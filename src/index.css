@@ -1,0 +1,7 @@
+@import url('./vendor/normalize.css');
+.page {
+  font-family: "Inter", "Arial", sans-serif;
+  background-color: #fff;
+	color: #000;
+}
+@import url('./components/Footer/Footer.css');

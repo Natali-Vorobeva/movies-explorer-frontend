@@ -1,0 +1,19 @@
+.footer {
+  min-height: 172px;
+}
+
+.footer__copyright {
+display: flex;
+}
+movies-explorer-frontend
+
+.footer__text {
+	line-height: 1;
+	font-size: 13px;
+	font-style: normal;
+	color: #a0a0a0;
+	text-align: center;
+}
+/* .footer__date {
+
+} */
