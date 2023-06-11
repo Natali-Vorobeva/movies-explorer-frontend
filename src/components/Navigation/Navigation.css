@@ -1,0 +1,59 @@
+.navigation {
+  transition: all 1s ease;
+}
+
+.navigation-button {
+  opacity: 0.6;
+  border: 1px solid #FFFFFF;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #fff;
+  padding: 10px 20px;
+  max-width: 129px;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+}
+.navigation-button:not(:last-child){
+  margin-bottom: 3px;
+}
+
+.navigation-button {
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.navigation-button:hover {
+  box-shadow: 10px 10px 10px 10px #2be080;
+}
+
+.navigation-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    #2be080,
+    transparent
+  );
+  transition: all 650ms;
+}
+
+.navigation-button:hover:before {
+  left: 100%;
+}
+
+.navigation-button__link {
+  color: #fff;
+}
+.navigation-button__link:hover {
+  opacity: .9;
+  font-weight: 400;
+}
