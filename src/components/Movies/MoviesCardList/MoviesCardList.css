@@ -15,20 +15,11 @@
   line-height: 15px;
   margin: 50px 0 0 0;
   cursor: pointer;
-  -moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-    margin: 50px 0 80px 0;
+  transition: all .5s ease;
+  margin: 50px 0 80px 0;
 }
 
 .movies-card-list__more:hover {
-  background-position: 100% 0;
-  -moz-transition: all .4s ease-in-out;
-  -o-transition: all .4s ease-in-out;
-  -webkit-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out;
-  background-image: linear-gradient(to right, #e99c4f, #ec8c69, #f1aa03 , #FBB03B);
-    box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
-    color: #fff;
+  transition: all .5s ease;
+  opacity: .7;
 }

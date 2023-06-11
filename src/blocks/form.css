@@ -90,6 +90,7 @@
   line-height: 17px;
   text-align: center;
   border: none;
+  color: #fff;
   padding: 13px 0;
   cursor: pointer;
 }
@@ -113,7 +114,7 @@
 }
 
 .form__save_type_profile:focus {
-  outline: 1px solid #ff6838;  
+  outline: 1px solid #ff6838;
 }
 
 .form__edit {
@@ -122,12 +123,8 @@
   line-height: 16px;
 }
 
-.form__movies {
-  color: #fff;
-}
-
 .form__movies:focus {
-  outline: none;  
+  outline: none;
 }
 
 .form__text {
@@ -145,13 +142,13 @@
 }
 
 .form__link:focus {
-  outline: 1px solid #ff6838;   
+  outline: 1px solid #ff6838;
 }
 
 .form__profile-exit {
   display: block;
   text-align: center;
-  margin: 16px 0 0 0;
+  margin: 16px 0 40px 0;
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;

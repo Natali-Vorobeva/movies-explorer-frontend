@@ -21,10 +21,12 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #e8e8e8;
+  transition: all .5s ease;
 }
 
 .portfolio__link:hover {
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  opacity: .7;
+  transition: all .5s ease;
 }
 
 
@@ -79,5 +81,5 @@
   .portfolio__arrow {
     font-size: 18px;
     line-height: 28px;
-  }  
+  }
 }

@@ -19,20 +19,20 @@ align-self: center;
 }
 
 .header__films:hover {
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   opacity: .7;
+  transition: all .5s ease;
 }
 
 .header__saved-films {
   line-height: 18px;
   font-size: 13px;
-  padding: 0 0 0 16px;  
+  padding: 0 0 0 16px;
   transition: all .5s ease;
 }
 
 .header__saved-films:hover {
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   opacity: .7;
+  transition: all .5s ease;
 }
 
 .header__links {
@@ -48,12 +48,12 @@ align-self: center;
   font-size: 12px;
   line-height: 16px;
   color: #fff;
+  transition: all .5s ease;
 }
 
 .header__signup:hover {
-transition: all .5s ease;
-  box-shadow: 0em 1.5em 1.5em -0.4em #2be080;
-  transform: translateY(-0.25em);
+  opacity: .7;
+  transition: all .5s ease;
 }
 
 .header__signin {
@@ -69,9 +69,7 @@ transition: all .5s ease;
 
 .header__signin:hover {
   transition: all .5s ease;
-  box-shadow: 0.5em 0.5em 1.5em -0.4em #2be080;
-  transform: translateY(-0.25em);
-  color: #fff;
+  opacity: .7;
 }
 
 .header__profile {
@@ -85,19 +83,18 @@ transition: all .5s ease;
   transition: all .5s ease;
 }
 
-.header__profile:hover {  
-  box-shadow: 0em .7em 1.5em -0.4em #2be080;
-  transform: translateY(-0.25em);
+.header__profile:hover {
   opacity: .7;
+  transition: all .5s ease;
 }
 
 .header_style_background-main {
   background: #465dff;
 }
 
-@media (min-width:769px){	
+@media (min-width:769px){
 	.header__burger {
-		display: none;		
+		display: none;
 	}
 
   .header__link-burger {
@@ -132,7 +129,7 @@ transition: all .5s ease;
       left: 0;
       top: 24px;
     }
-    
+
     .header__menu-burger::after {
       content: "";
       background: #000;
@@ -143,7 +140,7 @@ transition: all .5s ease;
       left: 0;
       bottom: 8px;
     }
-    
+
     .header__element-burger {
       content: "";
       background: #000;
@@ -166,18 +163,11 @@ transition: all .5s ease;
       background: #000;
     }
 
-    .header__content-menu {      
-    /* animation: visibilityMenuBurger 0.5s ease-in-out;  */
-    }    
-
-    /* @keyframes visibilityMenuBurger {
-      0% {
-        opacity: 0;
-      }
-      100% { 
-        opacity: 1; 
-      }
-    } */
+    .header__content-menu {
+      visibility: visible;
+      opacity: 1;
+      transition: all .5s ease;
+    }
 
     .header__link-burger {
       position: absolute;
@@ -204,9 +194,9 @@ transition: all .5s ease;
       align-self: end;
       padding: 0 50px 0 0;
       text-align: end;
-      cursor: pointer;       
+      cursor: pointer;
     }
-    
+
     .header__to-link-burger {
       display: inline;
       text-align: center;
@@ -216,8 +206,8 @@ transition: all .5s ease;
     }
 
     .header__to-link-burger:hover {
-      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  opacity: .7;
+      opacity: .7;
+      transition: all .5s ease;
     }
 
     .header__to-link-burger:not(:last-child){
@@ -228,33 +218,28 @@ transition: all .5s ease;
       margin: 105px 0 0 0;
     }
 
-    .header__to-films-burger {
-
-    }
-
     .header__to-profile-burger {
       width: 100px;
       text-align: center;
-      margin-top: 0;
+      margin-top: 10px;
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 90px;
-      height: 32px;   
+      height: 32px;
       font-weight: 500;
       font-size: 14px;
-      line-height: 16px;   
+      line-height: 16px;
       background: #f9f9f9;
       border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all .5s ease;
-    } 
-    
+    }
+
     .header__to-profile-burger:hover {
+      opacity: .7;
       transition: all .5s ease;
-      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  opacity: .7;
     }
 }
 
@@ -263,7 +248,7 @@ transition: all .5s ease;
     width: 103vw;
     height: 103vh;
   }
-  
+
   .header__close-burger {
     padding: 0 45px 0 0;
   }
@@ -294,16 +279,16 @@ transition: all .5s ease;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 90px;
-    height: 32px;   
+    height: 32px;
     font-weight: 500;
     font-size: 14px;
-    line-height: 16px;   
+    line-height: 16px;
     background: #f9f9f9;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-  } 
+  }
 }
 
 

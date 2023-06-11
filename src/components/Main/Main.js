@@ -9,23 +9,24 @@ import AboutMe from './AboutMe/AboutMe';
 import Portfolio from './Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main() {  
+function Main() {
   return (
-    <main className="main">
-      <Header
-        onDisplayMovies={'visibility'}
-        registration={'Регистрация'}
-        enter={'Войти'}
-        onActiveLinkMain={'active'}
-      />
+    <>
+    <Header
+      onDisplayMovies={'visibility'}
+      registration={'Регистрация'}
+      enter={'Войти'}
+      onActiveLinkMain={'active'}
+    />
+    <section className="main">
       <Promo />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
-      <Footer />
-      {/* <MoviesCard /> */}
-    </main>
+    </section>
+    <Footer />
+    </>
   )
 };
 

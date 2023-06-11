@@ -11,6 +11,16 @@ function Header({
   onRegistration, onEnter
 }) {
 
+  const [visibilityMenu, setVisibilityMenu] = useState(false);
+
+	function handleClickBurger() {
+		setVisibilityMenu(true);
+	}
+
+	function handleClickCloseBurger() {
+		setVisibilityMenu(false);
+	}
+
   return (
     <>
       <header className={`header ${onDisplayMovies}`}>
@@ -31,8 +41,10 @@ function Header({
               Аккаунт
             </Link>
           </div>
+
+          {/* !!! OPEN */}
           <div className="header__burger"
-          // onClick={handleClickBurger}
+          onClick={handleClickBurger}
           >
             <div className="header__menu-burger">
               <span className="header__element-burger">
@@ -55,13 +67,14 @@ function Header({
           </div>
         </div>
       </header>
-      <div className={`header__content-menu ${onDisplayMovies} visibility`}>
+      <div className={`header__content-menu ${onDisplayMovies} ${visibilityMenu ? 'show' : 'hide'}`}>
         <div className="header__content-menu-burger">
         </div>
         <div className="header__link-burger">
           <nav className="header__nav-link-burger">
+            {/* !!!!        CLOSE    */}
             <img src={closeBurger} className="header__close-burger" alt="Закрыть меню"
-            // onClick={handleClickCloseBurger}
+            onClick={handleClickCloseBurger}
             />
             <Link className="header__to-main-burger header__to-link-burger" to="/">
               <p className={`${onActiveLinkMain}`}>

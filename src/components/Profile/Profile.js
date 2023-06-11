@@ -7,10 +7,11 @@ function Profile({ username, buttonText }) {
 
 
   return (
-    <section className="profile">
-      <Header
+    <>
+    <Header
         onDisplayMain={'visibility'}
       />
+    <section className="profile">
       <div className="profile__container container">
         <h2 className="profile__title">{`Привет, ${username} Наталья!`}</h2>
         <form action="#"
@@ -43,10 +44,8 @@ function Profile({ username, buttonText }) {
           <Link className="form__profile-exit" to='/' >Выйти из аккаунта</Link>
         </form>
       </div>
-
-
-
     </section>
+    </>
   )
 }
 export default Profile;
