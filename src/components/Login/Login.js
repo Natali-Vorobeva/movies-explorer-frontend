@@ -6,7 +6,7 @@ function Login({ onMain, buttonText, formText, formLinkText }) {
   return (
     <section className="login">
       <div className="logo logo_type_position">
-        <Link className="logo__to-main" to='/' onClick={onMain}></Link>
+        <Link className="logo__to-main" to="/" onClick={onMain}></Link>
       </div>
       <h2 className="greeting">Рады видеть!</h2>
       <form action=""
@@ -32,9 +32,7 @@ function Login({ onMain, buttonText, formText, formLinkText }) {
         <button
           type="submit"
           className="form__save">
-          {/* {buttonText} */}
-          {/* Войти */}
-          <Link className="form__link" to="/movies">Войти</Link>
+          Войти
         </button>
         <p className="form__text">{formText}Ещё не зарегистрированы?&nbsp;<Link className="form__link " to='/signup' >&nbsp;{formLinkText}Регистрация</Link></p>
       </form >

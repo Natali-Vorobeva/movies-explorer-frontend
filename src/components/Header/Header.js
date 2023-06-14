@@ -34,51 +34,7 @@ function Header({
 
   return (
     <>
-      {/* <header className={`header ${onDisplayMovies}`}>
-        <div className="header__container container">
-          <div className='logo'>
-            <Link className="logo__to-main" to="/"></Link>
-          </div>
-          <div className="header__menu-explorer">
-            <Link className={`header__films ${noActiveFilmsLink}`} to="/movies">
-              Фильмы
-            </Link>
-            <Link className={`header__saved-films ${noActiveSavedFilmsLink}`} to="/saved-movies">
-              Сохранённые фильмы
-            </Link>
-          </div>
-          <div className='header__links'>
-            <Link className="header__profile" to="/profile">
-              Аккаунт
-            </Link>
-          </div>
-          <div className="header__burger"
-            onClick={handleClickBurger}
-          >
-            <div className="header__menu-burger">
-              <span className="header__element-burger">
-              </span>
-            </div>
-          </div>
-        </div>
-      </header> */}
-      {/* <div className={`header ${onDisplayMain}`}>
-        <div className="header__container header_style_background-main">
-          <div className="logo">
-          </div>
-          <div className="header__links-main">
-            <Link className="header__signup" to="/signup" onClick={onRegistration}>
-              {registration}
-            </Link>
-            <Link className="header__signin" to="/signin" onClick={onEnter}>
-              {enter}
-            </Link>
-          </div>
-        </div>
-      </div> */}
 
-
-      {/* <header className={`header ${onDisplayMovies}`}> */}
       <header className="header">
         <div className="header__container container">
 
@@ -165,6 +121,7 @@ function Header({
           </div>
         </div>
       </div>
+
       <div className={`header__content-menu ${visibilityMenuMain ? 'show' : 'hide'} `}>
         <div className="header__content-menu-burger">
         </div>
@@ -176,9 +133,9 @@ function Header({
               />
             </div>
             <nav className="header__nav-link-burger">
-                <p className="header__to-link-burger">
-                  {email}email
-                </p>
+              <p className="header__to-link-burger">
+                {email}email
+              </p>
               <Link className="header__to-films-burger header__to-link-burger" to="/movies">
                 <p className={`${onActiveLinkFilms}`}>
                   Фильмы
