@@ -19,11 +19,13 @@ function Main() {
       onActiveLinkMain={'active'}
     />
     <section className="main">
+      <div className="main__container">
       <Promo />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
+      </div>
     </section>
     <Footer />
     </>

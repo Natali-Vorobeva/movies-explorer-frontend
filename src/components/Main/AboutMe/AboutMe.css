@@ -79,11 +79,6 @@
     border-radius: 10px;
     min-width: 250px;
   }
-
-  .about-me__image {
-    width: 100%;
-    aspect-ratio: 0.83;
-  }
 }
 
 @media (max-width:500px){

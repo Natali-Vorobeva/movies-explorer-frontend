@@ -58,12 +58,13 @@
   opacity: .5;
 }
 
-@media (max-width:853px){
+@media (max-width:885px){
   .navigation {
     cursor: pointer;
     margin: 0 auto;
   }
 
   .navigation__button {
+    width: 89px;
   }
 }

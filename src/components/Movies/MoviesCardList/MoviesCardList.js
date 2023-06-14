@@ -11,68 +11,70 @@ function MoviesCardList(props) {
 
   return (
     <>
-      <div className="movies-card-list container">
-        <section className="gallery">
-          <div className="gallery__card-body">
-            <div className="gallery__poster">
-              <img className="gallery__img" src={imagePoster} alt="Постер фильма"
-                onClick={props.onCardClick}
-              />
+      <section className="movies-card-list">
+        <div className="movies-card-list__container container">
+          <div className="gallery">
+            <div className="gallery__card-body">
+              <div className="gallery__poster">
+                <img className="gallery__img" src={imagePoster} alt="Постер фильма"
+                  onClick={props.onCardClick}
+                />
+              </div>
+              <div className="gallery__label">
+                <p className="gallery__subtitle">Киноальманах Джей Харви: A dokkkk kkkkkk kkkkkkkk kk k kkk kk  «100 лет дизайна»</p>
+                <p className="gallery__like"></p>
+              </div>
+              <div className="gallery__time">1ч 42 м</div>
             </div>
-            <div className="gallery__label">
-              <p className="gallery__subtitle">Киноальманах Джей Харви: A dokkkk kkkkkk kkkkkkkk kk k kkk kk  «100 лет дизайна»</p>
-              <p className="gallery__like"></p>
-            </div>
-            <div className="gallery__time">1ч 42 м</div>
-          </div>
-          <div className="gallery__card-body">
+            <div className="gallery__card-body">
 
-            <div className="gallery__poster">
-              <img className="gallery__img" src={imagePoster} alt="Постер фильма" />
+              <div className="gallery__poster">
+                <img className="gallery__img" src={imagePoster} alt="Постер фильма" />
+              </div>
+              <div className="gallery__label">
+                <p className="gallery__subtitle">Киноальманах Джей Харви: «100 лет дизайна»</p>
+                <p className="gallery__liked"></p>
+              </div>
+              <div className="gallery__time">1ч 42 м</div>
             </div>
-            <div className="gallery__label">
-              <p className="gallery__subtitle">Киноальманах Джей Харви: «100 лет дизайна»</p>
-              <p className="gallery__liked"></p>
-            </div>
-            <div className="gallery__time">1ч 42 м</div>
-          </div>
 
-          <div className="gallery__card-body">
-            <div className="gallery__poster">
-              <img className="gallery__img" src={imagePoster2} alt="Постер фильма" />
+            <div className="gallery__card-body">
+              <div className="gallery__poster">
+                <img className="gallery__img" src={imagePoster2} alt="Постер фильма" />
+              </div>
+              <div className="gallery__label">
+                <p className="gallery__subtitle"> Пи Джей ХарвиПи Джей ХарвиПи Джей ХарвиПи </p>
+                <p className="gallery__like"></p>
+              </div>
+              <div className="gallery__time">1ч 42 м</div>
             </div>
-            <div className="gallery__label">
-              <p className="gallery__subtitle"> Пи Джей ХарвиПи Джей ХарвиПи Джей ХарвиПи </p>
-              <p className="gallery__like"></p>
+            <div className="gallery__card-body">
+              <div className="gallery__poster">
+                <img className="gallery__img" src={imagePoster3} alt="Постер фильма" />
+              </div>
+              <div className="gallery__label">
+                <p className="gallery__subtitle">Киноальманах «100 лет дизайна»</p>
+                <p className="gallery__like"></p>
+              </div>
+              <div className="gallery__time">1ч 42 м</div>
             </div>
-            <div className="gallery__time">1ч 42 м</div>
+            <div className="gallery__card-body">
+              <div className="gallery__poster">
+                <img className="gallery__img" src={imagePoster4} alt="Постер фильма" />
+              </div>
+              <div className="gallery__label">
+                <p className="gallery__subtitle">Киноальманах «100 лет дизайна»</p>
+                <p className="gallery__like"></p>
+              </div>
+              <div className="gallery__time">1ч 42 м</div>
+            </div>
           </div>
-          <div className="gallery__card-body">
-            <div className="gallery__poster">
-              <img className="gallery__img" src={imagePoster3} alt="Постер фильма" />
-            </div>
-            <div className="gallery__label">
-              <p className="gallery__subtitle">Киноальманах «100 лет дизайна»</p>
-              <p className="gallery__like"></p>
-            </div>
-            <div className="gallery__time">1ч 42 м</div>
-          </div>
-          <div className="gallery__card-body">
-            <div className="gallery__poster">
-              <img className="gallery__img" src={imagePoster4} alt="Постер фильма" />
-            </div>
-            <div className="gallery__label">
-              <p className="gallery__subtitle">Киноальманах «100 лет дизайна»</p>
-              <p className="gallery__like"></p>
-            </div>
-            <div className="gallery__time">1ч 42 м</div>
-          </div>
-        </section>
-        <button className="movies-card-list__more">Ещё</button>
-        {/* <MoviesCard
+          <button className="movies-card-list__more">Ещё</button>
+          {/* <MoviesCard
       isOpen={isOpen}
       onClose={props.onClose}/> */}
-      </div>
+        </div>
+      </section>
 
     </>
 

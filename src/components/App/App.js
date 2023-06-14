@@ -1,4 +1,5 @@
 
+import { useState } from 'react';
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 
 import Main from '../Main/Main';
@@ -9,20 +10,47 @@ import SavesMovies from '../SavedMovies/SavedMovies';
 // import MoviesCard from '../MoviesCard/MoviesCard';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
-import { useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
-
+import * as auth from '../../auth.js';
 
 
 function App() {
-
+  const navigate = useNavigate();
   const [isOpenCardPopup, setIsOpenCardPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // function handleIsOpenCardPopup() {
-  //   setIsOpenCardPopup(true);
-  // }
+  const [success, setSuccess] = useState({
+		status: false,
+		text: ''
+	});
+  const [isOpenInfoTooltip, setOpenInfoTooltip] = useState(false);
+
+
+  function handleRegister(username, email, password) {
+		auth.register(username, email, password)
+			.then(data => {
+				// setIsVisibilityBurger(false);
+				if (data) {
+					setSuccess({
+						status: true,
+						text: "Вы успешно зарегистрировались!",
+					});
+					navigate('/signin', { replace: true })
+					return;
+				}
+			})
+			.catch(() => {
+				setSuccess({
+					status: false,
+					text: "Что-то пошло не так! Попробуйте ещё раз.",
+				});
+			})
+			.finally(() => {
+				setOpenInfoTooltip(true);
+			})
+	}
 
   function handleOnCardClick() {
     setIsOpen(true);
@@ -32,19 +60,17 @@ function App() {
   function closeAllPopups() {
     setIsOpen(false);
     setIsOpenCardPopup(false);
+    setOpenInfoTooltip(false);
   };
   return (
     <>
       <div className="page__content">
-        {/* form buttonText - текст на кнопке submit */}
-        {/* formText - текст под кнопкой submit */}
-        {/* formLinkText - ссылка под кнопкой submit */}
         <Routes>
           <Route
             exact
             path='/signup'
             element={
-              <Register />
+              <Register onRegister={handleRegister} />
             }
           />
           <Route
@@ -97,6 +123,7 @@ function App() {
         isOpen={isOpen}
         onClose={closeAllPopups}
       />
+      {/* <InfoTooltip isOpen={isOpenInfoTooltip} onClose={closeAllPopups} success={success} /> */}
     </>
   );
 }

@@ -7,6 +7,7 @@
 .promo__container {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .promo__title {
@@ -27,12 +28,16 @@
   max-width: 310px;
 }
 
-.promo__img {
+.promo__image {
   max-width: 315px;
 }
 
+.promo__img {
+  width: 100%;
+}
+
 /* todo ДОДЕЛАТЬ ВСЕ MEDIA */
-@media (max-width:853px){
+@media (max-width:885px){
   .promo {
     padding-top: 140px;
   }
@@ -43,6 +48,8 @@
 
   .promo__title {
     opacity: 0.48;
+    font-size: 40px;
+line-height: 50px;
   }
 
   .promo__main-text {
@@ -84,8 +91,6 @@
 
   .promo__title {
     padding-top: 44px;
-    padding-right: 10px;
-    padding-left: 10px;
     font-size: 30px;
     line-height: 38px;
     opacity: 1;
