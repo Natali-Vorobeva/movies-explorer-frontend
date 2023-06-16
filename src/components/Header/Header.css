@@ -114,6 +114,10 @@ align-self: center;
 		display: none;
 	}
 
+  .header__burger-main {
+		display: none;
+	}
+
   .header__link-burger {
     display: none;
   }

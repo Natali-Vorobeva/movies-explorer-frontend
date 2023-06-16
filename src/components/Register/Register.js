@@ -22,18 +22,7 @@ function Register({ onRegister, formLinkText, onMain }) {
     onRegister(username, email, password);
   }
 
-  // const [ title, setTitle] = useState('Что-то пошло не так...');
   let title = 'Что-то пошло не так...';
-
-  //   const [customValidity, setCustomValidity] = useState('');
-  //   function check(input) {
-  //     if(input.validity.typeMismatch){
-  //         input.setCustomValidity("Что-то пошло не так...");
-  //     }
-  //     else {
-  //         input.setCustomValidity("");
-  //     }
-  // }
 
   return (
     <section className="register">
@@ -49,7 +38,6 @@ function Register({ onRegister, formLinkText, onMain }) {
           <input
             id="username" type="text"
             name="username"
-            pattern="[a-zA-Z]+"
             title={title}
             value={username}
             onChange={handleChangeUsername}
@@ -77,7 +65,6 @@ function Register({ onRegister, formLinkText, onMain }) {
             id="password" type="password"
             name="password"
             value={password}
-            pattern="[0-9]{4}"
             title={title}
             onChange={handleChangePassword}
             placeholder="Пароль"

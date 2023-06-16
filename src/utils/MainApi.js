@@ -1,4 +1,4 @@
-class Api {
+class MainApi {
   constructor({ url, headers }) {
     this._url = url;
     this._headers = headers;
@@ -11,13 +11,7 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`)
   }
 
-  // Получение карточек с сервера
-  getInitialCards() {
-    return fetch(`${this._url}/cards`, {
-      headers: this._headers,
-    })
-      .then(this._parseResponse);
-  }
+
 
 
   // Добавление новой карточки через попап
@@ -35,7 +29,7 @@ class Api {
 
   // Удаление карточки
   deleteCard(cardId) {
-    return fetch(`${this._url}/cards/${cardId}`, {
+    return fetch(`${this._url}/movies/${cardId}`, {
       headers: this._headers,
       method: 'DELETE'
     })
@@ -44,7 +38,7 @@ class Api {
 
   // Ставим лайк карточке
   setLike(cardId) {
-    return fetch(`${this._url}/cards/${cardId}/likes`, {
+    return fetch(`${this._url}/movies/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers
     })
@@ -70,42 +64,30 @@ class Api {
 
   // Получение информации о пользователе с сервера
   getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
+    return fetch(`${this._url}/users`, {
       headers: this._headers
     })
       .then(this._parseResponse);
   }
 
   // Редактирование информации о пользователе через попап
-  editUserInfo({ name, about }) {
-    return fetch(`${this._url}/users/me`, {
+  editUserInfo({ name, email }) {
+    return fetch(`${this._url}/users`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         name: name,
-        about: about
+        email: email
       })
     })
       .then(this._parseResponse);
   }
-
-  // Редактирование аватара пользователя через попап
-  // changeUserAvatar(avatar) {
-  //   return fetch(`${this._url}/users`, {
-  //     method: 'PATCH',
-  //     headers: this._headers,
-  //     body: JSON.stringify({
-  //       avatar: avatar
-  //     })
-  //   })
-  //     .then(this._parseResponse);
-  // }
 }
 
-export const api = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-58',
+export const mainApi = new MainApi({
+  url: 'api.portfolio-vorobeva.nomoredomains.rocks',
   headers: {
-    authorization: '032be63d-a621-4ef4-91b0-cc2afa2b0165',
+    // authorization: '032be63d-a621-4ef4-91b0-cc2afa2b0165',
     'Content-Type': 'application/json'
   }
 });
