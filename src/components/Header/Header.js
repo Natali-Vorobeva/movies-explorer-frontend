@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import closeBurger from '../../images/icons/close-burger.svg';
+
+
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 function Header({
+  onSignOut,
+  isLoggedIn,
+  activeButton,
   onDisplayMovies, onDisplayMain,
   noActiveFilmsLink, noActiveSavedFilmsLink,
   registration, enter, email,
-  onActiveLinkFilms, onActiveLinkMain, onActiveLinkFilmsSaved,
-  onRegistration, onEnter
+  onActiveLinkFilms, onActiveLinkMain, onActiveLinkFilmsSaved
 }) {
 
   const [visibilityMenuMovies, setVisibilityMenuMovies] = useState(false);
@@ -31,13 +35,10 @@ function Header({
   }
 
 
-
   return (
     <>
-
       <header className="header">
         <div className="header__container container">
-
           <div className={`header__on-display ${onDisplayMovies}`}>
             <div className="logo">
               <Link className="logo__to-main" to="/"></Link>
@@ -51,7 +52,7 @@ function Header({
               </Link>
             </div>
             <div className='header__links'>
-              <Link className="header__profile" to="/profile">
+              <Link className={`header__profile ${activeButton}`} to="/profile">
                 Аккаунт
               </Link>
             </div>
@@ -66,16 +67,38 @@ function Header({
           </div>
           <div className={`header__on-display ${onDisplayMain}`}>
             <div className="header__style-background"></div>
-            <div className="logo">
-            </div>
-            <div className="header__links-main">
-              <Link className="header__signup" to="/signup" onClick={onRegistration}>
-                {registration}
-              </Link>
-              <Link className="header__signin" to="/signin" onClick={onEnter}>
-                {enter}
-              </Link>
-            </div>
+            <div className="logo"></div>
+            {
+              isLoggedIn
+                ?
+                <>
+                  <div className="header__menu-explorer">
+                    <Link className={`header__films  header__to-link-burger_style_text ${noActiveFilmsLink}`} to="/movies">
+                      Фильмы
+                    </Link>
+                    <Link className={`header__saved-films  header__to-link-burger_style_text ${noActiveSavedFilmsLink}`} to="/saved-movies">
+                      Сохранённые фильмы
+                    </Link>
+                  </div>
+                  <div className="header__links-main">
+                    <p className="header__to-link-burger header__to-link-burger_style_text">{email}</p>
+                    <Link className="header__profile-exit header__to-link-burger_style_text" to='/' onClick={onSignOut}>Выйти</Link>
+                  </div>
+                </>
+                :
+                <>
+                  <div className="header__menu-explorer"></div>
+                  <div className="header__links-main">
+                    <Link className="header__signup" to="/signup">
+                      {registration}
+                    </Link>
+                    <Link className="header__signin" to="/signin">
+                      {enter}
+                    </Link>
+                  </div>
+                </>
+            }
+
             <div className="header__burger-main"
               onClick={handleClickBurgerMain}
             >
@@ -86,73 +109,20 @@ function Header({
             </div>
           </div>
         </div>
-      </header>
+        <BurgerMenu
+          visibilityMenuMovies={visibilityMenuMovies}
+          handleClickCloseBurgerMovies={handleClickCloseBurgerMovies}
+          onActiveLinkMain={onActiveLinkMain}
+          email={email}
+          onActiveLinkFilms={onActiveLinkFilms}
+          onActiveLinkFilmsSaved={onActiveLinkFilmsSaved}
+          visibilityMenuMain={visibilityMenuMain}
+          handleClickCloseBurgerMain={handleClickCloseBurgerMain}
+        />
+      </header >
 
-      <div className={`header__content-menu ${visibilityMenuMovies ? 'show' : 'hide'} `}>
-        <div className="header__content-menu-burger">
-        </div>
-        <div className="header__link-burger-container">
-          <div className="header__link-burger">
-            <div className="header__close-image">
-              <img src={closeBurger} className="header__close-burger" alt="Закрыть меню"
-                onClick={handleClickCloseBurgerMovies}
-              />
-            </div>
-            <nav className="header__nav-link-burger">
-              <Link className="header__to-main-burger header__to-link-burger" to="/">
-                <p className={`${onActiveLinkMain}`}>
-                  Главная
-                </p>
-              </Link>
-              <Link className="header__to-films-burger header__to-link-burger" to="/movies">
-                <p className={`${onActiveLinkFilms}`}>
-                  Фильмы
-                </p>
-              </Link>
-              <Link className="header__to-saved-movies-burger header__to-link-burger" to="/saved-movies">
-                <p className={`${onActiveLinkFilmsSaved}`}>
-                  Сохранённые фильмы
-                </p>
-              </Link>
-            </nav>
-            <Link className="header__to-profile-burger" to="/profile">
-              Аккаунт
-            </Link>
-          </div>
-        </div>
-      </div>
 
-      <div className={`header__content-menu ${visibilityMenuMain ? 'show' : 'hide'} `}>
-        <div className="header__content-menu-burger">
-        </div>
-        <div className="header__link-burger-container">
-          <div className="header__link-burger">
-            <div className="header__close-image">
-              <img src={closeBurger} className="header__close-burger" alt="Закрыть меню"
-                onClick={handleClickCloseBurgerMain}
-              />
-            </div>
-            <nav className="header__nav-link-burger">
-              <p className="header__to-link-burger">
-                {email}email
-              </p>
-              <Link className="header__to-films-burger header__to-link-burger" to="/movies">
-                <p className={`${onActiveLinkFilms}`}>
-                  Фильмы
-                </p>
-              </Link>
-              <Link className="header__to-saved-movies-burger header__to-link-burger" to="/saved-movies">
-                <p className={`${onActiveLinkFilmsSaved}`}>
-                  Сохранённые фильмы
-                </p>
-              </Link>
-            </nav>
-            <Link className="header__to-profile-burger" to="/profile">
-              Аккаунт
-            </Link>
-          </div>
-        </div>
-      </div>
+
     </>
   )
 }

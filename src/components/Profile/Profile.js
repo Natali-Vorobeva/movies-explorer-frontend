@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom';
 
 import Header from '../Header/Header';
 
-function Profile({ username, buttonText }) {
+function Profile({ name, onSignOut }) {
 
 
   return (
     <>
     <Header
         onDisplayMain={'visibility'}
+        activeButton={'no-active-nav-link'}
       />
     <section className="profile">
       <div className="profile__container container">
-        <h2 className="profile__title">{`Привет, ${username} Наталья!`}</h2>
+        <h2 className="profile__title">{`Привет, ${name}!`}</h2>
         <form action="#"
           // onSubmit={onSubmit}
           className='form form_type_profile' autoComplete="off">
@@ -37,11 +38,9 @@ function Profile({ username, buttonText }) {
             type="submit"
             className="form__save form__save_type_profile"
             name="button2">
-            {/* {buttonText || 'Сохранить'} */}
-            {buttonText}
             Редактировать
           </button>
-          <Link className="form__profile-exit" to='/' >Выйти из аккаунта</Link>
+          <Link className="form__profile-exit" to='/' onClick={onSignOut} >Выйти из аккаунта</Link>
         </form>
       </div>
     </section>

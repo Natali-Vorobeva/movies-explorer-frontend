@@ -9,7 +9,8 @@ import AboutMe from './AboutMe/AboutMe';
 import Portfolio from './Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main() {
+function Main({ isLoggedIn, email, onSignOut }) {
+
   return (
     <>
     <Header
@@ -17,16 +18,19 @@ function Main() {
       registration={'Регистрация'}
       enter={'Войти'}
       onActiveLinkMain={'active'}
+      email={email}
+      isLoggedIn={isLoggedIn}
+      onSignOut={onSignOut}
     />
-    <section className="main">
-      <div className="main__container">
+    <main className="main">
+      <section className="main__container">
       <Promo />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
-      </div>
-    </section>
+      </section>
+    </main>
     <Footer />
     </>
   )

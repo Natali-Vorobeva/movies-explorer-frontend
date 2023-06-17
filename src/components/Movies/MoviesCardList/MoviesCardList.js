@@ -10,7 +10,7 @@ function MoviesCardList(props) {
       <section className="movies-card-list">
         <div className="movies-card-list__container container">
           <div className="gallery">
-          {
+          {/* {
 						props.cards.map((card) => {
 							return <Movie
 								key={props.movie._id}
@@ -20,7 +20,7 @@ function MoviesCardList(props) {
 								onCardDeleteClick={props.onCardDeleteClick}
 							/>
 						})
-					}
+					} */}
           </div>
           <button className="movies-card-list__more">Ещё</button>
           {/* <MoviesCard

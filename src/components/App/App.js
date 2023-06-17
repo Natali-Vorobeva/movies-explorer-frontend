@@ -34,27 +34,34 @@ function App() {
   const navigate = useNavigate();
   const [isOpenCardPopup, setIsOpenCardPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
   const [success, setSuccess] = useState({
     status: false,
     text: ''
   });
   const [isOpenInfoTooltip, setOpenInfoTooltip] = useState(false);
 
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedHeader, setIsLoggedHeader] =  useState(false);
 
-  function handleRegister(username, email, password) {
-    auth.register(username, email, password)
+
+
+// !!! Доработать ${ name }
+
+  function handleRegister(name, email, password) {
+    auth.register(name, email, password)
       .then((data) => {
         console.log(data);
         // setIsVisibilityBurger(false);
         if (data) {
-          setSuccess({
-            status: true,
-            text: "Вы успешно зарегистрировались!",
-          });
-          navigate('/signin', { replace: true })
+          //   setSuccess({
+          //     status: true,
+          //     text: "Вы успешно зарегистрировались!",
+          //   });
+
+          navigate('/signin', { replace: true });
+          setName(data.name);
           return;
         }
       })
@@ -77,8 +84,10 @@ function App() {
         if (res.token) {
           localStorage.setItem('token', res.token);
           setIsLoggedIn(true);
-          navigate('/movies', { replace: true });
+          // setIsLoggedHeader(true);
+          // console.log(isLoggedHeader);
           setEmail(email);
+          navigate('/movies', { replace: true });
         }
       })
       .catch((res) => {
@@ -108,7 +117,8 @@ function App() {
         .checkToken(token)
         .then((res) => {
           setIsLoggedIn(true);
-          setEmail(res.data.email);
+          // setIsLoggedHeader(true);
+          setEmail(res.email);
           navigate('/', { replace: true })
         })
         .catch(err => {
@@ -117,22 +127,15 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      Promise.all([
-        mainApi.getUserInfo(),
-        moviesApi.getInitialMovies()
-      ])
-        .then(([me, cards]) => {
-          setCurrentUser(me);
-          // setMovies(movies);
-          // setIsVisibilityBurger(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  }, [isLoggedIn]);
+  function UserInfo() {
+    mainApi.getUserInfo()
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }
 
   function handleOnCardClick() {
     setIsOpen(true);
@@ -144,6 +147,17 @@ function App() {
     setIsOpenCardPopup(false);
     setOpenInfoTooltip(false);
   };
+
+  function handleSignOut() {
+		localStorage.removeItem('token');
+		// setIsVisibilityBurger(true);
+		navigate('/', { replace: true });
+		setIsLoggedIn(false);
+    // setIsLoggedHeader(false);
+		setEmail('');
+    // console.log(isLoggedHeader);
+	}
+
   return (
     <>
       <div className="page__content">
@@ -166,20 +180,26 @@ function App() {
               }
             />
             <Route
+              exact
               path='/profile'
               element={
                 <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
                   component={Profile}
+                  name={name}
+                  onSignOut={handleSignOut}
                 />
               }
             />
             <Route
+              exact
               path='/movies'
               element={
                 <ProtectedRoute
                   component={Movies}
                   isOpenCardPopup={isOpenCardPopup}
                   onCardClick={handleOnCardClick}
+                  isLoggedIn={isLoggedIn}
                 />
               }
             />
@@ -188,6 +208,7 @@ function App() {
               element={
                 <ProtectedRoute
                   component={SavesMovies}
+                  isLoggedIn={isLoggedIn}
                 />
               }
             />
@@ -195,7 +216,11 @@ function App() {
               exact
               path='/'
               element={
-                <Main />
+                <Main
+                  email={email}
+                  isLoggedIn={isLoggedIn}
+                  onSignOut={handleSignOut}
+                   />
               }
             />
             <Route

@@ -1,11 +1,11 @@
-export const BASE_URL = 'https://api.portfolio-vorobeva.nomoredomains.rocks';
+export const BASE_URL = 'http://api.portfolio-vorobeva.nomoredomains.rocks' || 'http://localhost:3001';
 // export const BASE_URL = 'https://auth.nomoreparties.co';
 
 const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
 }
 
-export const register = (username, email, password) => {
+export const register = (name, email, password) => {
 	return fetch(`${BASE_URL}/signup`, {
 		method: 'POST',
 		headers: {
@@ -13,7 +13,7 @@ export const register = (username, email, password) => {
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			username, email, password
+			name, email, password
 		})
 	})
 		.then(res => {
@@ -40,7 +40,7 @@ export const authorize = (email, password) => {
 };
 
 export const checkToken = (token) => {
-	return fetch(`${BASE_URL}/users`, {
+	return fetch(`${BASE_URL}/users/me`, {
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',
