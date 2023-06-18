@@ -126,7 +126,7 @@ deleteMovie(movieId) {
 
 
 export const mainApi = new MainApi({
-  url: 'api.portfolio-vorobeva.nomoredomains.rocks',
+  url: 'https://api.portfolio-vorobeva.nomoredomains.rocks',
   headers: {
     // authorization: '032be63d-a621-4ef4-91b0-cc2afa2b0165',
     'Content-Type': 'application/json'
