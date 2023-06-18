@@ -47,7 +47,7 @@ function App() {
 
 
 
-// !!! Доработать ${ name }
+  // !!! Доработать ${ name }
 
   function handleRegister(name, email, password) {
     auth.register(name, email, password)
@@ -84,8 +84,6 @@ function App() {
         if (res.token) {
           localStorage.setItem('token', res.token);
           setIsLoggedIn(true);
-          // setIsLoggedHeader(true);
-          // console.log(isLoggedHeader);
           setEmail(email);
           navigate('/movies', { replace: true });
         }
@@ -110,8 +108,10 @@ function App() {
     handleToken();
   }, []);
 
+
   function handleToken() {
     const token = localStorage.getItem('token');
+    // const loggedIn = localStorage.getItem('loggedIn');
     if (token) {
       auth
         .checkToken(token)
@@ -127,6 +127,23 @@ function App() {
     }
   };
 
+  // useEffect(() => {
+  // 	if (isLoggedIn) {
+  // 		Promise.all([
+  // 			mainApi.getUserInfo()
+  // 			// moviesApi.getInitialMovies()
+  // 		])
+  // 			.then(([me]) => {
+  // 				setCurrentUser(me);
+  // 				// setCards(cards);
+  // 				// setIsVisibilityBurger(true);
+  // 			})
+  // 			.catch((err) => {
+  // 				console.log(err);
+  // 			})
+  // 	}
+  // }, [isLoggedIn]);
+
   function UserInfo() {
     mainApi.getUserInfo()
       .then((userData) => {
@@ -135,7 +152,7 @@ function App() {
       .catch((err) => {
         console.log(err.message)
       })
-  }
+  };
 
   function handleOnCardClick() {
     setIsOpen(true);
@@ -149,15 +166,15 @@ function App() {
   };
 
   function handleSignOut() {
-		localStorage.removeItem('token');
-		// setIsVisibilityBurger(true);
-		navigate('/', { replace: true });
-		setIsLoggedIn(false);
-    // setIsLoggedHeader(false);
-		setEmail('');
-    // console.log(isLoggedHeader);
-	}
+    localStorage.removeItem('token');
+    localStorage.removeItem('loggedIn');
+    // setIsVisibilityBurger(true);
+    navigate('/', { replace: true });
+    setIsLoggedIn(false);
+    setEmail('');
+  }
 
+  console.log(isLoggedIn);
   return (
     <>
       <div className="page__content">
@@ -191,15 +208,17 @@ function App() {
                 />
               }
             />
+            {/* <Route exact path="/movies" element={<ProtectedRoute isLoggedIn={isLoggedIn} element={Movies}} /> */}
             <Route
               exact
               path='/movies'
               element={
                 <ProtectedRoute
+                  isLoggedIn={isLoggedIn}
                   component={Movies}
                   isOpenCardPopup={isOpenCardPopup}
                   onCardClick={handleOnCardClick}
-                  isLoggedIn={isLoggedIn}
+
                 />
               }
             />
@@ -207,8 +226,9 @@ function App() {
               path='/saved-movies'
               element={
                 <ProtectedRoute
-                  component={SavesMovies}
                   isLoggedIn={isLoggedIn}
+                  component={SavesMovies}
+
                 />
               }
             />
@@ -220,7 +240,7 @@ function App() {
                   email={email}
                   isLoggedIn={isLoggedIn}
                   onSignOut={handleSignOut}
-                   />
+                />
               }
             />
             <Route

@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api.portfolio-vorobeva.nomoredomains.rocks' || 'http://localhost:3001';
+export const BASE_URL = 'https://api.portfolio-vorobeva.nomoredomains.rocks';
 // export const BASE_URL = 'https://auth.nomoreparties.co';
 
 const checkResponse = (res) => {
