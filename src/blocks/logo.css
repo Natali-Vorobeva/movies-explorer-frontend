@@ -1,0 +1,27 @@
+.logo {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 8px solid #2be080;
+  margin: 18px 63px 18px 0;
+  transition: all .5s ease;
+}
+
+.logo:hover {
+  transition: all .5s ease;
+  opacity: .7;
+}
+
+.logo__to-main {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  z-index: 15;
+}
+
+@media (max-width:550px){
+  .logo_type_position {
+    margin: 0 auto;
+  }
+}
