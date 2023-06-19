@@ -29,6 +29,7 @@
   margin: 0 auto;
   padding: 100px 0;
   gap: 10px;
+  list-style-type: none;
 }
 
 .techs__item {
@@ -43,14 +44,12 @@
   line-height: 17px;
   cursor: pointer;
   transition: all .5s ease;
-  transition: all 2s ease;
 }
 
-.techs__item:hover { 
-  /* transform: scale3d(1, 1, 1);  */
-  transform: rotate3d(1, 0, 1, 720deg);
-  transition: all 2s ease;
-} 
+.techs__item:hover {
+  opacity: .7;
+  transition: all .5s ease;
+}
 
 @media (max-width:830px){
   .techs__item {
@@ -85,7 +84,7 @@
 }
 @media (max-width:650px){
   .techs__items {
-    max-width: 400px;    
+    max-width: 400px;
   }
 }
 
@@ -107,7 +106,7 @@
   .techs__items {
     padding-top: 60px;
     padding-bottom: 70px;
-    max-width: 180px;    
+    max-width: 180px;
   }
 
   .techs__item {

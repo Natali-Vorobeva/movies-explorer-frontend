@@ -1,5 +1,4 @@
-.not-found {  
-  padding: 0 0 60px 0;
+.not-found {
   max-width: 400px;
   height: 100vh;
   margin: 0 auto;
@@ -10,7 +9,7 @@
 
 .not-found__error {
   margin: auto auto;
-  
+
 }
 
 .not-found__code {
@@ -36,10 +35,10 @@
   line-height: 17px;
   color: #ff6838;
   transition: all .1s ease;
-  padding: 0 0 1px 0;
+  padding: 0 0 60px 0;
 }
 
 .not-found__link:hover {
-  transition: all .1s ease;
-  font-weight: 500;
+  transition: all .5s ease;
+  opacity: .7;
 }

@@ -6,15 +6,15 @@ function Portfolio() {
         <h3 className="portfolio__title">Портфолио</h3>
         <div className="portfolio__links">
           <div className="portfolio__link">
-            <a href="https://github.com/Natali-Vorobeva?tab=repositories" target="_blank" className="portfolio__link-static">Статичный сайт</a>
+            <a href="https://github.com/Natali-Vorobeva?tab=repositories" target="blank" className="portfolio__link-static">Статичный сайт</a>
             <p className="portfolio__arrow">↗</p>
           </div>
           <div className="portfolio__link">
-            <a href="https://github.com/Natali-Vorobeva?tab=repositories" target="_blank" className="portfolio__link-adaptive">Адаптивный сайт</a>
+            <a href="https://github.com/Natali-Vorobeva?tab=repositories" target="blank" className="portfolio__link-adaptive">Адаптивный сайт</a>
             <p className="portfolio__arrow">↗</p>
           </div>
           <div className="portfolio__link">
-            <a href="https://github.com/Natali-Vorobeva?tab=repositories" target="_blank" className="portfolio__link-app">Одностраничное приложение</a>
+            <a href="https://github.com/Natali-Vorobeva?tab=repositories" target="blank" className="portfolio__link-app">Одностраничное приложение</a>
             <p className="portfolio__arrow">↗</p>
           </div>
         </div>

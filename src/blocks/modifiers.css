@@ -1,7 +1,5 @@
 .container {
-  max-width: 1280px;
   padding: 0 70px;
-  margin: 0 auto;
 }
 
 .no-active-nav-link {
@@ -26,9 +24,20 @@
 }
 
 .indent-nav-button {
-  transition: all 1s ease;
-  margin: -80px 0 0 0;
-  transition: all .4s ease;
+  margin-top: -80px;
+  transition: all .5s ease;
+}
+
+@media (min-width:853px){
+  .indent-nav-button {
+    margin-top: 0;
+  }
+}
+
+@media (max-width:853px){
+  .indent-nav-button {
+    margin-top: 0;
+  }
 }
 
 .visibility {
@@ -39,6 +48,18 @@
   display: flex;
   visibility: visible;
   opacity: 1;
+  transition: all 1s ease;
+}
+
+.show {
+  visibility: visible;
+  opacity: 1;
+  transition: all 1s ease;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
   transition: all 1s ease;
 }
 

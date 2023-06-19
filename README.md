@@ -1,6 +1,6 @@
 # movies-explorer-frontend
-## https://natali-vorobeva.github.io/movies-explorer-frontend/
+## http://natali-vorobeva.github.io/movies-explorer-frontend/
 
 
-# ссылка на архив
+# ссылка на макет
 ## https://disk.yandex.ru/d/-kBJ0A7bgcTBjg

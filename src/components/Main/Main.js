@@ -9,23 +9,30 @@ import AboutMe from './AboutMe/AboutMe';
 import Portfolio from './Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main() {  
+function Main({ isLoggedIn, email, onSignOut }) {
+
   return (
+    <>
+    <Header
+      onDisplayMovies={'visibility'}
+      registration={'Регистрация'}
+      enter={'Войти'}
+      onActiveLinkMain={'active'}
+      email={email}
+      isLoggedIn={isLoggedIn}
+      onSignOut={onSignOut}
+    />
     <main className="main">
-      <Header
-        onDisplayMovies={'visibility'}
-        registration={'Регистрация'}
-        enter={'Войти'}
-        onActiveLinkMain={'active'}
-      />
+      <section className="main__container">
       <Promo />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
-      <Footer />
-      {/* <MoviesCard /> */}
+      </section>
     </main>
+    <Footer />
+    </>
   )
 };
 

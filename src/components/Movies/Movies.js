@@ -5,14 +5,15 @@ import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies({ isOpenCardPopup, onCardClick, isOpen, onClose }) {
-  
+function Movies({ onCardClick, email }) {
+
   return (
     <>
       <Header
         onDisplayMain={'visibility'}
         noActiveFilmsLink={'no-active-nav-link'}
         onActiveLinkFilms={'active'}
+        email={email}
       />
       <section className="movies">
         <SearchForm />

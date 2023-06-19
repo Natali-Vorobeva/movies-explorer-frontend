@@ -1,7 +1,4 @@
-.search-form {
-  padding: 0 0 70px 0;
-
-}
+.search-form {}
 
 .search-form__flex-container {
   display: flex;
@@ -10,7 +7,7 @@
   margin: 70px 0;
 }
 
-.search-icon {
+.search-form__icon {
   padding: 0 18px 0 30px;
 }
 
@@ -28,7 +25,10 @@
 }
 
 .search-form__input::placeholder {
-  color: #a0a0a0;  
+  color: #a0a0a0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
 }
 
 .search-form__button {
@@ -40,23 +40,19 @@
   align-self: center;
   border-radius: 48px;
   padding: 0 30px;
-  width: 80px;
-  margin: 0 30px;
-  transition: all .4s ease-in-out;
+  width: 83px;
+  margin: 0 30px 0 5px;
+  transition: all .5s ease;
   cursor: pointer;
   border: none;
 }
 
 .search-form__button:hover {
-  -moz-transition: all .4s ease-in-out;
-  -o-transition: all .4s ease-in-out;
-  -webkit-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out;
-  background-image: linear-gradient(to right, #e99c4f, #eb6231, #f86f0e);
-  box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+  transition: all .5s ease;
+  opacity: .7;
 }
 
-.search-button-img {
+.search-form__button-img {
   width: 15px;
   height: 15px;
 }
@@ -66,7 +62,7 @@
   display: flex;
   align-self: center;
   justify-content: end;
-  padding-right: 30px;
+  padding-right: 12px;
   border-left: 1px solid #e8e8e8;
 }
 
@@ -138,8 +134,14 @@
     margin-left: 1px;
   }
 
-  .search-icon {
+  .search-form__icon {
     padding: 0 15px 0 19px;
+  }
+}
+
+@media (min-width:765px){
+  .search-form__switch_style_mobile {
+    display: none;
   }
 }
 
@@ -150,15 +152,15 @@
 
   .search-form__flex-container {
     margin-top: 80px;
-    margin-bottom: 45px;
+    margin-bottom: 40px;
   }
 
   .search-form__button {
     margin-right: 19px;
     margin-left: 19px;
-  }  
+  }
 
-  .search-icon {
+  .search-form__icon {
     visibility: collapse;
   }
 
@@ -169,19 +171,15 @@
   .search-form__switch_style_mobile {
     display: flex;
     border-left: none;
-    justify-self: center; 
+    justify-self: center;
     margin-left: 0;
     align-items: center;
     padding-right: 0;
-    margin: 0 auto 44px auto;
+    max-width: 170px;
+    margin: 0 auto 40px auto;
   }
 
   .search-form__checkbox-switch-button {
     margin-left: 0px;
-  }
-}
-@media (min-width:765px){
-  .search-form__switch_style_mobile {
-    display: none;
   }
 }
