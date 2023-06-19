@@ -1,12 +1,10 @@
 {
   "files": {
-    "main.css": "./static/css/main.b252999c.css",
-    "main.js": "./static/js/main.4d8fb685.js",
+    "main.css": "./static/css/main.654b0a4a.css",
+    "main.js": "./static/js/main.d765b13e.js",
     "static/media/foto.svg": "./static/media/foto.e9fb0ec897105dffcb36d2318c39127f.svg",
-    "static/media/Flowers-1440x1280.jpg": "./static/media/Flowers-1440x1280.973119850739f7113e2a.jpg",
     "static/media/Inter-Black.woff": "./static/media/Inter-Black.fd37f7e052bea1018058.woff",
     "static/media/Inter-Regular.woff": "./static/media/Inter-Regular.34ed58565339f4f3be40.woff",
-    "static/media/1489427938_neobychnye-fotografii-flatlandiya-1.jpg": "./static/media/1489427938_neobychnye-fotografii-flatlandiya-1.e958ea1004e7700b482b.jpg",
     "static/media/1625178000_10-phonoteka-org-p-oboi-na-samsung-vertikalnie-oboi-krasivo-10.jpg": "./static/media/1625178000_10-phonoteka-org-p-oboi-na-samsung-vertikalnie-oboi-krasivo-10.a26b8811c20b0d97a9c4.jpg",
     "static/media/Inter-Black.woff2": "./static/media/Inter-Black.141c7af6ed109b318513.woff2",
     "static/media/Inter-Regular.woff2": "./static/media/Inter-Regular.4c96ed73beaf6d1e6cc7.woff2",
@@ -22,11 +20,11 @@
     "static/media/hearth-white.svg": "./static/media/hearth-white.140b763965e72920f444.svg",
     "static/media/close-burger.svg": "./static/media/close-burger.09da049275af48ed634025493291e8c6.svg",
     "static/media/Close-Icon.svg": "./static/media/Close-Icon.039f1f5203f653b4bacde5e34ee2810b.svg",
-    "main.b252999c.css.map": "./static/css/main.b252999c.css.map",
-    "main.4d8fb685.js.map": "./static/js/main.4d8fb685.js.map"
+    "main.654b0a4a.css.map": "./static/css/main.654b0a4a.css.map",
+    "main.d765b13e.js.map": "./static/js/main.d765b13e.js.map"
   },
   "entrypoints": [
-    "static/css/main.b252999c.css",
-    "static/js/main.4d8fb685.js"
+    "static/css/main.654b0a4a.css",
+    "static/js/main.d765b13e.js"
   ]
 }
