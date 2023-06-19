@@ -11,14 +11,12 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Movies from '../Movies/Movies';
 import SavesMovies from '../SavedMovies/SavedMovies';
-// import MoviesCard from '../MoviesCard/MoviesCard';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 import * as auth from '../../auth.js';
-
 
 function App() {
 
@@ -111,13 +109,11 @@ function App() {
 
   function handleToken() {
     const token = localStorage.getItem('token');
-    // const loggedIn = localStorage.getItem('loggedIn');
     if (token) {
       auth
         .checkToken(token)
         .then((res) => {
           setIsLoggedIn(true);
-          // setIsLoggedHeader(true);
           setEmail(res.email);
           navigate('/', { replace: true })
         })
@@ -168,7 +164,6 @@ function App() {
   function handleSignOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('loggedIn');
-    // setIsVisibilityBurger(true);
     navigate('/', { replace: true });
     setIsLoggedIn(false);
     setEmail('');
@@ -208,7 +203,6 @@ function App() {
                 />
               }
             />
-            {/* <Route exact path="/movies" element={<ProtectedRoute isLoggedIn={isLoggedIn} element={Movies}} /> */}
             <Route
               exact
               path='/movies'
@@ -218,7 +212,6 @@ function App() {
                   component={Movies}
                   isOpenCardPopup={isOpenCardPopup}
                   onCardClick={handleOnCardClick}
-
                 />
               }
             />
@@ -228,7 +221,6 @@ function App() {
                 <ProtectedRoute
                   isLoggedIn={isLoggedIn}
                   component={SavesMovies}
-
                 />
               }
             />
@@ -250,11 +242,10 @@ function App() {
                 <NotFound />}
             />
           </Routes>
-
-          <MoviesCard
+          {/* <MoviesCard
             isOpen={isOpen}
             onClose={closeAllPopups}
-          />
+          /> */}
           {/* <InfoTooltip isOpen={isOpenInfoTooltip} onClose={closeAllPopups} success={success} /> */}
 
         </CurrentUserContext.Provider>
