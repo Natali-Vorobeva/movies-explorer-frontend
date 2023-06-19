@@ -1,5 +1,4 @@
 .not-found {
-  padding: 0 0 60px 0;
   max-width: 400px;
   height: 100vh;
   margin: 0 auto;
@@ -36,7 +35,7 @@
   line-height: 17px;
   color: #ff6838;
   transition: all .1s ease;
-  padding: 0 0 1px 0;
+  padding: 0 0 60px 0;
 }
 
 .not-found__link:hover {
