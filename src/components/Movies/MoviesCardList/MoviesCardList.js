@@ -26,7 +26,16 @@ function MoviesCardList(props) {
             <div className="gallery__time">1ч 42 м</div>
           </div>
           <div className="gallery__card-body">
-
+              <div className="gallery__poster">
+                <img className="gallery__img" src={imagePoster} alt="Постер фильма" />
+              </div>
+              <div className="gallery__label">
+                <p className="gallery__subtitle">Киноальманах Джей Харви: «100 лет дизайна»</p>
+                <p className="gallery__delete">+</p>
+              </div>
+              <div className="gallery__time">1ч 42 м</div>
+            </div>
+          <div className="gallery__card-body">
             <div className="gallery__poster">
               <img className="gallery__img" src={imagePoster} alt="Постер фильма" />
             </div>
