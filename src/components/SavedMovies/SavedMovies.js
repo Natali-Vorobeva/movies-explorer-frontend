@@ -5,9 +5,9 @@ import SearchForm from '../Movies/SearchForm/SearchForm';
 import Footer from '../Footer/Footer';
 
 import imagePoster from '../../images/pic__COLOR_pic.png';
-import imagePoster2 from '../../images/1489427938_neobychnye-fotografii-flatlandiya-1.jpg';
-import imagePoster3 from '../../images/1625178000_10-phonoteka-org-p-oboi-na-samsung-vertikalnie-oboi-krasivo-10.jpg';
-import imagePoster4 from '../../images/Flowers-1440x1280.jpg';
+// import imagePoster2 from '../../images/1489427938_neobychnye-fotografii-flatlandiya-1.jpg';
+// import imagePoster3 from '../../images/1625178000_10-phonoteka-org-p-oboi-na-samsung-vertikalnie-oboi-krasivo-10.jpg';
+// import imagePoster4 from '../../images/Flowers-1440x1280.jpg';
 
 function SavedMovies() {
   return (

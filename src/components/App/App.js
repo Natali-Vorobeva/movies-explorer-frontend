@@ -18,7 +18,6 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 import * as auth from '../../auth.js';
 
-
 function App() {
 
   const [currentUser, setCurrentUser] = useState({
@@ -115,7 +114,6 @@ function App() {
         .checkToken(token)
         .then((res) => {
           setIsLoggedIn(true);
-          // setIsLoggedHeader(true);
           setEmail(res.email);
           navigate('/', { replace: true })
         })
@@ -149,7 +147,6 @@ function App() {
   function handleSignOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('loggedIn');
-    // setIsVisibilityBurger(true);
     navigate('/', { replace: true });
     setIsLoggedIn(false);
     setEmail('');
@@ -198,7 +195,6 @@ function App() {
                   component={Movies}
                   isOpenCardPopup={isOpenCardPopup}
                   onCardClick={handleOnCardClick}
-
                 />
               }
             />
@@ -208,7 +204,6 @@ function App() {
                 <ProtectedRoute
                   isLoggedIn={isLoggedIn}
                   component={SavesMovies}
-
                 />
               }
             />
@@ -230,11 +225,10 @@ function App() {
                 <NotFound />}
             />
           </Routes>
-
-          <MoviesCard
+          {/* <MoviesCard
             isOpen={isOpen}
             onClose={closeAllPopups}
-          />
+          /> */}
           {/* <InfoTooltip isOpen={isOpenInfoTooltip} onClose={closeAllPopups} success={success} /> */}
 
         </CurrentUserContext.Provider>
