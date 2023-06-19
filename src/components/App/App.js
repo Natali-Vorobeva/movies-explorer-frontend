@@ -11,7 +11,6 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Movies from '../Movies/Movies';
 import SavesMovies from '../SavedMovies/SavedMovies';
-// import MoviesCard from '../MoviesCard/MoviesCard';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import MoviesCard from '../MoviesCard/MoviesCard';
@@ -111,7 +110,6 @@ function App() {
 
   function handleToken() {
     const token = localStorage.getItem('token');
-    // const loggedIn = localStorage.getItem('loggedIn');
     if (token) {
       auth
         .checkToken(token)
@@ -127,24 +125,7 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  // 	if (isLoggedIn) {
-  // 		Promise.all([
-  // 			mainApi.getUserInfo()
-  // 			// moviesApi.getInitialMovies()
-  // 		])
-  // 			.then(([me]) => {
-  // 				setCurrentUser(me);
-  // 				// setCards(cards);
-  // 				// setIsVisibilityBurger(true);
-  // 			})
-  // 			.catch((err) => {
-  // 				console.log(err);
-  // 			})
-  // 	}
-  // }, [isLoggedIn]);
-
-  function UserInfo() {
+ function UserInfo() {
     mainApi.getUserInfo()
       .then((userData) => {
         setCurrentUser(userData);
@@ -208,7 +189,6 @@ function App() {
                 />
               }
             />
-            {/* <Route exact path="/movies" element={<ProtectedRoute isLoggedIn={isLoggedIn} element={Movies}} /> */}
             <Route
               exact
               path='/movies'
@@ -259,8 +239,6 @@ function App() {
 
         </CurrentUserContext.Provider>
       </div>
-
-
     </>
   );
 }

@@ -1,5 +1,4 @@
 export const BASE_URL = 'https://api.portfolio-vorobeva.nomoredomains.rocks';
-// export const BASE_URL = 'https://auth.nomoreparties.co';
 
 const checkResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
