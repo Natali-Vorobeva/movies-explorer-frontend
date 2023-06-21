@@ -133,6 +133,52 @@ function App() {
         console.log(err.message)
       })
   };
+  const [loading, setLoading] =  useState(false);
+  // todo movies handlers
+  function handleGetMovies(inputSearch, isShortFilms) {
+    setLoading(true);
+    moviesApi.getApiMovies()
+    .then((movies) => {
+      console.log(movies);
+      const searchedMovies = movies.filter((item) => item.nameRU.toLowerCase().includes(inputSearch.toLowerCase()));
+      const foundMovies = isShortFilms ? searchedMovies.filter((item) => item.duration <= 40) : searchedMovies;
+      localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+      localStorage.setItem('searchInputSearch', inputSearch);
+      localStorage.setItem('shortFilms', isShortFilms);
+      setLoading(false);
+      // handleResize();
+    })
+    .catch((err) => {
+      console.log(err.message);
+      setLoading(false);
+      // setServerError(true);
+    })
+};
+
+// function handleResize() {
+//   const foundMovies = JSON.parse(localStorage.getItem('foundMovies'))
+//   if (foundMovies === null) {
+//     return
+//   }
+//   if (windowWidth >= 1280) {
+//     setMovies(foundMovies.slice(0, 12))
+//     setMoreCards(3)
+//   } else if (windowWidth > 480 && windowWidth < 1280) {
+//     setMovies(foundMovies.slice(0, 8))
+//     setMoreCards(2)
+//   } else if (windowWidth <= 480) {
+//     setMovies(foundMovies.slice(0, 5))
+//     setMoreCards(2)
+//   }
+// }
+
+function handleSearch(inputSearch, isShortFilms) {
+  handleGetMovies(inputSearch, isShortFilms)
+}
+
+  function handleGetMoviesSwitch() {}
+  function filmsSwitch() {}
+  function filmsInputSearch() {}
 
   function handleOnCardClick() {
     setIsOpen(true);
@@ -202,6 +248,12 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   isOpenCardPopup={isOpenCardPopup}
                   onCardClick={handleOnCardClick}
+                  handleSearch={handleSearch}
+                  handleGetMoviesSwitch={handleGetMoviesSwitch}
+                  filmsSwitch={filmsSwitch}
+                  filmsInputSearch={filmsInputSearch}
+                  defaultSearchValue={localStorage.getItem('inputSearchMovieName') || ""}
+                  loading={loading}
                 />
               }
             />

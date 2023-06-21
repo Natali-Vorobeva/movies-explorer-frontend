@@ -5,7 +5,9 @@ import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies({ onCardClick, email }) {
+function Movies({
+  onCardClick, email, 
+  defaultSearchValue, handleSearch }) {
 
   return (
     <>
@@ -16,7 +18,14 @@ function Movies({ onCardClick, email }) {
         email={email}
       />
       <section className="movies">
-        <SearchForm />
+        <SearchForm
+          handleSearch={handleSearch}
+          // handleGetMovies={handleGetMovies}
+          // handleGetMoviesSwitch={handleGetMoviesSwitch}
+          // filmsSwitch={filmsSwitch}
+          // filmsInputSearch={filmsInputSearch}
+          defaultValue={defaultSearchValue}
+        />
         <MoviesCardList
           onCardClick={onCardClick}
         />

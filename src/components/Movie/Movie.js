@@ -3,49 +3,65 @@ import React from 'react';
 // import dislikeBtn from './../images/add-favorites.svg';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Movie({ movie,
+function Movie(props
+  // { movie,
 
 
   // * обратить внимание на movieId
 
-  movieId,
-  onMovieClick, onCardLike, onCardDeleteClick,
-  image, description, duration
-}) {
+//   movieId,
+//   onMovieClick, onCardLike, onCardDeleteClick,
+//   image, description, duration
+// }
+)
+{
 
-  const currentUser = React.useContext(CurrentUserContext);
-  const isOwn = movie.owner._id === currentUser._id;
-  const isLiked = movie.likes.some(i => i._id === currentUser._id);
+  const image = props.isOnlySaved ? props.movie.image : `https://api.nomoreparties.co/${props.movie.image.url}`
+  const trailerLink = props.movie.trailerLink
 
   const handleClick = () => {
-    onMovieClick(movie);
+    props.onMovieClick(props.movie);
   }
 
   const handleLikeClick = () => {
-    onCardLike(movie);
-  }
+    props.onCardLike(props.movie);
+  };
+
+  const duration = () => {
+    if (props.movie.duration > 60) {
+      return (props.movie.duration / 60 | 0) + "ч " + props.movie.duration % 60 + "м"
+    }
+    if (props.movie.duration === 60) {
+      return (props.movie.duration / 60) + "ч"
+    } else {
+      return props.movie.duration + "м"
+    };
+  };
+
+  function onMovieLike() {
+    props.onCardSave(props.movie);
+  };
 
   const handleDeleteClick = () => {
-    onCardDeleteClick(movie);
+    props.onCardDeleteClick(props.movie);
   }
 
-// !!! Доделать карточку для saved-movies !!!
+  // !!! Доделать карточку для saved-movies !!!
   return (
     <div className="gallery__card-body">
-      {
-        isOwn &&
-        <div className="gallery__card-body">
-              <div className="gallery__poster">
-                <img className="gallery__img" src={image} alt="Постер фильма" />
-              </div>
-              <div className="gallery__label">
-                <p className="gallery__subtitle">{description }</p>
-                <p className="gallery__liked">{onCardLike}</p>
-              </div>
-              <div className="gallery__time">{duration}</div>
-            </div>
-      }
+      <div className="gallery__poster">
+      <a className="movie__trailer" href={trailerLink} rel="noreferrer" target="_blank">
+        <img className="gallery__img" src={props.image} alt="Постер фильма" />
+      </a>
+      </div>
+      <div className="gallery__label">
+        <p className="gallery__subtitle">{props.description}</p>
+        <p className="gallery__liked">{onMovieLike}</p>
+      </div>
+      <div className="gallery__time">{duration}</div>
     </div>
+
+
   )
 }
 

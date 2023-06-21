@@ -29,14 +29,6 @@ class MainApi {
   }
 
 
-  getMovies() {
-    return fetch(`${this._address}/movies`, {
-      headers: this._headers,
-      credentials: 'include',
-    })
-      .then(this._checkResponseStatus);
-  }
-
   addMovie(movie) {
     return fetch(`${this._address}/movies`, {
       method: 'POST',
