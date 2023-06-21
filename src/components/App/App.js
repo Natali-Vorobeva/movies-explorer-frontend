@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { mainApi } from '../../utils/MainApi';
 import { moviesApi } from '../../utils/MoviesApi';
@@ -13,22 +13,10 @@ import Movies from '../Movies/Movies';
 import SavesMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
-import MoviesCard from '../MoviesCard/MoviesCard';
-import InfoTooltip from '../InfoTooltip/InfoTooltip';
-
 import * as auth from '../../auth.js';
 
 function App() {
-
-  const [currentUser, setCurrentUser] = useState({
-    "name": '',
-    "email": '',
-    "password": '',
-    "_id": ''
-  });
-  const [movies, setMovies] = useState([]);
-
-
+  const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
   const [isOpenCardPopup, setIsOpenCardPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -43,24 +31,19 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [isLoggedHeader, setIsLoggedHeader] =  useState(false);
 
-
-
-  // !!! Доработать ${ name }
-
-  function handleRegister(name, email, password) {
+  function handleRegister(values) {
+    const { name, email, password } = values;
+    console.log(values);
     auth.register(name, email, password)
-      .then((data) => {
-        console.log(data);
+      .then((user) => {
+        console.log(user);
+        setCurrentUser(user);
+        console.log(currentUser);
+        // setIsLoggedIn(true);
         // setIsVisibilityBurger(false);
-        if (data) {
-          //   setSuccess({
-          //     status: true,
-          //     text: "Вы успешно зарегистрировались!",
-          //   });
-
+        if (user) {
           navigate('/signin', { replace: true });
-          setName(data.name);
-          return;
+          // setName(data.name);
         }
       })
       .catch(() => {
@@ -76,6 +59,7 @@ function App() {
 
   function handleLogin(values) {
     const { email, password } = values;
+    console.log(values);
     auth
       .authorize(email, password)
       .then((res) => {
@@ -102,20 +86,38 @@ function App() {
       })
   }
 
+  const location = useLocation();
+
+  // useEffect(() => {
+  //   const path = location.pathname;
+  //   mainApi.getUserInfo()
+  //   .then((userData) => {
+  //     // setIsLoggedIn(true);
+  //     navigate(path, { replace: true });
+  //     setCurrentUser(userData);
+  //     // getSavedMovies()
+  //   })
+  //   .catch((err) => {
+  //     console.log(err.message)
+  //   })
+  // });
+
+
   useEffect(() => {
     handleToken();
   }, []);
 
-
   function handleToken() {
     const token = localStorage.getItem('token');
+    const path = location.pathname;
     if (token) {
       auth
         .checkToken(token)
         .then((res) => {
           setIsLoggedIn(true);
           setEmail(res.email);
-          navigate('/', { replace: true })
+          setName(res.name);
+          navigate(path);
         })
         .catch(err => {
           console.log(err);
@@ -123,10 +125,9 @@ function App() {
     }
   };
 
- function UserInfo() {
+  function UserInfo() {
     mainApi.getUserInfo()
       .then((userData) => {
-        setCurrentUser(userData);
       })
       .catch((err) => {
         console.log(err.message)
@@ -145,14 +146,21 @@ function App() {
   };
 
   function handleSignOut() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('loggedIn');
+    const token = localStorage.removeItem('token');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('isAuth');
+    // localStorage.removeItem('saved-movies');
+    // localStorage.removeItem('found-movies');
+    // localStorage.removeItem('isShort');
+    // localStorage.removeItem('isShortInSaves');
+    // localStorage.removeItem('movies');
     navigate('/', { replace: true });
     setIsLoggedIn(false);
     setEmail('');
   }
 
   console.log(isLoggedIn);
+
   return (
     <>
       <div className="page__content">
@@ -179,9 +187,8 @@ function App() {
               path='/profile'
               element={
                 <ProtectedRoute
-                  isLoggedIn={isLoggedIn}
                   component={Profile}
-                  name={name}
+                  isLoggedIn={isLoggedIn}
                   onSignOut={handleSignOut}
                 />
               }
@@ -191,8 +198,8 @@ function App() {
               path='/movies'
               element={
                 <ProtectedRoute
-                  isLoggedIn={isLoggedIn}
                   component={Movies}
+                  isLoggedIn={isLoggedIn}
                   isOpenCardPopup={isOpenCardPopup}
                   onCardClick={handleOnCardClick}
                 />
@@ -202,8 +209,8 @@ function App() {
               path='/saved-movies'
               element={
                 <ProtectedRoute
-                  isLoggedIn={isLoggedIn}
                   component={SavesMovies}
+                  isLoggedIn={isLoggedIn}
                 />
               }
             />
@@ -225,12 +232,6 @@ function App() {
                 <NotFound />}
             />
           </Routes>
-          {/* <MoviesCard
-            isOpen={isOpen}
-            onClose={closeAllPopups}
-          /> */}
-          {/* <InfoTooltip isOpen={isOpenInfoTooltip} onClose={closeAllPopups} success={success} /> */}
-
         </CurrentUserContext.Provider>
       </div>
     </>

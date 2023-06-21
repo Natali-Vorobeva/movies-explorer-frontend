@@ -1,16 +1,26 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router";
+import { useForm } from '../../utils/useForm';
+import { mainApi } from '../../utils/MainApi';
+import * as auth from '../../auth';
 
-function Login({ onMain, buttonText, formText, formLinkText, onLogin }) {
-  let title = 'Что-то пошло не так...';
+function Login({ onMain, formText, formLinkText, onLogin }) {
+  const navigate = useNavigate()
+  const { handleChange, values, errors, isValid, setIsValid } = useForm();
+  const [error, setError] = useState('');
 
-  const [values, setValues] = useState({});
+  // const [values, setValues] = useState({});
 
-  const handleChange = (evt) => {
-    const { value, name } = evt.target;
-    setValues({ ...values, [name]: value });
-  };
+  // const handleChange = (evt) => {
+  //   const { value, name } = evt.target;
+  //   setValues({ ...values, [name]: value });
+  // };
+
+
+
+
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -25,30 +35,34 @@ function Login({ onMain, buttonText, formText, formLinkText, onLogin }) {
       </div>
       <h2 className="greeting">Рады видеть!</h2>
       <form action="#"
-        onSubmit={handleSubmit}
-        className="form" autoComplete="off">
+        noValidate
+        onSubmit={ handleSubmit }
+        className="form"
+        >
         <div className="form__input-container" >
           <label className="form__label" htmlFor="email">E-mail</label>
           <input
             id="email" type="email" name="email"
-            title={title}
-            placeholder="Email" className="form__input form__input_data_email"
-            required autoComplete="off"
+            placeholder="Email"
+            className={ `form__input ${ errors.email && 'form__input_status_error' }` }
+            // "form__input form__input_data_email"
+            required
             value={values.email || ''}
             onChange={handleChange}
           />
-          <span className="email-input-error form__input-error">{title}</span>
+          <span className="email-input-error form__input-error">{errors.email}</span>
 
           <label className="form__label" htmlFor="password">Пароль</label>
           <input
             id="password" type="password"
-            title={title}
-            placeholder="Пароль" name="password" className="form__input form__input_data_password"
+            placeholder="Пароль" name="password"
+            className={ `form__input ${ errors.password && 'form__input_status_error' }` }
+            // "form__input form__input_data_password"
             required autoComplete="off"
             value={values.password || ''}
             onChange={handleChange}
           />
-          <span className="password-input-error form__input-error">{title}</span>
+          <span className="password-input-error form__input-error">{errors.password}</span>
         </div>
         <button
           type="submit"

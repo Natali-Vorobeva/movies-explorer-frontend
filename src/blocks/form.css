@@ -41,6 +41,10 @@
   border-bottom: 1px solid #ff6838;
 }
 
+.form__input_status_error {
+  
+}
+
 .form__input_type_profile {
   text-align: right;
 }
@@ -70,18 +74,6 @@
 
 .form__input:focus {
   outline: none;
-}
-
-.form__input_data_username {
-
-}
-
-.form__input_data_email {
-
-}
-
-.form__input_data_password {
-
 }
 
 .form__save {

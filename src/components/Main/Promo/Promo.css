@@ -47,9 +47,8 @@
   }
 
   .promo__title {
-    opacity: 0.48;
     font-size: 40px;
-line-height: 50px;
+    line-height: 50px;
   }
 
   .promo__main-text {

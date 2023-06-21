@@ -7,7 +7,7 @@ function Movie({ movie,
 
 
   // * обратить внимание на movieId
-  
+
   movieId,
   onMovieClick, onCardLike, onCardDeleteClick,
   image, description, duration
