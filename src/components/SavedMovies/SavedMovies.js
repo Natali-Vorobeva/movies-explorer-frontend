@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Header from '../Header/Header';
 import SearchForm from '../Movies/SearchForm/SearchForm';
 import Footer from '../Footer/Footer';
 
 import imagePoster from '../../images/pic__COLOR_pic.png';
-// import imagePoster2 from '../../images/1489427938_neobychnye-fotografii-flatlandiya-1.jpg';
-// import imagePoster3 from '../../images/1625178000_10-phonoteka-org-p-oboi-na-samsung-vertikalnie-oboi-krasivo-10.jpg';
-// import imagePoster4 from '../../images/Flowers-1440x1280.jpg';
 
-function SavedMovies() {
+function SavedMovies(props) {
+  const [filteredMovies, setFilteredMovies] = useState([]);
+
+  function handleSearch(movieName, isShortFilms) {
+    const filteredMovies = props.cards.filter((item) => item.nameRU.toLowerCase().includes(movieName.toLowerCase()));
+    if (isShortFilms) {
+      setFilteredMovies(filteredMovies.filter((item) => item.duration <= 40));
+    }
+    else {
+      setFilteredMovies(filteredMovies);
+    }
+  };
+
+  function initFilteredMovies() {
+    setFilteredMovies(props.cards);
+  }
+
+  useEffect(() => {
+    setFilteredMovies(
+      filteredMovies.filter(movie => props.cards.some(card => movie.movieId === card.movieId))
+    )
+  }, [props.cards]);
+
+  useEffect(() => {
+    initFilteredMovies()
+  }, []);
+
   return (
     <>
       <Header
@@ -18,7 +41,10 @@ function SavedMovies() {
         noActiveSavedFilmsLink={'no-active-nav-link'}
       />
       <section className="saved-movies">
-        <SearchForm />
+        <SearchForm
+          handleSearch={handleSearch}
+          defaultValue=""
+        />
         <div className="saved-movies container">
           <div className="gallery gallery_size_saved-movies">
             <div className="gallery__card-body">

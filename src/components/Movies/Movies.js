@@ -5,9 +5,7 @@ import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies({
-  onCardClick, email, 
-  defaultSearchValue, handleSearch }) {
+function Movies(props) {
 
   return (
     <>
@@ -15,19 +13,22 @@ function Movies({
         onDisplayMain={'visibility'}
         noActiveFilmsLink={'no-active-nav-link'}
         onActiveLinkFilms={'active'}
-        email={email}
+        email={props.email}
       />
       <section className="movies">
         <SearchForm
-          handleSearch={handleSearch}
-          // handleGetMovies={handleGetMovies}
-          // handleGetMoviesSwitch={handleGetMoviesSwitch}
-          // filmsSwitch={filmsSwitch}
-          // filmsInputSearch={filmsInputSearch}
-          defaultValue={defaultSearchValue}
+          handleSearch={props.handleSearch}
+          defaultValue={props.defaultSearchValue}
         />
         <MoviesCardList
-          onCardClick={onCardClick}
+          cards={props.cards}
+          handleShowMore={props.handleShowMore}
+          isSaved={props.isSaved}
+          isOnlySaved={false}
+          onCardSave={props.onCardSave}
+          onCardDelete={props.onCardDelete}
+          serverError={props.serverError}
+          loading={props.loading}
         />
       </section >
       <Footer />

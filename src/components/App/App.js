@@ -16,8 +16,11 @@ import NotFound from '../NotFound/NotFound';
 import * as auth from '../../auth.js';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [currentUser, setCurrentUser] = useState({});
+
   const [isOpenCardPopup, setIsOpenCardPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [success, setSuccess] = useState({
@@ -29,7 +32,13 @@ function App() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [isLoggedHeader, setIsLoggedHeader] =  useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [movies, setMovies] = useState([]);
+  const [moreCards, setMoreCards] = useState(0);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState(false);
+
 
   function handleRegister(values) {
     const { name, email, password } = values;
@@ -39,11 +48,8 @@ function App() {
         console.log(user);
         setCurrentUser(user);
         console.log(currentUser);
-        // setIsLoggedIn(true);
-        // setIsVisibilityBurger(false);
         if (user) {
           navigate('/signin', { replace: true });
-          // setName(data.name);
         }
       })
       .catch(() => {
@@ -68,6 +74,7 @@ function App() {
           setIsLoggedIn(true);
           setEmail(email);
           navigate('/movies', { replace: true });
+          getUserInfo();
         }
       })
       .catch((res) => {
@@ -85,23 +92,6 @@ function App() {
         setOpenInfoTooltip(true);
       })
   }
-
-  const location = useLocation();
-
-  // useEffect(() => {
-  //   const path = location.pathname;
-  //   mainApi.getUserInfo()
-  //   .then((userData) => {
-  //     // setIsLoggedIn(true);
-  //     navigate(path, { replace: true });
-  //     setCurrentUser(userData);
-  //     // getSavedMovies()
-  //   })
-  //   .catch((err) => {
-  //     console.log(err.message)
-  //   })
-  // });
-
 
   useEffect(() => {
     handleToken();
@@ -125,64 +115,118 @@ function App() {
     }
   };
 
-  function UserInfo() {
+  // function UserInfo() {
+  //   mainApi.getUserInfo()
+  //     .then((userData) => {
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message)
+  //     })
+  // };
+  function getUserInfo() {
     mainApi.getUserInfo()
       .then((userData) => {
+        setIsLoggedIn(true);
+        setCurrentUser(userData);
       })
       .catch((err) => {
-        console.log(err.message)
+        console.log(err.message);
       })
-  };
-  const [loading, setLoading] =  useState(false);
+  }
+
   // todo movies handlers
   function handleGetMovies(inputSearch, isShortFilms) {
     setLoading(true);
     moviesApi.getApiMovies()
-    .then((movies) => {
-      console.log(movies);
-      const searchedMovies = movies.filter((item) => item.nameRU.toLowerCase().includes(inputSearch.toLowerCase()));
-      const foundMovies = isShortFilms ? searchedMovies.filter((item) => item.duration <= 40) : searchedMovies;
-      localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-      localStorage.setItem('searchInputSearch', inputSearch);
-      localStorage.setItem('shortFilms', isShortFilms);
-      setLoading(false);
-      // handleResize();
-    })
-    .catch((err) => {
-      console.log(err.message);
-      setLoading(false);
-      // setServerError(true);
-    })
-};
+      .then((movies) => {
+        console.log(movies);
+        const searchedMovies = movies.filter((item) => item.nameRU.toLowerCase().includes(inputSearch.toLowerCase()));
+        const foundMovies = isShortFilms ? searchedMovies.filter((item) => item.duration <= 40) : searchedMovies;
+        localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+        localStorage.setItem('inputSearchMovieName', inputSearch);
+        localStorage.setItem('shortFilms', isShortFilms);
+        setLoading(false);
+        handleResize();
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setLoading(false);
+        setServerError(true);
+      })
+  };
 
-// function handleResize() {
-//   const foundMovies = JSON.parse(localStorage.getItem('foundMovies'))
-//   if (foundMovies === null) {
-//     return
-//   }
-//   if (windowWidth >= 1280) {
-//     setMovies(foundMovies.slice(0, 12))
-//     setMoreCards(3)
-//   } else if (windowWidth > 480 && windowWidth < 1280) {
-//     setMovies(foundMovies.slice(0, 8))
-//     setMoreCards(2)
-//   } else if (windowWidth <= 480) {
-//     setMovies(foundMovies.slice(0, 5))
-//     setMoreCards(2)
-//   }
-// }
 
-function handleSearch(inputSearch, isShortFilms) {
-  handleGetMovies(inputSearch, isShortFilms)
-}
+  function handleResize() {
+    const foundMovies = JSON.parse(localStorage.getItem('foundMovies'));
+    if (foundMovies === null) {
+      return;
+    };
+    if (windowWidth >= 1280) {
+      setMovies(foundMovies.slice(0, 12));
+      setMoreCards(3);
+    } else if (windowWidth > 480 && windowWidth < 1280) {
+      setMovies(foundMovies.slice(0, 8));
+      setMoreCards(2);
+    } else if (windowWidth <= 480) {
+      setMovies(foundMovies.slice(0, 5));
+      setMoreCards(2);
+    }
+  }
 
-  function handleGetMoviesSwitch() {}
-  function filmsSwitch() {}
-  function filmsInputSearch() {}
+  function handleSearch(inputSearch, isShortFilms) {
+    handleGetMovies(inputSearch, isShortFilms)
+  }
+
+  function checkWindowWidth() {
+    setWindowWidth(window.innerWidth);
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', checkWindowWidth)
+    handleResize()
+  }, [windowWidth]);
+
+  function handleShowMore() {
+    const foundMovies = localStorage.getItem('foundMovies');
+    setMovies(foundMovies.slice(0, movies.length + moreCards))
+  }
+
+
+  function handleGetMoviesSwitch() { }
+  function filmsSwitch() { }
+  function filmsInputSearch() { }
 
   function handleOnCardClick() {
     setIsOpen(true);
     setIsOpenCardPopup(true);
+  }
+
+
+  // ! Добавить addMovie
+  function handleCardSave(movie) {
+    mainApi.addMovie(movie)
+      .then((movieData) => {
+        setSavedMovies([...savedMovies, movieData])
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }
+
+  function handleCardDelete(card) {
+    const deleteCard = savedMovies.find(c => c.movieId === (card.id || card.movieId) && c.owner === currentUser._id)
+    if (!deleteCard) return
+    mainApi.deleteMovie(deleteCard._id)
+      .then(() => {
+        setSavedMovies(savedMovies.filter(c => c._id !== deleteCard._id))
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }
+
+  function isSaved(card) {
+    return savedMovies.some(item => item.movieId === card.id && item.owner === currentUser._id)
   }
 
   function closeAllPopups() {
@@ -192,7 +236,7 @@ function handleSearch(inputSearch, isShortFilms) {
   };
 
   function handleSignOut() {
-    const token = localStorage.removeItem('token');
+    localStorage.removeItem('token');
     // localStorage.removeItem('token');
     // localStorage.removeItem('isAuth');
     // localStorage.removeItem('saved-movies');
@@ -245,14 +289,15 @@ function handleSearch(inputSearch, isShortFilms) {
               element={
                 <ProtectedRoute
                   component={Movies}
+                  cards={movies}
                   isLoggedIn={isLoggedIn}
-                  isOpenCardPopup={isOpenCardPopup}
-                  onCardClick={handleOnCardClick}
                   handleSearch={handleSearch}
-                  handleGetMoviesSwitch={handleGetMoviesSwitch}
-                  filmsSwitch={filmsSwitch}
-                  filmsInputSearch={filmsInputSearch}
                   defaultSearchValue={localStorage.getItem('inputSearchMovieName') || ""}
+                  handleShowMore={handleShowMore}
+                  isSaved={isSaved}
+                  onCardSave={handleCardSave}
+                  onCardDelete={handleCardDelete}
+                  serverError={serverError}
                   loading={loading}
                 />
               }
@@ -263,6 +308,11 @@ function handleSearch(inputSearch, isShortFilms) {
                 <ProtectedRoute
                   component={SavesMovies}
                   isLoggedIn={isLoggedIn}
+                  handleSearch={handleSearch}
+                  cards={savedMovies}
+                  isSaved={isSaved}
+                  onCardDelete={handleCardDelete}
+                  serverError={serverError}
                 />
               }
             />

@@ -19,7 +19,7 @@ class MainApi {
   //     .then(this._parseResponse);
   // }
 
-  getCurrentUser() {
+  getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: {
         'Content-Type': 'application/json'
@@ -30,7 +30,7 @@ class MainApi {
 
 
   addMovie(movie) {
-    return fetch(`${this._address}/movies`, {
+    return fetch(`${this._url}/movies`, {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
@@ -52,7 +52,7 @@ class MainApi {
   }
 
   deleteMovie(movieId) {
-    return fetch(`${this._address}/movies/${movieId}`, {
+    return fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: this._headers,
@@ -61,70 +61,18 @@ class MainApi {
   }
 }
 
-// Добавление новой карточки через попап
-// addCard(data) {
-//   return fetch(`${this._url}/cards`, {
-//     method: 'POST',
-//     headers: this._headers,
-//     body: JSON.stringify({
-//       name: data.name,
-//       link: data.link
-//     })
-//   })
-//     .then(this._parseResponse);
-// }
-
-// Удаление карточки
-// deleteCard(cardId) {
-//   return fetch(`${this._url}/movies/${cardId}`, {
-//     headers: this._headers,
-//     method: 'DELETE'
-//   })
-//     .then(this._parseResponse);
-// }
-
-// Ставим лайк карточке
-// setLike(cardId) {
-//   return fetch(`${this._url}/movies/${cardId}/likes`, {
-//     method: 'PUT',
-//     headers: this._headers
-//   })
-//     .then(this._parseResponse);
-// }
-
-// Удаляем лайк
-// deleteLike(cardId) {
-//   return fetch(`${this._url}/cards/${cardId}/likes`, {
-//     method: 'DELETE',
-//     headers: this._headers
-//   })
-//     .then(this._parseResponse);
-// }
-
-// changeLikeCardStatus(cardId, isLiked) {
-//   if (isLiked) {
-//     return this.setLike(cardId);
-//   } else {
-//     return this.deleteLike(cardId);
-//   }
-// }
-
-
-
 // Редактирование информации о пользователе через попап
-// editUserInfo({
-//   name, email
-// }) {
+// editUserInfo(name, email) {
 //   return fetch(`${this._url}/users`, {
 //     method: 'PATCH',
 //     headers: this._headers,
 //     body: JSON.stringify({
 //       name: name,
-//       email: email
+//       email: email;
 //     })
 //   })
 //     .then(this._parseResponse);
-// }
+// };
 
 
 export const mainApi = new MainApi({
