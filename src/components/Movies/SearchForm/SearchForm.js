@@ -9,6 +9,8 @@ function SearchForm({
   const [inputSearch, setInputSearch] = useState('');
   const [isSwitch, setIsSwitch] = useState(false);
 
+  const [filmsInputSearch, setFilmsInputSearch] = useState('');
+
   function handleInputChange(evt) {
     setInputSearch(evt.target.value);
   }
@@ -20,12 +22,6 @@ function SearchForm({
     handleSearch(inputSearch, isShortFilms);
   }
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-function handleResizeScreen() {
-
-}
-
   function handleSubmit(evt) {
     evt.preventDefault();
     handleSearch(inputSearch, isSwitch);
@@ -33,7 +29,7 @@ function handleResizeScreen() {
 
   useEffect(() => {
     setIsSwitch(defaultValue);
-    setInputSearch(localStorage.getItem('shortFilms') || '');
+    setInputSearch(localStorage.getItem('shortFilms') || false);
   }, []);
 
   return (
@@ -74,20 +70,6 @@ function handleResizeScreen() {
           <p className="search-form__text">Короткометражки</p>
         </div>
       </form>
-      {/* <div className="search-form__switch search-form__switch_style_mobile">
-        <div className="search-form__checkbox">
-          <input
-            className="search-form__checkbox-base"
-            id="toggle_switch-mobile" name="toggle_switch-mobile"
-            type="checkbox"
-            value={inputSearch || ''}
-            checked={isSwitch}
-            onChange={handleSwitchChange}
-          />
-          <label className="search-form__checkbox-switch-button" htmlFor="toggle_switch-mobile"></label>
-        </div>
-        <p className="search-form__text">Короткометражки</p>
-      </div> */}
     </div >
   )
 }

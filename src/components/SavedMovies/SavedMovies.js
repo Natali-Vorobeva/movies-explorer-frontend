@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import Header from '../Header/Header';
 import SearchForm from '../Movies/SearchForm/SearchForm';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-
-import imagePoster from '../../images/pic__COLOR_pic.png';
 
 function SavedMovies(props) {
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -46,8 +45,16 @@ function SavedMovies(props) {
           defaultValue=""
         />
         <div className="saved-movies container">
-          <div className="gallery gallery_size_saved-movies">
-            <div className="gallery__card-body">
+          <div className="gallery_size_saved-movies">
+          <MoviesCardList
+          cards={filteredMovies}
+          isSaved={props.isSaved}
+          isOnlySaved={true}
+          onCardDelete={props.onCardDelete}
+          serverError={props.serverError}
+          loading={props.loading}
+        />
+            {/* <div className="gallery__card-body">
               <div className="gallery__poster">
                 <img className="gallery__img" src={imagePoster} alt="Постер фильма" />
               </div>
@@ -56,7 +63,7 @@ function SavedMovies(props) {
                 <p className="gallery__delete">+</p>
               </div>
               <div className="gallery__time">1ч 42 м</div>
-            </div>
+            </div> */}
           </div>
         </div >
       </section >

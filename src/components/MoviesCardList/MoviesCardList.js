@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import Movie from '../../Movie/Movie';
-import Preloader from '../Preloader/Preloader';
+import Movie from '../Movie/Movie';
+import Preloader from '../Movies/Preloader/Preloader';
 
 function MoviesCardList(props) {
   if (props.loading) return <Preloader />;

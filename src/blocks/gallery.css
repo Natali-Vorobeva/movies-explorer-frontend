@@ -72,15 +72,16 @@
   border-radius: 36px;
   margin: -4px 0 0 0;
   cursor: pointer;
+  border: none;
 }
 
 .gallery__like::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
+  top: 8px;
+  left: 7px;
+  width: 10px;
+  height: 10px;
   background: url('../images/icons/hearth-white.svg') center no-repeat;
 }
 
@@ -92,15 +93,16 @@
   border-radius: 36px;
   margin: -4px 0 0 0;
   cursor: pointer;
+  border: none;
 }
 
 .gallery__liked::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
+  top: 8px;
+  left: 7px;
+  width: 10px;
+  height: 10px;
   background: url('../images/icons/hearth-red.svg') center no-repeat;
 }
 
@@ -115,7 +117,6 @@
   align-items: center;
   transform: rotate(-45deg);
 }
-
 
 .gallery__time {
   font-weight: 400;

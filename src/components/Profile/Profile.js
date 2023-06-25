@@ -4,51 +4,39 @@ import { useNavigate } from "react-router";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useForm } from '../../utils/useForm';
 import { mainApi } from '../../utils/MainApi';
-import * as auth from '../../auth';
-
 
 import Header from '../Header/Header';
 
-function Profile({ user, onSignOut }) {
+function Profile({ onHandleSubmit, onSignOut }) {
   const currentUser = React.useContext(CurrentUserContext);
   const navigate = useNavigate();
   const { handleChange, values, errors, isValid, setValues, setIsValid } = useForm();
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  // const [name, setName] = useState(currentUser.name);
+  const [name, setName] = useState('');
+  // const [email, setEmail] = useState(currentUser.email);
+  const [email, setEmail] = useState('');
 
-
-  // useEffect(() => {
-  //   setValues({name: user.name, email: user.email})
-  // }, [user]);
-
-  // useEffect(() => {
-  //   setSuccess(false)
-  //   if (values.name === user.name && values.email === user.email) {
-  //     setIsValid(false);
-  //   }
-  // }, [values]);
-
-  // const getErrorMassage = (err) => {
-  //   return err.json();
-  // }
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    setIsValid(false);
-    mainApi.updateCurrentUser({
-      email: values.email,
-      name: values.name
-    })
-      .then((user) => {
-        // updateUser(user);
-        setSuccess(true);
-      })
-      .catch(err => {
-        setIsValid(false);
-        // getErrorMassage(err)
-        //   .then(res => setError(res.validation ? res.validation.body.message : res.message))
-      })
+  function handleNameChange(evt) {
+    setName(evt.target.value);
   }
+
+  function handleEmailChange(evt) {
+    setEmail(evt.target.value);
+  }
+  
+  function handleEditUser(evt) {
+    evt.preventDefault();
+    onHandleSubmit({
+      name,
+      email: email,
+    });
+  }
+
+  useEffect(() => {
+    setName(currentUser.name);
+    setEmail(currentUser.email);
+  }, [currentUser]);
 
   return (
     <>
@@ -58,28 +46,32 @@ function Profile({ user, onSignOut }) {
       />
       <section className="profile">
         <div className="profile__container container">
-          <h2 className="profile__title">Привет, {user.name}!</h2>
+          <h2 className="profile__title">Привет, {name}!</h2>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleEditUser}
             className='form form_type_profile'
             noValidate
           >
-            <div className="form__input-container" >
+            <div className="form__input-container form__input-container_way_grid" >
               <div className="form__input-row">
-                <label className="form__label form__label_type_profile" htmlFor='name'>Имя</label>
+                <label className="form__label form__label_type_profile form__label_type_profile-name" htmlFor='name'>Имя</label>
                 <input
-                  id="username" type="text" name="name" className="form__input form__input_type_profile"
-                  placeholder={user.name} value={values.name || ''}
-                  onChange={handleChange}
+                  id="username" type="text" name="name" className="form__input form__input_type_profile form__input_type_profile-name"
+                  value={name}
+                  placeholder={name} 
+                  onChange={handleNameChange}
                   minLength='2' maxLength='30' required />
-                <span className="name-input-error form__input-error">{errors.name}</span>
+                <span className="name-input-error form__input-error form__input-error_type_profile-name">{errors.name}</span>
               </div>
               <div className="form__input-row">
                 <label className='form__label form__label_type_profile form__label_type_profile-email' htmlFor='email'>E-mail</label>
                 <input
-                  id="email" type="email" name="email" className="form__input form__input_type_profile form__label_type_profile-email form__input_data_email"
+                  id="email" type="email" name="email" className="form__input form__input_type_profile form__input_type_profile-email "
+                  placeholder={email} 
+                  value={email}
+                  onChange={handleEmailChange}
                   required autoComplete="off" />
-                <span className="email-input-error form__input-error">{errors.email}</span>
+                <span className="email-input-error form__input-error form__input-error_type_profile-email">{errors.email}</span>
               </div>
             </div>
             <button

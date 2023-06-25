@@ -13,14 +13,13 @@ import Movies from '../Movies/Movies';
 import SavesMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
-import * as auth from '../../auth.js';
+// import * as auth from '../../auth.js';
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [currentUser, setCurrentUser] = useState({});
-
   const [isOpenCardPopup, setIsOpenCardPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [success, setSuccess] = useState({
@@ -33,48 +32,51 @@ function App() {
   const [email, setEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [moreCards, setMoreCards] = useState(0);
   const [savedMovies, setSavedMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      mainApi.checkToken(token)
+        .then((res) => {
+          if (res) {
+            setIsLoggedIn(true);
+            navigate(location.pathname);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    } else {
 
-  function handleRegister(values) {
-    const { name, email, password } = values;
-    console.log(values);
-    auth.register(name, email, password)
-      .then((user) => {
-        console.log(user);
-        setCurrentUser(user);
-        console.log(currentUser);
-        if (user) {
-          navigate('/signin', { replace: true });
-        }
-      })
-      .catch(() => {
-        setSuccess({
-          status: false,
-          text: "Что-то пошло не так! Попробуйте ещё раз.",
-        });
-      })
-      .finally(() => {
-        setOpenInfoTooltip(true);
-      })
-  }
+    }
+  }, []);
 
-  function handleLogin(values) {
-    const { email, password } = values;
-    console.log(values);
-    auth
+  useEffect(() => {
+    isLoggedIn &&
+    mainApi.getUserInfo()
+    .then((user) => {
+      setCurrentUser(user);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  })
+
+  function handleLogin(email, password) {
+    mainApi
       .authorize(email, password)
       .then((res) => {
+        console.log(res);
         if (res.token) {
           localStorage.setItem('token', res.token);
           setIsLoggedIn(true);
-          setEmail(email);
+          // setEmail(email);
           navigate('/movies', { replace: true });
-          getUserInfo();
         }
       })
       .catch((res) => {
@@ -91,48 +93,64 @@ function App() {
         }
         setOpenInfoTooltip(true);
       })
-  }
-
-  useEffect(() => {
-    handleToken();
-  }, []);
-
-  function handleToken() {
-    const token = localStorage.getItem('token');
-    const path = location.pathname;
-    if (token) {
-      auth
-        .checkToken(token)
-        .then((res) => {
-          setIsLoggedIn(true);
-          setEmail(res.email);
-          setName(res.name);
-          navigate(path);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
   };
 
-  // function UserInfo() {
-  //   mainApi.getUserInfo()
-  //     .then((userData) => {
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message)
-  //     })
+  // useEffect(() => {
+  //   handleToken();
+  // }, []);
+
+  // function handleToken() {
+  //   const token = localStorage.getItem('token');
+  //   const path = location.pathname;
+  //   if (token) {
+  //     console.log(token);
+  //     mainApi
+  //       .checkToken(token)
+  //       .then((res) => {          
+  //         console.log(res);
+  //         // setCurrentUser(res);
+  //         setIsLoggedIn(true);
+  //         setEmail(res.email);
+  //         setName(res.name);
+  //         navigate(path);
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       })
+  //   }
   // };
-  function getUserInfo() {
-    mainApi.getUserInfo()
-      .then((userData) => {
-        setIsLoggedIn(true);
-        setCurrentUser(userData);
+
+  function handleSubmitUpdateUser(data) {
+    mainApi.updateUserInfo(data)
+      .then((updateUser) => {
+        setCurrentUser(updateUser);
       })
       .catch((err) => {
-        console.log(err.message);
+      });
+  };
+
+
+  function handleRegister({name, email, password}) {
+    // const { name, email, password } = values;
+    console.log(name);
+    mainApi.register({name, email, password})
+      .then((user) => {
+        console.log(user);        
+          navigate('/signin', { replace: true });        
       })
-  }
+      .catch(() => {
+        setSuccess({
+          status: false,
+          text: "Что-то пошло не так! Попробуйте ещё раз.",
+        });
+      })
+      .finally(() => {
+        setOpenInfoTooltip(true);
+      })
+  };
+
+
+
 
   // todo movies handlers
   function handleGetMovies(inputSearch, isShortFilms) {
@@ -250,6 +268,7 @@ function App() {
   }
 
   console.log(isLoggedIn);
+  console.log(currentUser);
 
   return (
     <>
@@ -279,6 +298,9 @@ function App() {
                 <ProtectedRoute
                   component={Profile}
                   isLoggedIn={isLoggedIn}
+                  name={name}
+                  email={email}
+                  onHandleSubmit={handleSubmitUpdateUser}
                   onSignOut={handleSignOut}
                 />
               }
