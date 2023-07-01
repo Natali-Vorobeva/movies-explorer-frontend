@@ -1,10 +1,15 @@
 import React from 'react';
 
-function Movie(props) {
-  const nameRu = props.card.nameRU;
-  const image = props.isOnlySaved ? props.card.image : `https://api.nomoreparties.co/${props.card.image.url}`;
-  const trailerLink = props.card.trailerLink;
+import { useMovies } from '../../hooks/useMovies';
 
+function Movie(props) {
+
+  // const { movies } = useMovies();
+  const nameRu = props.card.nameRU;
+  const image = props.card.image;
+  // const image = props.isOnlySaved ? props.card.image : `https://api.nomoreparties.co/${props.card.image.url}`;
+  const trailerLink = props.card.trailerLink;
+  console.log(props.card.image);
   const duration = () => {
     if (props.card.duration > 60) {
       return (props.card.duration / 60 | 0) + "ч " + props.card.duration % 60 + "м"
@@ -23,17 +28,17 @@ function Movie(props) {
   function handleCardDelete() {
     props.onCardDelete(props.card)
   };
-  
+
   return (
     <div className="gallery__card-body">
       <div className="gallery__poster">
-      <a className="movie__trailer" href={trailerLink} rel="noreferrer" target="_blank">
-        <img className="gallery__img" src={image} alt="Постер фильма" />
-      </a>
+        <a className="movie__trailer" href={trailerLink} rel="noreferrer" target="_blank">
+          <img className="gallery__img" src={image} alt="Постер фильма" />
+        </a>
       </div>
 
 
-{/* ! Этот ког вместо gallery__liked/ Его нужно адаптировать */}
+      {/* ! Этот ког вместо gallery__liked/ Его нужно адаптировать */}
 
 
 
@@ -42,7 +47,7 @@ function Movie(props) {
         {props.isOnlySaved ? <button className="gallery__delete" onClick={handleCardDelete} type="button"></button> :
           (props.isSaved(props.card) ? <button className="gallery__like" onClick={handleCardDelete} type="button"></button> :
             <button className="gallery__like" onClick={handleCardSave} type="button"></button>)
-            }
+        }
         {/* <p className="gallery__liked">{}</p> */}
       </div>
       <div className="gallery__time">{duration()}</div>

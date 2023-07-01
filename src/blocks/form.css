@@ -50,7 +50,7 @@
 .form__input-row {
   display: grid;
   grid-template-columns: 30px 1fr;
-  grid-template-rows: 27px minmax(0 27px);
+  grid-template-rows: 27px minmax(8px, 15px);
   grid-template-areas: 
   'label input'
   '. error';
@@ -116,6 +116,27 @@
   outline: none;
 }
 
+.form__success {
+  position: absolute;
+  width: 100%;
+  margin: -30px 0 0 0;
+  text-align: center; 
+  font-size: 13px;  
+}
+
+.form__success_type_profile {
+  color: #465dff;
+}
+
+.form__info {
+  position: absolute;
+  width: 100%;
+  margin: -25px 0 0 0;
+  text-align: center; 
+  font-size: 13px;
+  color: #465dff;
+}
+
 .form__save {
   width: 100%;
   margin: 135px 0 0 0;
@@ -138,6 +159,8 @@
 }
 
 .form__save_type_profile {
+  position: relative;
+  border: 1px solid #000;
   margin: 220px 0 0 0;
   color: #000;
   background: #fff;
@@ -150,6 +173,19 @@
 
 .form__save_type_profile:focus {
   outline: 1px solid #ff6838;
+}
+
+.form__button_disable {
+  background: #c0bdbd;
+  opacity: .7;
+  pointer-events: none;
+  cursor: auto;
+}
+
+.form__button_type-profile_disable {
+  cursor: auto;
+  color: #d3d1d1;
+  pointer-events: none;
 }
 
 .form__edit {

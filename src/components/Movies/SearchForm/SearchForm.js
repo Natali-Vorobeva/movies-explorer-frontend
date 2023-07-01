@@ -1,57 +1,56 @@
 import React, { useState, useEffect } from 'react';
 
+import { useMovies } from '../../../hooks/useMovies';
+import { useLocalStorageJson, useLocalStorage } from '../../../hooks/useLocalStorage';
 import searchButton from '../../../images/icons/search-white.svg';
 import searchIcon from '../../../images/icons/search-icon-gray.svg';
 
-function SearchForm({
-  handleSearch, defaultValue
-}) {
-  const [inputSearch, setInputSearch] = useState('');
-  const [isSwitch, setIsSwitch] = useState(false);
+function SearchForm() {
 
-  const [filmsInputSearch, setFilmsInputSearch] = useState('');
+  
+  const {search, shortMovies, handleSetSearch,
+    handleSetShortMovies,
+    filteredMovies, initMovies,
+  } = useMovies();
 
-  function handleInputChange(evt) {
-    setInputSearch(evt.target.value);
-  }
+  let searchData = search;
+  let shortMoviesData = shortMovies;
 
-  function handleSwitchChange(evt) {
-    const isShortFilms = evt.target.checked;
-    setIsSwitch(isShortFilms);
-    console.log(isSwitch);
-    handleSearch(inputSearch, isShortFilms);
-  }
+  const [movies, setMovies] = useLocalStorageJson([], 'initMovies');
+  const [filteredMoviesList, setFilteredMoviesList] = useLocalStorageJson([], 'filteredMoviesList');
+  const [searchText, setSearchText] = useLocalStorage('', 'search');
+  const [shortMoviesInfo, setShortMoviesInfo] = useLocalStorage('', 'shortMovies');
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    handleSearch(inputSearch, isSwitch);
-  };
+    setMovies(initMovies);
+    setFilteredMoviesList(filteredMovies);
+    setSearchText(searchData);
+    setShortMoviesInfo(shortMoviesData);
+     };
 
-  useEffect(() => {
-    setIsSwitch(defaultValue);
-    setInputSearch(localStorage.getItem('shortFilms') || false);
-  }, []);
-
+  
   return (
     <div className="search-form container">
       <form className="search-form__flex-container">
         <div className="search-form__input-row">
-        <img src={searchIcon} alt="Поиск" className="search-form__icon" />
-        <input
-          id="search-form"
-          placeholder="Фильм"
-          type="text" name="search-form"
-          className="search-form__input"
-          value={inputSearch || ''}
-          onChange={handleInputChange}
-          required
-        />
-        <button
-          className="search-form__button"
-          type="submit"
-          onClick={handleSubmit}>
-          <img src={searchButton} alt="Поиск" className="search-form__button-img" />
-        </button>
+          <img src={searchIcon} alt="Поиск" className="search-form__icon" />
+          <input
+            id="search-form"
+            placeholder="Фильм"
+            type="text" name="search-form"
+            className="search-form__input"
+            value={searchData}
+            onChange={handleSetSearch}
+            required
+          />
+          <button
+            className="search-form__button"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            <img src={searchButton} alt="Поиск" className="search-form__button-img" />
+          </button>
         </div>
 
         <div className="search-form__switch">
@@ -61,9 +60,9 @@ function SearchForm({
               id="toggle_switch-desktop"
               name="toggle_switch-desktop"
               type="checkbox"
-              value={inputSearch || ''}
-              // checked={isSwitch}
-              onChange={handleSwitchChange}
+              value={shortMovies}
+              checked={shortMovies}
+              onChange={handleSetShortMovies}
             />
             <label className="search-form__checkbox-switch-button" htmlFor="toggle_switch-desktop"></label>
           </div>

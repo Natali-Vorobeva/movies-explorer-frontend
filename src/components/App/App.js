@@ -4,7 +4,9 @@ import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { mainApi } from '../../utils/MainApi';
 import { moviesApi } from '../../utils/MoviesApi';
+import { useMovies } from '../../hooks/useMovies';
 import ProtectedRoute from '../../utils/ProtectedRoute';
+import { useLocalStorageJson, useGetLocalStorage } from '../../hooks/useLocalStorage';
 
 import Main from '../Main/Main';
 import Register from '../Register/Register';
@@ -13,20 +15,14 @@ import Movies from '../Movies/Movies';
 import SavesMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
-// import * as auth from '../../auth.js';
+
 
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
-
   const [currentUser, setCurrentUser] = useState({});
   const [isOpenCardPopup, setIsOpenCardPopup] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [success, setSuccess] = useState({
-    status: false,
-    text: ''
-  });
-  const [isOpenInfoTooltip, setOpenInfoTooltip] = useState(false);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -35,9 +31,12 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [moreCards, setMoreCards] = useState(0);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
 
+  const { handleSetSearch, setHandleSetSearch, filteredMovies } = useMovies();
+
+  // const { movies: filteredMovies } = useMovies();
+//
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -46,6 +45,8 @@ function App() {
           if (res) {
             setIsLoggedIn(true);
             navigate(location.pathname);
+            setCurrentUser(res);
+            setEmail(res.email)
           }
         })
         .catch((error) => {
@@ -58,124 +59,52 @@ function App() {
 
   useEffect(() => {
     isLoggedIn &&
-    mainApi.getUserInfo()
-    .then((user) => {
-      setCurrentUser(user);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  })
+      mainApi.getUserInfo()
+        .then((user) => {
+          setCurrentUser(user);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+  }, []);
 
   function handleLogin(email, password) {
     mainApi
       .authorize(email, password)
-      .then((res) => {
-        console.log(res);
-        if (res.token) {
-          localStorage.setItem('token', res.token);
+      .then((data) => {
+        console.log(data);
+        if (data.token) {
+          console.log(data.token);
+          localStorage.setItem('token', data.token);
           setIsLoggedIn(true);
           // setEmail(email);
           navigate('/movies', { replace: true });
         }
       })
-      .catch((res) => {
-        if (res === 'Ошибка: 401') {
-          setSuccess({
-            status: false,
-            text: "Аккаунт не\u00A0зарегистрирован",
-          });
-        } else {
-          setSuccess({
-            status: false,
-            text: res,
-          });
-        }
-        setOpenInfoTooltip(true);
-      })
-  };
-
-  // useEffect(() => {
-  //   handleToken();
-  // }, []);
-
-  // function handleToken() {
-  //   const token = localStorage.getItem('token');
-  //   const path = location.pathname;
-  //   if (token) {
-  //     console.log(token);
-  //     mainApi
-  //       .checkToken(token)
-  //       .then((res) => {          
-  //         console.log(res);
-  //         // setCurrentUser(res);
-  //         setIsLoggedIn(true);
-  //         setEmail(res.email);
-  //         setName(res.name);
-  //         navigate(path);
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       })
-  //   }
-  // };
-
-  function handleSubmitUpdateUser(data) {
-    mainApi.updateUserInfo(data)
-      .then((updateUser) => {
-        setCurrentUser(updateUser);
-      })
       .catch((err) => {
-      });
-  };
-
-
-  function handleRegister({name, email, password}) {
-    // const { name, email, password } = values;
-    console.log(name);
-    mainApi.register({name, email, password})
-      .then((user) => {
-        console.log(user);        
-          navigate('/signin', { replace: true });        
-      })
-      .catch(() => {
-        setSuccess({
-          status: false,
-          text: "Что-то пошло не так! Попробуйте ещё раз.",
-        });
-      })
-      .finally(() => {
-        setOpenInfoTooltip(true);
+        console.log(err);
       })
   };
-
-
-
 
   // todo movies handlers
-  function handleGetMovies(inputSearch, isShortFilms) {
-    setLoading(true);
-    moviesApi.getApiMovies()
-      .then((movies) => {
-        console.log(movies);
-        const searchedMovies = movies.filter((item) => item.nameRU.toLowerCase().includes(inputSearch.toLowerCase()));
-        const foundMovies = isShortFilms ? searchedMovies.filter((item) => item.duration <= 40) : searchedMovies;
-        localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
-        localStorage.setItem('inputSearchMovieName', inputSearch);
-        localStorage.setItem('shortFilms', isShortFilms);
-        setLoading(false);
-        handleResize();
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setLoading(false);
-        setServerError(true);
-      })
+  function handleSearchMovie() {
+  // console.log(movies);
+      // setLoading(true);
+      const movies =  JSON.parse(localStorage.getItem('filteredMoviesList'));
+      console.log(movies);
+// console.log({moviesList});
+    //       const searchedMovies = movies.filter((item) => item.nameRU.toLowerCase().includes(inputSearch.toLowerCase()));
+    //       const foundMovies = isShortFilms ? searchedMovies.filter((item) => item.duration <= 40) : searchedMovies;
+    //       localStorage.setItem('foundMovies', JSON.stringify(foundMovies));
+    //       localStorage.setItem('inputSearchMovieName', inputSearch);
+    //       localStorage.setItem('shortFilms', isShortFilms);
+    // localStorage.setItem('filteredMovies',  JSON.stringify(filteredMovies));
+    handleResize();
+
   };
 
-
   function handleResize() {
-    const foundMovies = JSON.parse(localStorage.getItem('foundMovies'));
+    const foundMovies = JSON.parse(localStorage.getItem('filteredMovies'));
     if (foundMovies === null) {
       return;
     };
@@ -189,30 +118,22 @@ function App() {
       setMovies(foundMovies.slice(0, 5));
       setMoreCards(2);
     }
-  }
-
-  function handleSearch(inputSearch, isShortFilms) {
-    handleGetMovies(inputSearch, isShortFilms)
-  }
+  };
 
   function checkWindowWidth() {
     setWindowWidth(window.innerWidth);
-  }
-
+  };
   useEffect(() => {
     window.addEventListener('resize', checkWindowWidth)
-    handleResize()
+    handleResize();
   }, [windowWidth]);
+
+
 
   function handleShowMore() {
     const foundMovies = localStorage.getItem('foundMovies');
     setMovies(foundMovies.slice(0, movies.length + moreCards))
   }
-
-
-  function handleGetMoviesSwitch() { }
-  function filmsSwitch() { }
-  function filmsInputSearch() { }
 
   function handleOnCardClick() {
     setIsOpen(true);
@@ -250,7 +171,6 @@ function App() {
   function closeAllPopups() {
     setIsOpen(false);
     setIsOpenCardPopup(false);
-    setOpenInfoTooltip(false);
   };
 
   function handleSignOut() {
@@ -267,9 +187,6 @@ function App() {
     setEmail('');
   }
 
-  console.log(isLoggedIn);
-  console.log(currentUser);
-
   return (
     <>
       <div className="page__content">
@@ -280,7 +197,8 @@ function App() {
               path='/signup'
               element={
                 <Register
-                  onRegister={handleRegister} />
+                // onRegister={handleRegister}
+                />
               }
             />
             <Route
@@ -300,7 +218,6 @@ function App() {
                   isLoggedIn={isLoggedIn}
                   name={name}
                   email={email}
-                  onHandleSubmit={handleSubmitUpdateUser}
                   onSignOut={handleSignOut}
                 />
               }
@@ -313,14 +230,15 @@ function App() {
                   component={Movies}
                   cards={movies}
                   isLoggedIn={isLoggedIn}
-                  handleSearch={handleSearch}
-                  defaultSearchValue={localStorage.getItem('inputSearchMovieName') || ""}
-                  handleShowMore={handleShowMore}
-                  isSaved={isSaved}
-                  onCardSave={handleCardSave}
-                  onCardDelete={handleCardDelete}
-                  serverError={serverError}
-                  loading={loading}
+                  handleSearch={handleSearchMovie}
+                  // handleSearch={filteredMovies}
+                  // defaultSearchValue={localStorage.getItem('inputSearchMovieName') || ""}
+                // handleShowMore={handleShowMore}
+                // isSaved={isSaved}
+                // onCardSave={handleCardSave}
+                // onCardDelete={handleCardDelete}
+                // serverError={serverError}
+                // loading={state.loading}
                 />
               }
             />
@@ -330,10 +248,10 @@ function App() {
                 <ProtectedRoute
                   component={SavesMovies}
                   isLoggedIn={isLoggedIn}
-                  handleSearch={handleSearch}
+                  // handleSearch={handleSearch}
                   cards={savedMovies}
-                  isSaved={isSaved}
-                  onCardDelete={handleCardDelete}
+                  // isSaved={isSaved}
+                  // onCardDelete={handleCardDelete}
                   serverError={serverError}
                 />
               }

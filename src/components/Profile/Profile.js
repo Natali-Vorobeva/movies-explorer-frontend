@@ -2,41 +2,75 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { useForm } from '../../utils/useForm';
+import { useForm } from '../../hooks/useForm';
 import { mainApi } from '../../utils/MainApi';
 
 import Header from '../Header/Header';
 
-function Profile({ onHandleSubmit, onSignOut }) {
+function Profile({
+  // onHandleSubmit, 
+  onSignOut
+}) {
   const currentUser = React.useContext(CurrentUserContext);
   const navigate = useNavigate();
   const { handleChange, values, errors, isValid, setValues, setIsValid } = useForm();
   const [error, setError] = useState('');
-  // const [name, setName] = useState(currentUser.name);
   const [name, setName] = useState('');
-  // const [email, setEmail] = useState(currentUser.email);
   const [email, setEmail] = useState('');
+  const [success, setSuccess] = useState(false);
+  // const user = currentUser;
 
-  function handleNameChange(evt) {
-    setName(evt.target.value);
-  }
-
-  function handleEmailChange(evt) {
-    setEmail(evt.target.value);
-  }
-  
-  function handleEditUser(evt) {
-    evt.preventDefault();
-    onHandleSubmit({
-      name,
-      email: email,
-    });
-  }
 
   useEffect(() => {
     setName(currentUser.name);
     setEmail(currentUser.email);
   }, [currentUser]);
+
+
+  useEffect(() => {
+    setSuccess(false);
+    if (values.name === currentUser.name && values.email === currentUser.email) {
+      setIsValid(false);
+    }
+  }, [values]);
+
+
+  function handleEditUser(evt) {
+    evt.preventDefault();
+    mainApi.updateUserInfo({
+
+      name: values.name,
+      email: values.email,
+    })
+      .then((data) => {
+        console.log(data);
+        setName(data.name);
+        setEmail(data.email);
+        setSuccess(true);
+      })
+      .catch((err) => {
+      });
+  };
+
+  // function handleEditUser(evt) {
+  //   evt.preventDefault();
+  //   onHandleSubmit({
+  //     name: values.name,
+  //     email: values.email,
+  //   });
+  // }
+  // function handleSubmitUpdateUser(data) {
+  // console.log(data);
+  //   mainApi.updateUserInfo(data)
+  //     .then((data) => {
+  //       console.log(data);
+  //       setCurrentUser(data);
+  //     })
+  //     .catch((err) => {
+  //     });
+  // };
+
+
 
   return (
     <>
@@ -47,7 +81,7 @@ function Profile({ onHandleSubmit, onSignOut }) {
       <section className="profile">
         <div className="profile__container container">
           <h2 className="profile__title">Привет, {name}!</h2>
-          <form
+          <form action='#'
             onSubmit={handleEditUser}
             className='form form_type_profile'
             noValidate
@@ -57,9 +91,9 @@ function Profile({ onHandleSubmit, onSignOut }) {
                 <label className="form__label form__label_type_profile form__label_type_profile-name" htmlFor='name'>Имя</label>
                 <input
                   id="username" type="text" name="name" className="form__input form__input_type_profile form__input_type_profile-name"
-                  value={name}
-                  placeholder={name} 
-                  onChange={handleNameChange}
+                  placeholder={name}
+                  value={values.name || ''}
+                  onChange={handleChange}
                   minLength='2' maxLength='30' required />
                 <span className="name-input-error form__input-error form__input-error_type_profile-name">{errors.name}</span>
               </div>
@@ -67,17 +101,21 @@ function Profile({ onHandleSubmit, onSignOut }) {
                 <label className='form__label form__label_type_profile form__label_type_profile-email' htmlFor='email'>E-mail</label>
                 <input
                   id="email" type="email" name="email" className="form__input form__input_type_profile form__input_type_profile-email "
-                  placeholder={email} 
-                  value={email}
-                  onChange={handleEmailChange}
+                  placeholder={email}
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                  value={values.email || ''}
+                  onChange={handleChange}
                   required autoComplete="off" />
                 <span className="email-input-error form__input-error form__input-error_type_profile-email">{errors.email}</span>
               </div>
             </div>
+
             <button
               type="submit"
-              className="form__save form__save_type_profile"
+              className={`form__save form__save_type_profile ${isValid ? '' : 'form__button_type-profile_disable'}`}
               name="button2">
+              <p className='form__success form__success_type_profile'>{success && 'Данные успешно изменены'}</p>
+              <span className='form__info'>{error}</span>
               Редактировать
             </button>
             <Link className="form__profile-exit" to='/' onClick={onSignOut} >Выйти из аккаунта</Link>

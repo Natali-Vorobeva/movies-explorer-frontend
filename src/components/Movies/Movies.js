@@ -1,15 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Header from '../Header/Header';
-import SearchForm from '../Movies/SearchForm/SearchForm';
+import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
+
+import { useMovies } from '../../hooks/useMovies';
 
 function Movies(props) {
 
   
+ 
+  // const [cards, setCards] = useState([]);
+ 
+  // const movies = useGetLocalStorage('filteredMoviesList');
+  // console.log(movies);
 
-  return (
+    // useEffect(() => {
+  // const movies = useGetLocalStorage('filteredMoviesList');
+  
+      // const filteredMovies = JSON.parse(localStorage.getItem('filteredMoviesList'));
+      // return filteredMovies
+    // setCards(filteredMovies);
+    //   console.log(filteredMovies);
+    //   // handleSearch();
+    //   return filteredMovies;
+    // }, []);
+
+  // function handleSearch() {
+  //   const getCards = () => {
+  //     const movies = JSON.parse(localStorage.getItem('filteredMovies'));
+  //     console.log(movies);
+  //     return movies;
+  //    }
+// console.log(cards);
+
+// const [cards, setCards] = useState([]);
+// function 
+// const movies = useGetLocalStorage('filteredMoviesList');
+
+return (
     <>
       <Header
         onDisplayMain={'visibility'}
@@ -19,18 +49,19 @@ function Movies(props) {
       />
       <section className="movies">
         <SearchForm
-          handleSearch={props.handleSearch}
-          defaultValue={props.defaultSearchValue}
+        // handleSearch={handleFetchMovies}
+        // defaultValue={props.defaultSearchValue}
         />
         <MoviesCardList
           cards={props.cards}
+          // handleSearch={handleResize}
+          handleSearchMovie={props.handleSearchMovie}
           handleShowMore={props.handleShowMore}
           isSaved={props.isSaved}
           isOnlySaved={false}
           onCardSave={props.onCardSave}
           onCardDelete={props.onCardDelete}
           serverError={props.serverError}
-          loading={props.loading}
         />
       </section >
       <Footer />

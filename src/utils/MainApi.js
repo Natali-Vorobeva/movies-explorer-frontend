@@ -8,49 +8,65 @@ class MainApi {
     if (res.ok) {
       return res.json();
     }
-    // return Promise.reject(`Ошибка: ${res.status}`)
-    return res.text().then((text) => {
-      return Promise.reject({
-        status: res.status,
-        errorText:
-          JSON.parse(text).message === 'validation failed'
-            ? JSON.parse(text).validation.body.message
-            : JSON.parse(text).message
-      });
-    });
+    return Promise.reject(`Ошибка: ${res.err}`)
+    // return res.text().then((text) => {
+    //   return Promise.reject({
+    //     status: res.status,
+    //     errorText:
+    //       JSON.parse(text).message === 'validation failed'
+    //         ? JSON.parse(text).validation.body.message
+    //         : JSON.parse(text).message
+    //   });
+    // });
   };
 
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
-      mode: 'no-cors',
-      headers: this._headers
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json;  charset=UTF-8',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
     })
-      .then(this._parseResponse);
+    .then(this._parseResponse);
   }
 
   checkToken(token) {
     return fetch(`${this._url}/users/me`, {
-      // mode: 'no-cors',
       method: 'GET',
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       }
     })
-      .then(this._handleRes);
+      // .then(res => {
+      //   if (res.ok) {
+      //     return res.json();
+      //   }
+      //   return Promise.reject(`Ошибка: ${res.status}`);
+      // })
+      .then(this._parseResponse);
   };
 
   authorize(email, password) {
     return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
         email, password
       })
     })
-      .then(this._handleRes);
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
   };
 
   register(data) {
@@ -70,23 +86,27 @@ class MainApi {
   };
 
   updateUserInfo({ name, email }) {
-
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
         name: name,
         email: email
       }),
-    }).then(this._handleRes);
+    }).then(this._parseResponse);
   }
 
   addMovie(movie) {
     return fetch(`${this._url}/movies`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
       body: JSON.stringify({
         country: movie.country || 'Нет данных',
         director: movie.director,
@@ -107,16 +127,17 @@ class MainApi {
   deleteMovie(movieId) {
     return fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
     })
       .then(this._parseResponse);
   }
 };
 
 export const mainApi = new MainApi({
-  url: 'https://api.ak-movies-explorer.nomoredomains.monster',
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  }
+  // url: 'https://api.ak-movies-explorer.nomoredomains.monster',
+  url: 'https://api.portfolio-vorobeva.nomoredomains.rocks',
 });

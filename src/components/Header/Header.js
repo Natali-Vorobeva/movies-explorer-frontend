@@ -81,8 +81,9 @@ function Header({
                     </Link>
                   </div>
                   <div className="header__links-main">
-                    <p className="header__to-link-burger header__to-link-burger_style_text">{email}</p>
-                    <Link className="header__profile-exit header__to-link-burger_style_text" to='/' onClick={onSignOut}>Выйти</Link>
+                    <Link className={`header__profile ${activeButton}`} to="/profile">
+                      Аккаунт
+                    </Link>
                   </div>
                 </>
                 :

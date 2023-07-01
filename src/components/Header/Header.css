@@ -86,11 +86,11 @@ align-self: center;
 }
 
 .header__profile {
-  width: 100px;
+  width: 60px;
   line-height: 16px;
   font-size: 14px;
   font-weight: 500;
-  margin: 8px 20px 8px 20px;
+  padding: 8px 20px;
   background: #f9f9f9;
   border-radius: 32px;
   transition: all .5s ease;

@@ -1,5 +1,5 @@
 import React from 'react';
-// import MoviesCard from '../MoviesCard/MoviesCard';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import Header from '../Header/Header';
 import Promo from './Promo/Promo';
@@ -10,6 +10,7 @@ import Portfolio from './Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
 function Main({ isLoggedIn, email, onSignOut }) {
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <>
@@ -18,7 +19,7 @@ function Main({ isLoggedIn, email, onSignOut }) {
       registration={'Регистрация'}
       enter={'Войти'}
       onActiveLinkMain={'active'}
-      email={email}
+      email={currentUser.email}
       isLoggedIn={isLoggedIn}
       onSignOut={onSignOut}
     />
