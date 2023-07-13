@@ -1,95 +1,80 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Route, Routes, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import Movie from '../Movie/Movie';
-import Preloader from '../Movies/Preloader/Preloader';
-import { useMovies } from '../../hooks/useMovies';
-import { moviesApi } from '../../utils/MoviesApi';
+import Preloader from '../Preloader/Preloader';
+import useResize from '../../hooks/useResize.js';
 
-const  MoviesCardList = ({cards, ...props}) => {
+const MoviesCardList = ({
+  movies,
+  savedMovies,
+  onLikeMovie,
+  onDeleteMovie,
+  isLikeButton,
+  info,
+  isLoading,
+  getSavedMovies
+}) => {
 
-  const { filteredMovies, error, loading, notFound, handleFetchMovies } = useMovies();
-  
-  const [cardsList, setCardsList] = useState([]);
-  // console.log(cardsList);
-  
-  const [moreCards, setMoreCards] = useState([]);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  let size = useResize();
+  const [moviesToAdd, setMoviesToAdd] = useState(0);
+  const location = useLocation();
 
-  if (loading) return <Preloader />;
-  // if (!notFound) return <span className="movies-card-list__error container">Ничего не найдено. </span>;
-  if (error) {
-    return <span className="movies-card-list__error  container">Во время запроса произошла ошибка.
-      Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</span>;
-  }
+  useEffect(() => {
+    setMoviesToAdd(0);
+  }, [movies]);
 
+    const moviesToRender = useMemo(() => {
+    const countToRender = (size.width > 1200) ? 16 : (size.width < 1200 && size.width > 930) ? 12 : (size.width < 930 && size.width > 580) ? 8 : size.width < 581 ? 5 : 1;
 
-  // function handleResize(cards) {
-    
-  //   console.log(props.cards);
-  //   if (props.cards === null) {
-  //     return;
-  //   };
-  //   if (windowWidth >= 1280) {
-  //     setCardsList(props.cards.slice(0, 12));
-  //     setMoreCards(3);
-  //   } else if (windowWidth > 480 && windowWidth < 1280) {
-  //     setCardsList(props.cards.slice(0, 8));
-  //     setMoreCards(2);
-  //   } else if (windowWidth <= 480) {
-  //     setCardsList(props.cards.slice(0, 5));
-  //     setMoreCards(2);
-  //   }
-  // };
+    return movies.slice(0, countToRender + moviesToAdd);
+  }, [movies, moviesToAdd, size]);
 
-  // function checkWindowWidth() {
-  //   setWindowWidth(window.innerWidth);
-  // };
-  // useEffect(() => {
-  //   window.addEventListener('resize', checkWindowWidth)
-  //   handleResize();
-  // }, [windowWidth]);
+  if (info) {
+    return <span className="form__nothing-found container">Ничего не найдено</span>
+  };
+  if (getSavedMovies < 1) {
+    return <span className="form__nothing-found container">Сохраненных фильмов нет</span>
+  };
 
-
-
-
-
-  // const foundMovies = JSON.parse(localStorage.getItem('filteredMovies'));
-  
   return (
     <>
       <section className="movies-card-list">
         <div className="movies-card-list__container container">
           <div className="gallery">
             {
-              // props.cards.map(card => {
-              //   return (
-              //     <Movie
-              //       card={card}
-              //       // key={props.isOnlySaved ? card.movieId : card.id}
-              //       key={card.movieId}
-              //       // isSaved={props.isSaved}
-              //       // isOnlySaved={props.isOnlySaved}
-              //       onCardSave={props.onCardSave}
-              //       onCardDelete={props.onCardDelete}
-              //     />
-              //   )
-              // })
+              isLoading
+                ?
+                <Preloader />
+                :
+                moviesToRender.map((movie) => {
+                  return (
+                    <Movie
+                      key={movie.id || movie.movieId}
+                      movie={movie}
+                      isLikeButton={isLikeButton}
+                      savedMovies={savedMovies}
+                      onLikeMovie={onLikeMovie}
+                      onDeleteMovie={onDeleteMovie}
+                    />
+                  )
+                })
             }
           </div>
         </div>
-        {/* {props.isOnlySaved ? "" :
-          (props.cards.length < foundMovies.length
-            ? */}
-        <button className="movies-card-list__more" onClick={props.handleShowMore}>Ещё</button>
-        {/* :
-            ""
+        {location.pathname === '/movies' &&
+          movies.length > moviesToRender.length && (
+            <button
+              onClick={() => {
+                setMoviesToAdd((prev) => prev + ((size.width >= 1199) ? 4 : (size.width < 1199 && size.width > 929) ? 3 : (size.width < 930 && size.width > 580) ? 2 : size.width < 580 ? 2 : 1));
+              }}
+              className="movies-card-list__more"
+            >
+              Еще
+            </button>
           )
-        } */}
+        }
       </section >
-
-
     </>
-
   )
 }
 export default MoviesCardList;

@@ -46,17 +46,16 @@
   margin: -20px 0 6px 0;
 }
 
-
 .form__input-row {
   display: grid;
   grid-template-columns: 30px 1fr;
   grid-template-rows: 27px minmax(8px, 15px);
-  grid-template-areas: 
+  grid-template-areas:
   'label input'
   '. error';
 }
 
-.form__input_type_profile {  
+.form__input_type_profile {
   text-align: right;
   margin: 0;
   padding: 0;
@@ -76,12 +75,12 @@
 
 .form__label_type_profile-name {
   height: 27px;
-  grid-area: label; 
-  
+  grid-area: label;
+
   border-bottom: 1px solid #e8e8e8;
 }
 
-.form__label_type_profile-email {  
+.form__label_type_profile-email {
   height: 27px;
   grid-area: label;
   border: none;
@@ -89,7 +88,7 @@
 
 .form__input_type_profile-name {
   height: 27px;
-  grid-area: input;  
+  grid-area: input;
   border-bottom: 1px solid #e8e8e8;
 }
 
@@ -120,8 +119,8 @@
   position: absolute;
   width: 100%;
   margin: -30px 0 0 0;
-  text-align: center; 
-  font-size: 13px;  
+  text-align: center;
+  font-size: 13px;
 }
 
 .form__success_type_profile {
@@ -132,9 +131,15 @@
   position: absolute;
   width: 100%;
   margin: -25px 0 0 0;
-  text-align: center; 
+  text-align: center;
   font-size: 13px;
   color: #465dff;
+}
+
+.form__nothing-found {
+  color: #465dff;
+  display: flex;
+  justify-content: center;
 }
 
 .form__save {

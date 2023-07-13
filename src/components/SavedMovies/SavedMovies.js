@@ -5,32 +5,59 @@ import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function SavedMovies(props) {
+const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const searchedMovies = localStorage.getItem('searchedSavedMovies');
+  const queries = localStorage.getItem('searchQuerySavedMovies');
+  const [searchQuery, setSearchQuery] = useState({});
 
-  function handleSearch(movieName, isShortFilms) {
-    const filteredMovies = props.cards.filter((item) => item.nameRU.toLowerCase().includes(movieName.toLowerCase()));
-    if (isShortFilms) {
-      setFilteredMovies(filteredMovies.filter((item) => item.duration <= 40));
+  useEffect(() => {
+    if (searchedMovies) {
+      setFilteredMovies(JSON.parse(searchedMovies));
+    } else {
+      setFilteredMovies(savedMovies);
     }
-    else {
-      setFilteredMovies(filteredMovies);
+  }, [searchedMovies, savedMovies, searchQuery]);
+
+  useEffect(() => {
+    if (queries) {
+      setSearchQuery(JSON.parse(queries));
+    } else {
+      setSearchQuery({ ...queries, searchText: '' });
+    }
+  }, [queries, savedMovies]);
+
+  const filterMovies = (query) => {
+    localStorage.setItem('searchQuerySavedMovies', JSON.stringify(query));
+
+    let filtered = [];
+    if (query.isShortFilmChecked) {
+      filtered = savedMovies.filter((movie) => {
+        return (
+          movie.duration <= 40 &&
+          movie.nameRU.toLowerCase().trim().includes(query.searchText.toLowerCase())
+        );
+      });
+      setFilteredMovies(filtered);
+      localStorage.setItem('searchedSavedMovies', JSON.stringify(filtered));
+    } else if (!query.isShortFilmChecked) {
+      filtered = savedMovies.filter((movie) => {
+        return movie.nameRU
+          .toLowerCase()
+          .trim()
+          .includes(query.searchText.toLowerCase());
+      });
+      setFilteredMovies(filtered);
+      localStorage.setItem('searchedSavedMovies', JSON.stringify(filtered));
     }
   };
 
-  function initFilteredMovies() {
-    setFilteredMovies(props.cards);
-  }
-
-  useEffect(() => {
-    setFilteredMovies(
-      filteredMovies.filter(movie => props.cards.some(card => movie.movieId === card.movieId))
-    )
-  }, [props.cards]);
-
-  useEffect(() => {
-    initFilteredMovies()
-  }, []);
+  const handleResetInput = () => {
+    setFilteredMovies(savedMovies);
+    setSearchQuery({});
+    localStorage.removeItem('searchedSavedMovies');
+    localStorage.removeItem('searchQuerySavedMovies');
+  };
 
   return (
     <>
@@ -41,29 +68,17 @@ function SavedMovies(props) {
       />
       <section className="saved-movies">
         <SearchForm
-          handleSearch={handleSearch}
-          defaultValue=""
+          onFilter={filterMovies}
+          searchQuery={searchQuery}
+          onResetInput={handleResetInput}
         />
-        <div className="saved-movies container">
+        <div className="saved-movies">
           <div className="gallery_size_saved-movies">
-          <MoviesCardList
-          cards={filteredMovies}
-          isSaved={props.isSaved}
-          isOnlySaved={true}
-          onCardDelete={props.onCardDelete}
-          serverError={props.serverError}
-          loading={props.loading}
-        />
-            {/* <div className="gallery__card-body">
-              <div className="gallery__poster">
-                <img className="gallery__img" src={imagePoster} alt="Постер фильма" />
-              </div>
-              <div className="gallery__label">
-                <p className="gallery__subtitle">Киноальманах Джей Харви: «100 лет дизайна»</p>
-                <p className="gallery__delete">+</p>
-              </div>
-              <div className="gallery__time">1ч 42 м</div>
-            </div> */}
+            <MoviesCardList
+              movies={filteredMovies}
+              onDeleteMovie={onDeleteMovie}
+              getSavedMovies={getSavedMovies}
+            />
           </div>
         </div >
       </section >

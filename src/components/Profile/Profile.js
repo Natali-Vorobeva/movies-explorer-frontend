@@ -1,76 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useForm } from '../../hooks/useForm';
-import { mainApi } from '../../utils/MainApi';
 
 import Header from '../Header/Header';
 
-function Profile({
-  // onHandleSubmit, 
-  onSignOut
-}) {
-  const currentUser = React.useContext(CurrentUserContext);
-  const navigate = useNavigate();
-  const { handleChange, values, errors, isValid, setValues, setIsValid } = useForm();
-  const [error, setError] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [success, setSuccess] = useState(false);
-  // const user = currentUser;
+function Profile({ statusSuccess, onUpdateUser, onSignOut }) {
 
+  const currentUser = React.useContext(CurrentUserContext);
+  const { handleChange, values, errors, isValid, setValues, setIsValid } = useForm();
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    if (currentUser) {
+      setValues(currentUser);
+      setIsValid(true);
+    }
+  }, [currentUser, setIsValid, setValues]);
 
   useEffect(() => {
     setName(currentUser.name);
-    setEmail(currentUser.email);
   }, [currentUser]);
 
 
   useEffect(() => {
-    setSuccess(false);
     if (values.name === currentUser.name && values.email === currentUser.email) {
       setIsValid(false);
     }
   }, [values]);
 
-
   function handleEditUser(evt) {
     evt.preventDefault();
-    mainApi.updateUserInfo({
-
-      name: values.name,
-      email: values.email,
-    })
-      .then((data) => {
-        console.log(data);
-        setName(data.name);
-        setEmail(data.email);
-        setSuccess(true);
-      })
-      .catch((err) => {
-      });
+    onUpdateUser(values);
   };
-
-  // function handleEditUser(evt) {
-  //   evt.preventDefault();
-  //   onHandleSubmit({
-  //     name: values.name,
-  //     email: values.email,
-  //   });
-  // }
-  // function handleSubmitUpdateUser(data) {
-  // console.log(data);
-  //   mainApi.updateUserInfo(data)
-  //     .then((data) => {
-  //       console.log(data);
-  //       setCurrentUser(data);
-  //     })
-  //     .catch((err) => {
-  //     });
-  // };
-
-
 
   return (
     <>
@@ -80,7 +42,7 @@ function Profile({
       />
       <section className="profile">
         <div className="profile__container container">
-          <h2 className="profile__title">Привет, {name}!</h2>
+          <h2 className="profile__title">Привет, {currentUser.name}!</h2>
           <form action='#'
             onSubmit={handleEditUser}
             className='form form_type_profile'
@@ -101,7 +63,7 @@ function Profile({
                 <label className='form__label form__label_type_profile form__label_type_profile-email' htmlFor='email'>E-mail</label>
                 <input
                   id="email" type="email" name="email" className="form__input form__input_type_profile form__input_type_profile-email "
-                  placeholder={email}
+                  placeholder={currentUser.email}
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                   value={values.email || ''}
                   onChange={handleChange}
@@ -114,8 +76,8 @@ function Profile({
               type="submit"
               className={`form__save form__save_type_profile ${isValid ? '' : 'form__button_type-profile_disable'}`}
               name="button2">
-              <p className='form__success form__success_type_profile'>{success && 'Данные успешно изменены'}</p>
-              <span className='form__info'>{error}</span>
+              <p className='form__success form__success_type_profile'>{statusSuccess && 'Данные успешно изменены'}</p>
+              <span className='form__info'></span>
               Редактировать
             </button>
             <Link className="form__profile-exit" to='/' onClick={onSignOut} >Выйти из аккаунта</Link>

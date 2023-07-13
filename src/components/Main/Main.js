@@ -1,6 +1,5 @@
 import React from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-
 import Header from '../Header/Header';
 import Promo from './Promo/Promo';
 import AboutProject from './AboutProject/AboutProject';
@@ -9,7 +8,7 @@ import AboutMe from './AboutMe/AboutMe';
 import Portfolio from './Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main({ isLoggedIn, email, onSignOut }) {
+function Main({ isLoggedIn, onSignOut }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   return (

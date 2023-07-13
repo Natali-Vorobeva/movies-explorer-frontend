@@ -1,59 +1,56 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { useMovies } from '../../hooks/useMovies';
+function Movie({ movie, savedMovies, onLikeMovie, onDeleteMovie, isLikeButton }) {
+  let location = useLocation();
+  const image = movie.image.url
+    ? `https://api.nomoreparties.co/${movie.image.url}`
+    : movie.image;
 
-function Movie(props) {
+  let isLiked = savedMovies
+    ? savedMovies.some((item) => item.movieId === movie.id)
+    : false;
 
-  // const { movies } = useMovies();
-  const nameRu = props.card.nameRU;
-  const image = props.card.image;
-  // const image = props.isOnlySaved ? props.card.image : `https://api.nomoreparties.co/${props.card.image.url}`;
-  const trailerLink = props.card.trailerLink;
-  console.log(props.card.image);
+  const isDeleteButton = location.pathname === '/saved-movies';
+
   const duration = () => {
-    if (props.card.duration > 60) {
-      return (props.card.duration / 60 | 0) + "ч " + props.card.duration % 60 + "м"
+    if (movie.duration > 60) {
+      return (movie.duration / 60 | 0) + "ч " + movie.duration % 60 + "м"
     }
-    if (props.card.duration === 60) {
-      return (props.card.duration / 60) + "ч"
+    if (movie.duration === 60) {
+      return (movie.duration / 60) + "ч"
     } else {
-      return props.card.duration + "м"
+      return movie.duration + "м"
     }
-  };
-
-  function handleCardSave() {
-    props.onCardSave(props.card)
-  };
-
-  function handleCardDelete() {
-    props.onCardDelete(props.card)
   };
 
   return (
     <div className="gallery__card-body">
       <div className="gallery__poster">
-        <a className="movie__trailer" href={trailerLink} rel="noreferrer" target="_blank">
-          <img className="gallery__img" src={image} alt="Постер фильма" />
+        <a className="movie__trailer" href={movie.trailerLink} rel="noreferrer" target="_blank">
+          <img className="gallery__img" src={image} alt={movie.nameRU} />
         </a>
       </div>
 
-
-      {/* ! Этот ког вместо gallery__liked/ Его нужно адаптировать */}
-
-
-
       <div className="gallery__label">
-        <p className="gallery__subtitle">{nameRu}</p>
-        {props.isOnlySaved ? <button className="gallery__delete" onClick={handleCardDelete} type="button"></button> :
-          (props.isSaved(props.card) ? <button className="gallery__like" onClick={handleCardDelete} type="button"></button> :
-            <button className="gallery__like" onClick={handleCardSave} type="button"></button>)
+        <p className="gallery__subtitle">{movie.nameRU}</p>
+
+        {isLikeButton && (
+          <button
+            onClick={() => onLikeMovie(movie, isLiked, savedMovies._id)}
+            className={`gallery__like ${isLiked ? 'gallery__like_status_liked' : ''}`}
+          ></button>)
         }
-        {/* <p className="gallery__liked">{}</p> */}
+
+        {isDeleteButton && (
+          <button
+            onClick={() => onDeleteMovie(movie._id)}
+            className={`gallery__delete`}
+          >+</button>
+        )}
       </div>
       <div className="gallery__time">{duration()}</div>
     </div>
-
-
   )
 }
 

@@ -1,69 +1,105 @@
 import React, { useEffect, useState } from 'react';
-
 import Header from '../Header/Header';
 import SearchForm from './SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-import { useMovies } from '../../hooks/useMovies';
+function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLikeButton }) {
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const searchedMovies = localStorage.getItem('searchedMovies');
+  const queries = localStorage.getItem('searchQueryMovies');
+  const [searchQuery, setSearchQuery] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [info, setInfo] = useState(false);
 
-function Movies(props) {
+  useEffect(() => {
+    if (searchedMovies) {
+      setFilteredMovies(JSON.parse(searchedMovies));
+    }
+  }, [searchedMovies]);
 
-  
- 
-  // const [cards, setCards] = useState([]);
- 
-  // const movies = useGetLocalStorage('filteredMoviesList');
-  // console.log(movies);
+  useEffect(() => {
+    if (queries) {
+      setSearchQuery(JSON.parse(queries));
+    }
+  }, [queries]);
 
-    // useEffect(() => {
-  // const movies = useGetLocalStorage('filteredMoviesList');
-  
-      // const filteredMovies = JSON.parse(localStorage.getItem('filteredMoviesList'));
-      // return filteredMovies
-    // setCards(filteredMovies);
-    //   console.log(filteredMovies);
-    //   // handleSearch();
-    //   return filteredMovies;
-    // }, []);
+  const filterMovies = (query) => {
+    if (!filteredMovies.length) {
+      setIsLoading(true);
+    }
 
-  // function handleSearch() {
-  //   const getCards = () => {
-  //     const movies = JSON.parse(localStorage.getItem('filteredMovies'));
-  //     console.log(movies);
-  //     return movies;
-  //    }
-// console.log(cards);
+    let filtered = [];
+    localStorage.setItem('searchQueryMovies', JSON.stringify(query));
 
-// const [cards, setCards] = useState([]);
-// function 
-// const movies = useGetLocalStorage('filteredMoviesList');
+    if (query.isShortFilmChecked) {
+      filtered = movies.filter((movie) => {
+        return (
+          movie.duration <= 40 &&
+          movie.nameRU
+            .toLowerCase()
+            .trim()
+            .includes(query.searchText.toLowerCase())
+        );
+      });
+      setFilteredMovies(filtered);
+      localStorage.setItem('searchedMovies', JSON.stringify(filtered));
+    } else if (!query.isShortFilmChecked) {
+      filtered = movies.filter((movie) => {
+        return movie.nameRU
+          .toLowerCase()
+          .trim()
+          .includes(query.searchText.toLowerCase());
+      });
 
-return (
+      setFilteredMovies(filtered);
+      localStorage.setItem('searchedMovies', JSON.stringify(filtered));
+    }
+    setIsLoading(false);
+  };
+
+  const handleResetInput = () => {
+    setFilteredMovies([]);
+    setSearchQuery({});
+    localStorage.removeItem('searchedMovies');
+    localStorage.removeItem('searchQueryMovies');
+  };
+
+  useEffect(() => {
+    if (filteredMovies.length < 1) {
+      setInfo(true);
+    } else {
+      setInfo(false);
+    }
+  }, [filteredMovies]);
+
+  return (
     <>
       <Header
         onDisplayMain={'visibility'}
         noActiveFilmsLink={'no-active-nav-link'}
         onActiveLinkFilms={'active'}
-        email={props.email}
+        email={email}
       />
       <section className="movies">
         <SearchForm
-        // handleSearch={handleFetchMovies}
-        // defaultValue={props.defaultSearchValue}
+          onFilter={filterMovies}
+          searchQuery={searchQuery}
+          onResetInput={handleResetInput}
         />
         <MoviesCardList
-          cards={props.cards}
-          // handleSearch={handleResize}
-          handleSearchMovie={props.handleSearchMovie}
-          handleShowMore={props.handleShowMore}
-          isSaved={props.isSaved}
-          isOnlySaved={false}
-          onCardSave={props.onCardSave}
-          onCardDelete={props.onCardDelete}
-          serverError={props.serverError}
+          isLikeButton={isLikeButton}
+          movies={filteredMovies}
+          savedMovies={savedMovies}
+          onLikeMovie={onLikeMovie}
+          info={info}
+          isLoading={isLoading}
+          onDeleteMovie={onDeleteMovie}
+          filteredMovies={filteredMovies}
+          searchedMovies={searchedMovies}
         />
       </section >
+
       <Footer />
     </>
   )

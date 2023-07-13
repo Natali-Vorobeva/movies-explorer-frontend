@@ -8,16 +8,7 @@ class MainApi {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.err}`)
-    // return res.text().then((text) => {
-    //   return Promise.reject({
-    //     status: res.status,
-    //     errorText:
-    //       JSON.parse(text).message === 'validation failed'
-    //         ? JSON.parse(text).validation.body.message
-    //         : JSON.parse(text).message
-    //   });
-    // });
+    return Promise.reject(`Ошибка: ${res.err}`);
   };
 
   getUserInfo() {
@@ -25,11 +16,10 @@ class MainApi {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        // 'Content-Type': 'application/json;  charset=UTF-8',
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     })
-    .then(this._parseResponse);
+      .then(this._parseResponse);
   }
 
   checkToken(token) {
@@ -38,15 +28,9 @@ class MainApi {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     })
-      // .then(res => {
-      //   if (res.ok) {
-      //     return res.json();
-      //   }
-      //   return Promise.reject(`Ошибка: ${res.status}`);
-      // })
       .then(this._parseResponse);
   };
 
@@ -99,6 +83,17 @@ class MainApi {
     }).then(this._parseResponse);
   }
 
+  getSavedMovies() {
+    return fetch(`${this._url}/movies`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((res) => this._parseResponse(res)
+      );
+  }
+
   addMovie(movie) {
     return fetch(`${this._url}/movies`, {
       method: 'POST',
@@ -124,12 +119,11 @@ class MainApi {
       .then(this._parseResponse);
   }
 
-  deleteMovie(movieId) {
-    return fetch(`${this._url}/movies/${movieId}`, {
+  deleteMovie(id) {
+    return fetch(`${this._url}/movies/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
     })
@@ -138,6 +132,5 @@ class MainApi {
 };
 
 export const mainApi = new MainApi({
-  // url: 'https://api.ak-movies-explorer.nomoredomains.monster',
   url: 'https://api.portfolio-vorobeva.nomoredomains.rocks',
 });

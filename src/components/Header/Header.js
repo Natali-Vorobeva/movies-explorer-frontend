@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-
-
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 function Header({
-  onSignOut,
   isLoggedIn,
   activeButton,
   onDisplayMovies, onDisplayMain,
@@ -33,7 +29,6 @@ function Header({
   function handleClickCloseBurgerMain() {
     setVisibilityMenuMain(false);
   }
-
 
   return (
     <>
@@ -119,11 +114,9 @@ function Header({
           onActiveLinkFilmsSaved={onActiveLinkFilmsSaved}
           visibilityMenuMain={visibilityMenuMain}
           handleClickCloseBurgerMain={handleClickCloseBurgerMain}
+          isLoggedIn={isLoggedIn}
         />
       </header >
-
-
-
     </>
   )
 }

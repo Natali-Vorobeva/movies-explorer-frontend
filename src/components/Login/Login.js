@@ -1,22 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router";
 import { useForm } from '../../hooks/useForm';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { mainApi } from '../../utils/MainApi';
-import * as auth from '../../auth';
 
 function Login({ onMain, formText, onLogin }) {
+
   const currentUser = React.useContext(CurrentUserContext);
-  const navigate = useNavigate()
-  const { handleChange, values, errors, isValid } = useForm();  
+  const { handleChange, values, errors, isValid } = useForm();
   const [error, setError] = useState('');
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    setName(currentUser.name);
     setEmail(currentUser.email);
   }, [currentUser]);
 
@@ -59,8 +54,8 @@ function Login({ onMain, formText, onLogin }) {
             onChange={handleChange}
           />
           <span className="password-input-error form__input-error">{errors.password}</span>
-        </div>        
-        <div className='form__info'>{error}</div>
+        </div>
+        {/* <div className='form__info'>{error}</div> */}
         <button
           type="submit"
           className={`form__save  ${ isValid ? '' : 'form__button_disable' }`}>

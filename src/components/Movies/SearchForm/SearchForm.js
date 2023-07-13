@@ -1,38 +1,56 @@
 import React, { useState, useEffect } from 'react';
-
-import { useMovies } from '../../../hooks/useMovies';
-import { useLocalStorageJson, useLocalStorage } from '../../../hooks/useLocalStorage';
 import searchButton from '../../../images/icons/search-white.svg';
 import searchIcon from '../../../images/icons/search-icon-gray.svg';
 
-function SearchForm() {
+const SearchForm = ({ onFilter, searchQuery, onResetInput }) => {
+  const [searchText, setSearchText] = useState('');
+  const [error, setError] = useState('');
+  const isChecked = JSON.parse(localStorage.getItem('filterCheckBox'));
+  const [isShortFilmChecked, setIsShortFilmChecked] = useState(isChecked);
 
-  
-  const {search, shortMovies, handleSetSearch,
-    handleSetShortMovies,
-    filteredMovies, initMovies,
-  } = useMovies();
+  useEffect(() => {
+    if (searchQuery.searchText) {
+      setSearchText(searchQuery.searchText);
+    }
+  }, [searchQuery.searchText]);
 
-  let searchData = search;
-  let shortMoviesData = shortMovies;
 
-  const [movies, setMovies] = useLocalStorageJson([], 'initMovies');
-  const [filteredMoviesList, setFilteredMoviesList] = useLocalStorageJson([], 'filteredMoviesList');
-  const [searchText, setSearchText] = useLocalStorage('', 'search');
-  const [shortMoviesInfo, setShortMoviesInfo] = useLocalStorage('', 'shortMovies');
+  const handleChange = (evt) => {
+    setSearchText(evt.target.value);
+  };
 
-  function handleSubmit(evt) {
+  const checkFilterBox = () => {
+    if (searchText !== '') {
+      setIsShortFilmChecked(!isShortFilmChecked);
+
+      onFilter({
+        searchText: searchText,
+        isShortFilmChecked: !isShortFilmChecked
+      });
+    } else {
+      setIsShortFilmChecked(!isShortFilmChecked);
+
+      onFilter({
+        searchText: searchQuery.searchText,
+        isShortFilmChecked: !isShortFilmChecked
+      });
+    }
+  };
+
+  const handleSubmit = (evt) => {
     evt.preventDefault();
-    setMovies(initMovies);
-    setFilteredMoviesList(filteredMovies);
-    setSearchText(searchData);
-    setShortMoviesInfo(shortMoviesData);
-     };
 
-  
+    if (!searchText) {
+      setError('Нужно ввести ключевое слово');
+      return;
+    } else {
+      onFilter({ searchText, isShortFilmChecked });
+    }
+  };
+
   return (
     <div className="search-form container">
-      <form className="search-form__flex-container">
+      <form className="search-form__flex-container" onSubmit={handleSubmit}>
         <div className="search-form__input-row">
           <img src={searchIcon} alt="Поиск" className="search-form__icon" />
           <input
@@ -40,10 +58,21 @@ function SearchForm() {
             placeholder="Фильм"
             type="text" name="search-form"
             className="search-form__input"
-            value={searchData}
-            onChange={handleSetSearch}
+            value={searchText || ''}
+            onChange={handleChange}
             required
           />
+
+          <button
+            className="search-form__button-reset"
+            type="button"
+            onClick={() => {
+              onResetInput();
+              setSearchText('');
+            }}
+          >
+            +
+          </button>
           <button
             className="search-form__button"
             type="submit"
@@ -52,7 +81,6 @@ function SearchForm() {
             <img src={searchButton} alt="Поиск" className="search-form__button-img" />
           </button>
         </div>
-
         <div className="search-form__switch">
           <div className="search-form__checkbox">
             <input
@@ -60,15 +88,17 @@ function SearchForm() {
               id="toggle_switch-desktop"
               name="toggle_switch-desktop"
               type="checkbox"
-              value={shortMovies}
-              checked={shortMovies}
-              onChange={handleSetShortMovies}
+              onChange={checkFilterBox}
+              checked={isChecked || ''}
             />
             <label className="search-form__checkbox-switch-button" htmlFor="toggle_switch-desktop"></label>
           </div>
           <p className="search-form__text">Короткометражки</p>
         </div>
       </form>
+      <span className="form__input-error">
+        {!searchText && error}
+      </span>
     </div >
   )
 }

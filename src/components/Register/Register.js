@@ -7,26 +7,24 @@ import { mainApi } from '../../utils/MainApi';
 function Register({ onMain }) {
   const navigate = useNavigate();
   const { handleChange, values, errors, isValid, setIsValid } = useForm();
-  
 
-
-    function handleSubmitRegister(evt) {
+  function handleSubmitRegister(evt) {
     evt.preventDefault();
     setIsValid(false);
-    mainApi.register({      
+    mainApi.register({
       name: values.name,
       email: values.email,
       password: values.password
     })
-    .then((user) => {
-      console.log(user);        
-        navigate('/signin', { replace: true });        
-    })
-    .catch(() => {
-      setIsValid(false);
-    })
-    .finally(() => {
-    })
+      .then((user) => {
+        console.log(user);
+        navigate('/signin', { replace: true });
+      })
+      .catch(() => {
+        setIsValid(false);
+      })
+      .finally(() => {
+      })
   }
 
   return (
@@ -56,7 +54,7 @@ function Register({ onMain }) {
           <label className="form__label" htmlFor="email">E-mail</label>
           <input
             id="email" type="email"
-            name="email"            
+            name="email"
             value={values.email || ''}
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"
             onChange={handleChange}
@@ -77,7 +75,7 @@ function Register({ onMain }) {
           <span className="password-input-error form__input-error">{errors.password}</span>
           <button
             type="submit"
-            className={`form__save  ${ isValid ? '' : 'form__button_disable' }`}>
+            className={`form__save  ${isValid ? '' : 'form__button_disable'}`}>
             Зарегистрироваться
           </button>
         </div>
