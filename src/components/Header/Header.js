@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+
+
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
 function Header({
+  onSignOut,
   isLoggedIn,
   activeButton,
   onDisplayMovies, onDisplayMain,
@@ -29,6 +33,7 @@ function Header({
   function handleClickCloseBurgerMain() {
     setVisibilityMenuMain(false);
   }
+
 
   return (
     <>
@@ -76,9 +81,8 @@ function Header({
                     </Link>
                   </div>
                   <div className="header__links-main">
-                    <Link className={`header__profile ${activeButton}`} to="/profile">
-                      Аккаунт
-                    </Link>
+                    <p className="header__to-link-burger header__to-link-burger_style_text">{email}</p>
+                    <Link className="header__profile-exit header__to-link-burger_style_text" to='/' onClick={onSignOut}>Выйти</Link>
                   </div>
                 </>
                 :
@@ -114,9 +118,11 @@ function Header({
           onActiveLinkFilmsSaved={onActiveLinkFilmsSaved}
           visibilityMenuMain={visibilityMenuMain}
           handleClickCloseBurgerMain={handleClickCloseBurgerMain}
-          isLoggedIn={isLoggedIn}
         />
       </header >
+
+
+
     </>
   )
 }

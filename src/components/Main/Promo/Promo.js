@@ -16,6 +16,8 @@ function Promo() {
     };
   };
 
+
+
   return (
     <section className="promo">
       <div className="promo__container container">

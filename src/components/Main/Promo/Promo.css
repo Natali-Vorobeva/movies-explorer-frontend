@@ -36,6 +36,7 @@
   width: 100%;
 }
 
+/* todo ДОДЕЛАТЬ ВСЕ MEDIA */
 @media (max-width:885px){
   .promo {
     padding-top: 140px;
@@ -102,6 +103,7 @@
     line-height: 16px;
     max-width: 260px;
   }
+
 
   .promo__img {
     max-width: 210px;
