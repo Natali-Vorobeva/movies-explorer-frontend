@@ -1,15 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Header from '../Header/Header';
 import SearchForm from '../Movies/SearchForm/SearchForm';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-import imagePoster from '../../images/pic__COLOR_pic.png';
-// import imagePoster2 from '../../images/1489427938_neobychnye-fotografii-flatlandiya-1.jpg';
-// import imagePoster3 from '../../images/1625178000_10-phonoteka-org-p-oboi-na-samsung-vertikalnie-oboi-krasivo-10.jpg';
-// import imagePoster4 from '../../images/Flowers-1440x1280.jpg';
+const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const searchedMovies = localStorage.getItem('searchedSavedMovies');
+  const queries = localStorage.getItem('searchQuerySavedMovies');
+  const [searchQuery, setSearchQuery] = useState({});
 
-function SavedMovies() {
+  useEffect(() => {
+    if (searchedMovies) {
+      setFilteredMovies(JSON.parse(searchedMovies));
+    } else {
+      setFilteredMovies(savedMovies);
+    }
+  }, [searchedMovies, savedMovies, searchQuery]);
+
+  useEffect(() => {
+    if (queries) {
+      setSearchQuery(JSON.parse(queries));
+    } else {
+      setSearchQuery({ ...queries, searchText: '' });
+    }
+  }, [queries, savedMovies]);
+
+  const filterMovies = (query) => {
+    localStorage.setItem('searchQuerySavedMovies', JSON.stringify(query));
+
+    let filtered = [];
+    if (query.isShortFilmChecked) {
+      filtered = savedMovies.filter((movie) => {
+        return (
+          movie.duration <= 40 &&
+          movie.nameRU.toLowerCase().trim().includes(query.searchText.toLowerCase())
+        );
+      });
+      setFilteredMovies(filtered);
+      localStorage.setItem('searchedSavedMovies', JSON.stringify(filtered));
+    } else if (!query.isShortFilmChecked) {
+      filtered = savedMovies.filter((movie) => {
+        return movie.nameRU
+          .toLowerCase()
+          .trim()
+          .includes(query.searchText.toLowerCase());
+      });
+      setFilteredMovies(filtered);
+      localStorage.setItem('searchedSavedMovies', JSON.stringify(filtered));
+    }
+  };
+
+  const handleResetInput = () => {
+    setFilteredMovies(savedMovies);
+    setSearchQuery({});
+    localStorage.removeItem('searchedSavedMovies');
+    localStorage.removeItem('searchQuerySavedMovies');
+  };
+
   return (
     <>
       <Header
@@ -18,19 +67,18 @@ function SavedMovies() {
         noActiveSavedFilmsLink={'no-active-nav-link'}
       />
       <section className="saved-movies">
-        <SearchForm />
-        <div className="saved-movies container">
-          <div className="gallery gallery_size_saved-movies">
-            <div className="gallery__card-body">
-              <div className="gallery__poster">
-                <img className="gallery__img" src={imagePoster} alt="Постер фильма" />
-              </div>
-              <div className="gallery__label">
-                <p className="gallery__subtitle">Киноальманах Джей Харви: «100 лет дизайна»</p>
-                <p className="gallery__delete">+</p>
-              </div>
-              <div className="gallery__time">1ч 42 м</div>
-            </div>
+        <SearchForm
+          onFilter={filterMovies}
+          searchQuery={searchQuery}
+          onResetInput={handleResetInput}
+        />
+        <div className="saved-movies">
+          <div className="gallery_size_saved-movies">
+            <MoviesCardList
+              movies={filteredMovies}
+              onDeleteMovie={onDeleteMovie}
+              getSavedMovies={getSavedMovies}
+            />
           </div>
         </div >
       </section >

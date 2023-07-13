@@ -1,50 +1,55 @@
 import React from 'react';
-// import likeBtn from './../images/favorite-black.svg';
-// import dislikeBtn from './../images/add-favorites.svg';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { useLocation } from 'react-router-dom';
 
-function Movie({ movie,
+function Movie({ movie, savedMovies, onLikeMovie, onDeleteMovie, isLikeButton }) {
+  let location = useLocation();
+  const image = movie.image.url
+    ? `https://api.nomoreparties.co/${movie.image.url}`
+    : movie.image;
 
+  let isLiked = savedMovies
+    ? savedMovies.some((item) => item.movieId === movie.id)
+    : false;
 
-  // * обратить внимание на movieId
+  const isDeleteButton = location.pathname === '/saved-movies';
 
-  movieId,
-  onMovieClick, onCardLike, onCardDeleteClick,
-  image, description, duration
-}) {
+  const duration = () => {
+    if (movie.duration > 60) {
+      return (movie.duration / 60 | 0) + "ч " + movie.duration % 60 + "м"
+    }
+    if (movie.duration === 60) {
+      return (movie.duration / 60) + "ч"
+    } else {
+      return movie.duration + "м"
+    }
+  };
 
-  const currentUser = React.useContext(CurrentUserContext);
-  const isOwn = movie.owner._id === currentUser._id;
-  const isLiked = movie.likes.some(i => i._id === currentUser._id);
-
-  const handleClick = () => {
-    onMovieClick(movie);
-  }
-
-  const handleLikeClick = () => {
-    onCardLike(movie);
-  }
-
-  const handleDeleteClick = () => {
-    onCardDeleteClick(movie);
-  }
-
-// !!! Доделать карточку для saved-movies !!!
   return (
     <div className="gallery__card-body">
-      {
-        isOwn &&
-        <div className="gallery__card-body">
-              <div className="gallery__poster">
-                <img className="gallery__img" src={image} alt="Постер фильма" />
-              </div>
-              <div className="gallery__label">
-                <p className="gallery__subtitle">{description }</p>
-                <p className="gallery__liked">{onCardLike}</p>
-              </div>
-              <div className="gallery__time">{duration}</div>
-            </div>
-      }
+      <div className="gallery__poster">
+        <a className="movie__trailer" href={movie.trailerLink} rel="noreferrer" target="_blank">
+          <img className="gallery__img" src={image} alt={movie.nameRU} />
+        </a>
+      </div>
+
+      <div className="gallery__label">
+        <p className="gallery__subtitle">{movie.nameRU}</p>
+
+        {isLikeButton && (
+          <button
+            onClick={() => onLikeMovie(movie, isLiked, savedMovies._id)}
+            className={`gallery__like ${isLiked ? 'gallery__like_status_liked' : ''}`}
+          ></button>)
+        }
+
+        {isDeleteButton && (
+          <button
+            onClick={() => onDeleteMovie(movie._id)}
+            className={`gallery__delete`}
+          >+</button>
+        )}
+      </div>
+      <div className="gallery__time">{duration()}</div>
     </div>
   )
 }
