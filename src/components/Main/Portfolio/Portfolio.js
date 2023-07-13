@@ -18,7 +18,10 @@ function Portfolio() {
             <p className="portfolio__arrow">↗</p>
           </div>
         </div>
+
       </div>
+
+
     </section>
   )
 }

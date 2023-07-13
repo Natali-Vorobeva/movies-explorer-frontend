@@ -8,100 +8,40 @@ class MainApi {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.err}`);
-  };
-
-  getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
-    })
-      .then(this._parseResponse);
+    return Promise.reject(`Ошибка: ${res.status}`)
   }
 
-  checkToken(token) {
+  // Получение информации о пользователе с сервера
+  // getUserInfo() {
+  //   return fetch(`${this._url}/users/me`, {
+  //     headers: this._headers
+  //   })
+  //     .then(this._parseResponse);
+  // }
+
+  getCurrentUser() {
     return fetch(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
-    })
-      .then(this._parseResponse);
-  };
-
-  authorize(email, password) {
-    return fetch(`${this._url}/signin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({
-        email, password
-      })
-    })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-  };
-
-  register(data) {
-    console.log(data);
-    return fetch(`${this._url}/signup`, {
-      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      })
     })
       .then(this._parseResponse);
-  };
-
-  updateUserInfo({ name, email }) {
-    return fetch(`${this._url}/users/me`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify({
-        name: name,
-        email: email
-      }),
-    }).then(this._parseResponse);
   }
 
-  getSavedMovies() {
-    return fetch(`${this._url}/movies`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
+
+  getMovies() {
+    return fetch(`${this._address}/movies`, {
+      headers: this._headers,
+      credentials: 'include',
     })
-      .then((res) => this._parseResponse(res)
-      );
+      .then(this._checkResponseStatus);
   }
 
   addMovie(movie) {
-    return fetch(`${this._url}/movies`, {
+    return fetch(`${this._address}/movies`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
+      credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({
         country: movie.country || 'Нет данных',
         director: movie.director,
@@ -116,21 +56,88 @@ class MainApi {
         nameEN: movie.nameEN || 'Нет данных'
       })
     })
-      .then(this._parseResponse);
+      .then(this._checkResponseStatus);
   }
 
-  deleteMovie(id) {
-    return fetch(`${this._url}/movies/${id}`, {
+  deleteMovie(movieId) {
+    return fetch(`${this._address}/movies/${movieId}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
+      credentials: 'include',
+      headers: this._headers,
     })
-      .then(this._parseResponse);
+      .then(this._checkResponseStatus);
   }
-};
+}
+
+// Добавление новой карточки через попап
+// addCard(data) {
+//   return fetch(`${this._url}/cards`, {
+//     method: 'POST',
+//     headers: this._headers,
+//     body: JSON.stringify({
+//       name: data.name,
+//       link: data.link
+//     })
+//   })
+//     .then(this._parseResponse);
+// }
+
+// Удаление карточки
+// deleteCard(cardId) {
+//   return fetch(`${this._url}/movies/${cardId}`, {
+//     headers: this._headers,
+//     method: 'DELETE'
+//   })
+//     .then(this._parseResponse);
+// }
+
+// Ставим лайк карточке
+// setLike(cardId) {
+//   return fetch(`${this._url}/movies/${cardId}/likes`, {
+//     method: 'PUT',
+//     headers: this._headers
+//   })
+//     .then(this._parseResponse);
+// }
+
+// Удаляем лайк
+// deleteLike(cardId) {
+//   return fetch(`${this._url}/cards/${cardId}/likes`, {
+//     method: 'DELETE',
+//     headers: this._headers
+//   })
+//     .then(this._parseResponse);
+// }
+
+// changeLikeCardStatus(cardId, isLiked) {
+//   if (isLiked) {
+//     return this.setLike(cardId);
+//   } else {
+//     return this.deleteLike(cardId);
+//   }
+// }
+
+
+
+// Редактирование информации о пользователе через попап
+// editUserInfo({
+//   name, email
+// }) {
+//   return fetch(`${this._url}/users`, {
+//     method: 'PATCH',
+//     headers: this._headers,
+//     body: JSON.stringify({
+//       name: name,
+//       email: email
+//     })
+//   })
+//     .then(this._parseResponse);
+// }
+
 
 export const mainApi = new MainApi({
-  url: 'https://api.portfolio-vorobeva.nomoredomains.rocks',
+  url: 'https://diplom-portfolio-vorobeva.nomoredomains.rocks',
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });

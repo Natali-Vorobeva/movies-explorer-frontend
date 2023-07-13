@@ -1,5 +1,6 @@
 import React from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+// import MoviesCard from '../MoviesCard/MoviesCard';
+
 import Header from '../Header/Header';
 import Promo from './Promo/Promo';
 import AboutProject from './AboutProject/AboutProject';
@@ -8,8 +9,7 @@ import AboutMe from './AboutMe/AboutMe';
 import Portfolio from './Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main({ isLoggedIn, onSignOut }) {
-  const currentUser = React.useContext(CurrentUserContext);
+function Main({ isLoggedIn, email, onSignOut }) {
 
   return (
     <>
@@ -18,7 +18,7 @@ function Main({ isLoggedIn, onSignOut }) {
       registration={'Регистрация'}
       enter={'Войти'}
       onActiveLinkMain={'active'}
-      email={currentUser.email}
+      email={email}
       isLoggedIn={isLoggedIn}
       onSignOut={onSignOut}
     />

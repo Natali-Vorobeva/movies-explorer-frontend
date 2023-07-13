@@ -29,6 +29,9 @@
   transition: all .5s ease;
 }
 
+
+
+
 .portfolio__link:not(:last-child){
   margin: 0 0 10px 0;
 }
