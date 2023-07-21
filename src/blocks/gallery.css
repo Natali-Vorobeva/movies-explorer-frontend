@@ -1,0 +1,131 @@
+.gallery {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid #e8e8e8;
+  padding: 80px 0 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-rows: repeat(minmax(1, 4), 1fr);
+  row-gap: 30px;
+  column-gap: 20px;
+  margin: 0 auto;
+}
+
+.gallery_size_saved-movies {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-rows: none;
+  grid-auto-rows: 1fr;
+}
+
+.gallery__card-body {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template: auto minmax(32px, 1fr) 20px / 1fr;
+  box-sizing: border-box;
+}
+
+.gallery__poster {
+  position: relative;
+  padding: 0 0 52% 0;
+  margin: 0 0 14px 0;
+  background: #e8e8e8;
+}
+
+.gallery__img {
+  width: 100%;
+  aspect-ratio: 1.78;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all 1s ease;
+}
+
+.gallery__img:hover {
+  transition: all .5s ease;
+  opacity: .7;
+}
+
+.gallery__label {
+  padding: 10px 0 13px 0;
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.gallery__subtitle {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  transition: all .5s ease;
+}
+
+.gallery__subtitle:hover {
+  transition: all .5s ease;
+  opacity: .7;
+}
+
+.gallery__like {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  background: #f9f9f9;
+  border-radius: 36px;
+  margin: -4px 0 0 0;
+  cursor: pointer;
+  border: none;
+}
+
+.gallery__like::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 7px;
+  width: 10px;
+  height: 10px;
+  background: url('../images/icons/hearth-white.svg') center no-repeat;
+}
+
+.gallery__like_status_liked {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  background: #f9f9f9;
+  border-radius: 36px;
+  margin: -4px 0 0 0;
+  cursor: pointer;
+  border: none;
+}
+
+.gallery__like_status_liked::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 7px;
+  width: 10px;
+  height: 10px;
+  background: url('../images/icons/hearth-red.svg') center no-repeat;
+}
+
+.gallery__delete {
+  width: 24px;
+  height: 24px;
+  background: #f9f9f9;
+  border-radius: 36px;
+  margin: -4px 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(-45deg);
+  border: none;
+  cursor: pointer;
+}
+
+.gallery__time {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #a0a0a0;
+  padding: 6px 0 0 0;
+}
