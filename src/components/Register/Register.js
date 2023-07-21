@@ -47,7 +47,6 @@ function Register({ onRegister, isLoggedIn, onMain }) {
             id="email" type="email"
             name="email"
             value={values.email || ''}
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"
             onChange={handleChange}
             placeholder="Email"
             className="form__input form__input_data_email"

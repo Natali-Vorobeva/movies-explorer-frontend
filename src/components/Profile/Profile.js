@@ -73,7 +73,6 @@ function Profile({ statusSuccess, onUpdateUser, onSignOut, isLoggedIn }) {
                 <input
                   id="email" type="email" name="email" className="form__input form__input_type_profile form__input_type_profile-email "
                   placeholder={currentUser.email}
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                   value={values.email || ''}
                   onChange={handleChange}
                   required autoComplete="off" />

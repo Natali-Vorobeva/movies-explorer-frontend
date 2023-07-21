@@ -47,7 +47,6 @@ function Login({ onMain, formText, onLogin, isLoggedIn }) {
             placeholder="Email"
             className={`form__input ${errors.email && 'form__input_status_error'}`}
             required
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"
             value={values.email || ''}
             onChange={handleChange}
           />

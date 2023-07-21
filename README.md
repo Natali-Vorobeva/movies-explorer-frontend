@@ -3,7 +3,7 @@
 
 
 # movies-explorer-frontend
-## http://natali-vorobeva.github.io/movies-explorer-frontend/
+## https://natali-vorobeva.github.io/movies-explorer-frontend/
 
 
 # ссылка на макет

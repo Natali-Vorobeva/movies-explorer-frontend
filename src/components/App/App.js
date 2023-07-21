@@ -64,6 +64,9 @@ function App() {
         .catch((error) => {
           console.log(error);
         });
+  }, [isLoggedIn]);
+
+  useEffect(() => {
     isLoggedIn &&
       mainApi
         .getSavedMovies()
@@ -75,7 +78,8 @@ function App() {
           }
         })
         .catch((error) => console.log(error));
-  }, [isLoggedIn]);
+  }, [currentUser, isLoggedIn]);
+
 
   useEffect(() => {
     if (isLoggedIn) {
