@@ -14,7 +14,6 @@ function Profile({ statusSuccess, onUpdateUser, onSignOut, isLoggedIn }) {
   const [name, setName] = useState('')
 
   useEffect(() => {
-    console.log(isLoggedIn)
     if (!isLoggedIn) {
       navigate('/');
     }

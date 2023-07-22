@@ -14,7 +14,6 @@ function Login({ onMain, formText, onLogin, isLoggedIn }) {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    console.log(isLoggedIn)
     if (isLoggedIn) {
       navigate('/');
     }

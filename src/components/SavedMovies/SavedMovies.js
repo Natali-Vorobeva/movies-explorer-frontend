@@ -11,6 +11,7 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
   const searchedMovies = localStorage.getItem('searchedSavedMovies');
   const queries = localStorage.getItem('searchQuerySavedMovies');
   const [searchQuery, setSearchQuery] = useState({});
+  const [infoSaved, setInfoSaved] = useState(false);
 
   useEffect(() => {
     if (searchedMovies) {
@@ -29,7 +30,6 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
   }, [queries, savedMovies]);
 
   const filterMovies = (query) => {
-    localStorage.setItem('searchQuerySavedMovies', JSON.stringify(query));
 
     let filtered = [];
     if (query.isShortFilmChecked) {
@@ -40,7 +40,7 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
         );
       });
       setFilteredMovies(filtered);
-      localStorage.setItem('searchedSavedMovies', JSON.stringify(filtered));
+      filtered.length < 1 ? setInfoSaved(true) : setInfoSaved(false);
     } else if (!query.isShortFilmChecked) {
       filtered = savedMovies.filter((movie) => {
         return movie.nameRU
@@ -49,15 +49,13 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
           .includes(query.searchText.toLowerCase());
       });
       setFilteredMovies(filtered);
-      localStorage.setItem('searchedSavedMovies', JSON.stringify(filtered));
+      filtered.length < 1 ? setInfoSaved(true) : setInfoSaved(false);
     }
   };
 
   const handleResetInput = () => {
     setFilteredMovies(savedMovies);
     setSearchQuery({});
-    localStorage.removeItem('searchedSavedMovies');
-    localStorage.removeItem('searchQuerySavedMovies');
   };
 
   return (
@@ -79,6 +77,7 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
               movies={filteredMovies}
               onDeleteMovie={onDeleteMovie}
               getSavedMovies={getSavedMovies}
+              infoSaved={infoSaved}
             />
           </div>
         </div >

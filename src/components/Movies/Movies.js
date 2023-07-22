@@ -16,9 +16,9 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
   const [searchQuery, setSearchQuery] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [info, setInfo] = useState(false);
+  const [initialInfo, setInitialInfo] = useState(false);
 
   useEffect(() => {
-    console.log(isLoggedIn)
     if (!isLoggedIn) {
       navigate('/');
     }
@@ -28,21 +28,27 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
     if (searchedMovies) {
       setFilteredMovies(JSON.parse(searchedMovies));
     }
+    // console.log(searchedMovies)  НЕ СЮДА  setInfo(true);
   }, [searchedMovies]);
 
   useEffect(() => {
     if (queries) {
       setSearchQuery(JSON.parse(queries));
+    } else {
+      setInitialInfo(true);
     }
   }, [queries]);
 
   const filterMovies = (query) => {
-    console.log(query);
     localStorage.setItem('searchQueryMovies', JSON.stringify(query));
+    // ...
     let filtered = [];
     if (!filteredMovies.length) {
       setIsLoading(true);
     }
+    // ...
+    setInitialInfo(false);
+    // ...
     if (query.isShortFilmChecked && query.searchText !== undefined) {
       filtered = movies.filter((movie) => {
         return (
@@ -54,6 +60,8 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
         );
       });
       setFilteredMovies(filtered);
+      filtered.length < 1 ? setInfo(true) : setInfo(false);
+      console.log(filtered);
       localStorage.setItem('searchedMovies', JSON.stringify(filtered));
     } else if (!query.isShortFilmChecked && query.searchText !== undefined) {
       filtered = movies.filter((movie) => {
@@ -62,27 +70,29 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
           .trim()
           .includes(query.searchText.toLowerCase())
       });
-
       setFilteredMovies(filtered);
+      filtered.length < 1 ? setInfo(true) : setInfo(false);
       localStorage.setItem('searchedMovies', JSON.stringify(filtered));
     }
     setIsLoading(false);
   };
 
   const handleResetInput = () => {
+    setInitialInfo(true);
+    setInfo(false);
     setFilteredMovies([]);
     setSearchQuery({});
     localStorage.removeItem('searchedMovies');
     localStorage.removeItem('searchQueryMovies');
   };
 
-  useEffect(() => {
-    if (filteredMovies.length < 1) {
-      setInfo(true);
-    } else {
-      setInfo(false);
-    }
-  }, [filteredMovies]);
+  // useEffect(() => {
+  //   if (filteredMovies.length < 1) {
+  //     setInfo(true);
+  //   } else {
+  //     setInfo(false);
+  //   }
+  // }, [filteredMovies]);
 
   return (
     <>
@@ -104,6 +114,7 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
           savedMovies={savedMovies}
           onLikeMovie={onLikeMovie}
           info={info}
+          initialInfo={initialInfo}
           isLoading={isLoading}
           onDeleteMovie={onDeleteMovie}
           filteredMovies={filteredMovies}

@@ -17,7 +17,9 @@ const MoviesCardList = ({
   isLikeButton,
   info,
   isLoading,
-  getSavedMovies
+  getSavedMovies,
+  initialInfo,
+  infoSaved,
 }) => {
 
   let size = useResize();
@@ -34,8 +36,11 @@ const MoviesCardList = ({
     return movies.slice(0, countToRender + moviesToAdd);
   }, [movies, moviesToAdd, size]);
 
-  if (info) {
+  if (info || infoSaved) {
     return <span className="form__nothing-found container">Ничего не найдено</span>
+  };
+  if (initialInfo) {
+    return <span className="form__nothing-found container">Здесь пока ничего не найдено</span>
   };
   if (getSavedMovies < 1) {
     return <span className="form__nothing-found container">Сохраненных фильмов нет</span>
