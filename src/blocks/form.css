@@ -127,6 +127,10 @@
   color: #465dff;
 }
 
+.form__success_type_error {
+  color: red;
+}
+
 .form__info {
   position: absolute;
   width: 100%;

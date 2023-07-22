@@ -5,12 +5,11 @@ import { useForm } from '../../hooks/useForm';
 import { useNavigate } from "react-router";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Login({ onMain, formText, onLogin, isLoggedIn }) {
+function Login({ onMain, formText, onLogin, isLoggedIn, apiErrors }) {
 
   const navigate = useNavigate();
   const currentUser = React.useContext(CurrentUserContext);
   const { handleChange, values, errors, isValid } = useForm();
-  const [error, setError] = useState('');
   const [email, setEmail] = useState('');
 
   useEffect(() => {
@@ -62,10 +61,14 @@ function Login({ onMain, formText, onLogin, isLoggedIn }) {
           />
           <span className="password-input-error form__input-error">{errors.password}</span>
         </div>
-        {/* <div className='form__info'>{error}</div> */}
         <button
           type="submit"
           className={`form__save  ${ isValid ? '' : 'form__button_disable' }`}>
+            {apiErrors.profile && (
+                <p className="form__success form__success_type_error">
+                  {apiErrors.login.errorText}
+                </p>
+              )}
           Войти
         </button>
         <p className="form__text">{formText}Ещё не зарегистрированы?&nbsp;<Link className="form__link " to='/signup' >&nbsp;Регистрация</Link></p>

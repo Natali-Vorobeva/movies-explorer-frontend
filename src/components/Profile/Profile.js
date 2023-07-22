@@ -6,12 +6,12 @@ import { useForm } from '../../hooks/useForm';
 
 import Header from '../Header/Header';
 
-function Profile({ statusSuccess, onUpdateUser, onSignOut, isLoggedIn }) {
+function Profile({ statusSuccess, onUpdateUser, onSignOut, isLoggedIn, apiErrors }) {
 
   const navigate = useNavigate();
   const currentUser = React.useContext(CurrentUserContext);
   const { handleChange, values, errors, isValid, setValues, setIsValid } = useForm();
-  const [name, setName] = useState('')
+  const [name, setName] = useState('');
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -84,7 +84,11 @@ function Profile({ statusSuccess, onUpdateUser, onSignOut, isLoggedIn }) {
               className={`form__save form__save_type_profile ${isValid ? '' : 'form__button_type-profile_disable'}`}
               name="button2">
               <p className='form__success form__success_type_profile'>{statusSuccess && 'Данные успешно изменены'}</p>
-              <span className='form__info'></span>
+              {apiErrors.profile && (
+                <p className="form__success form__success_type_error">
+                  {apiErrors.profile.errorText}
+                </p>
+              )}
               Редактировать
             </button>
             <Link className="form__profile-exit" to='/' onClick={onSignOut} >Выйти из аккаунта</Link>

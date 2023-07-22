@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router";
 import { useForm } from '../../hooks/useForm';
 
-function Register({ onRegister, isLoggedIn, onMain }) {
+function Register({ onRegister, isLoggedIn, onMain, apiErrors }) {
 
   const navigate = useNavigate();
   const { handleChange, values, errors, isValid, setIsValid } = useForm();
@@ -14,6 +14,7 @@ function Register({ onRegister, isLoggedIn, onMain }) {
       navigate('/');
     }
   }, [isLoggedIn]);
+  console.log(apiErrors)
 
   return (
     <section className="register">
@@ -66,6 +67,11 @@ function Register({ onRegister, isLoggedIn, onMain }) {
           <button
             type="submit"
             className={`form__save  ${isValid ? '' : 'form__button_disable'}`}>
+              {apiErrors.profile && (
+                <p className="form__success form__success_type_error">
+                  {apiErrors.register.errorText}
+                </p>
+              )}
             Зарегистрироваться
           </button>
         </div>

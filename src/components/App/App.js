@@ -29,6 +29,12 @@ function App() {
   const [statusSuccess, setStatusSuccess] = useState(false);
   const isLikeButton = location.pathname === '/movies';
   const getSavedMovies = savedMovies.length;
+  const [apiErrors, setApiErrors] = useState({
+    login: {},
+    register: {},
+    profile: {},
+    movies: {}
+  });
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -115,8 +121,8 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
-      })
+        setApiErrors({ ...apiErrors, login: err });
+    });
   };
 
   const handleRegister = (values) => {
@@ -129,8 +135,8 @@ function App() {
         handleLogin(values);
       })
       .catch((err) => {
-        console.log(err);
-      });
+        setApiErrors({ ...apiErrors, register: err });
+    });
   };
 
   const handleUpdateUser = (values) => {
@@ -144,8 +150,7 @@ function App() {
           name: values.name,
           email: values.email
         });
-        console.log(data);
-        console.log(data);
+        setApiErrors({ ...apiErrors, profile: {} });
         setName(data.name);
         setEmail(data.email);
         setStatusSuccess(true);
@@ -155,6 +160,7 @@ function App() {
         console.log(statusSuccess);
       })
       .catch((err) => {
+          setApiErrors({ ...apiErrors, profile: err });
       });
   }
 
@@ -180,14 +186,10 @@ function App() {
     mainApi
       .deleteMovie(movieId)
       .then((res) => {
-        console.log(res);
-        console.log(savedMovies);
         const updatedSavedMovies = savedMovies.filter(
           (movie) => movie._id !== movieId
         );
-        console.log(updatedSavedMovies);
         setSavedMovies(updatedSavedMovies);
-
         if (searchedSavedMovies) {
           const updatedSearchedSavedMovies = searchedSavedMovies.filter(
             (movie) => movie._id !== movieId
@@ -224,6 +226,7 @@ function App() {
                   <Register
                   onRegister={handleRegister}
                   isLoggedIn={isLoggedIn}
+                  apiErrors={apiErrors}
                   />
                 }
               />
@@ -234,6 +237,7 @@ function App() {
                   <Login
                     onLogin={handleLogin}
                     isLoggedIn={isLoggedIn}
+                    apiErrors={apiErrors}
                     />
                 }
               />
@@ -249,6 +253,7 @@ function App() {
                     onSignOut={handleSignOut}
                     onUpdateUser={handleUpdateUser}
                     statusSuccess={statusSuccess}
+                    apiErrors={apiErrors}
                   />
                 }
               />
