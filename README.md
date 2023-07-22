@@ -1,5 +1,5 @@
 # ссылка на pull request
-## https://github.com/Natali-Vorobeva/movies-explorer-frontend/pull/9
+## https://github.com/Natali-Vorobeva/movies-explorer-frontend/pull/1
 
 
 
