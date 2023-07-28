@@ -66,7 +66,7 @@ function Register({ onRegister, isLoggedIn, onMain, apiErrors }) {
           <span className="password-input-error form__input-error">{errors.password}</span>
           <button
             type="submit"
-            className={`form__save   ${isValid ? '' : 'form__button_disable'}`}>
+            className={`form__save  ${isValid ? '' : 'form__button_disable'}`}>
               {apiErrors.profile && (
                 <p className="form__success form__success_type_error">
                   {apiErrors.register.errorText}

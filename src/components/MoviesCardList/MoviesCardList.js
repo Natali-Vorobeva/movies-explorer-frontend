@@ -37,7 +37,7 @@ const MoviesCardList = ({
   }, [movies, moviesToAdd, size]);
 
   if (info || infoSaved) {
-    return <span className="form__nothing-found container">По вашему запросу ничего не найдено</span>
+    return <span className="form__nothing-found container">Ничего не найдено</span>
   };
   if (initialInfo) {
     return <span className="form__nothing-found container">Здесь пока ничего не найдено</span>

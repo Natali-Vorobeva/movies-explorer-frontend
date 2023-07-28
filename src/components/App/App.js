@@ -37,14 +37,6 @@ function App() {
   });
 
   useEffect(() => {
-    setApiErrors({
-      login: {},
-      register: {},
-      profile: {}
-    });
-  }, [location]);
-
-  useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       mainApi.checkToken(token)
@@ -105,10 +97,9 @@ function App() {
           .then((movies) => {
             localStorage.setItem('movies', JSON.stringify(movies));
             setMovies(movies);
-            setApiErrors({ ...apiErrors, movies: {} });
           })
-          .catch((err) => {
-            setApiErrors({ ...apiErrors, movies: err });
+          .catch((error) => {
+            console.log(error);
           });
       }
     }
@@ -277,7 +268,6 @@ function App() {
                     savedMovies={savedMovies}
                     onLikeMovie={handleLikeMovie}
                     isLikeButton={isLikeButton}
-                    apiErrors={apiErrors}
                   />
                 }
               />
