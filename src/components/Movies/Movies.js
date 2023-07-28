@@ -7,7 +7,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import { SHOT_FILM } from '../../utils/constants';
 
-function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLikeButton, isLoggedIn, apiErrors }) {
+function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLikeButton, isLoggedIn }) {
 
   const navigate = useNavigate();
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -28,6 +28,7 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
     if (searchedMovies) {
       setFilteredMovies(JSON.parse(searchedMovies));
     }
+    // console.log(searchedMovies)  НЕ СЮДА  setInfo(true);
   }, [searchedMovies]);
 
   useEffect(() => {
@@ -85,6 +86,14 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
     localStorage.removeItem('searchQueryMovies');
   };
 
+  // useEffect(() => {
+  //   if (filteredMovies.length < 1) {
+  //     setInfo(true);
+  //   } else {
+  //     setInfo(false);
+  //   }
+  // }, [filteredMovies]);
+
   return (
     <>
       <Header
@@ -99,14 +108,6 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
           searchQuery={searchQuery}
           onResetInput={handleResetInput}
         />
-        {apiErrors?.movies && Object.keys(apiErrors?.movies).length !== 0 ? (
-          <p className="form__nothing-found container">
-            Во время запроса произошла ошибка. Возможно, проблема с соединением
-            или сервер недоступен. Подождите немного и попробуйте ещё раз
-          </p>
-        ) : (
-          ''
-        )}
         <MoviesCardList
           isLikeButton={isLikeButton}
           movies={filteredMovies}
