@@ -51,9 +51,17 @@ class MainApi {
         if (res.ok) {
           return res.json();
         }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return res.text().then((text) => {
+          return Promise.reject({
+            status: res.status,
+            errorText:
+              JSON.parse(text).message === 'Validation failed'
+                ? JSON.parse(text).validation.body.message
+                : JSON.parse(text).message
+          });
+        });
       })
-  };
+  }
 
   register(name, email, password) {
     // console.log(data);
@@ -68,22 +76,21 @@ class MainApi {
         password,
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return res.text().then((text) => {
-        console.log(res);
-        return Promise.reject({
-          status: res.status,
-          errorText:
-            JSON.parse(text).message === 'Validation failed'
-              ? JSON.parse(text).validation.body.message
-              : JSON.parse(text).message
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return res.text().then((text) => {
+          return Promise.reject({
+            status: res.status,
+            errorText:
+              JSON.parse(text).message === 'Validation failed'
+                ? JSON.parse(text).validation.body.message
+                : JSON.parse(text).message
+          });
         });
-      });
-    })
-}
+      })
+  }
 
   updateUserInfo({ name, email }) {
     return fetch(`${this._url}/users/me`, {
@@ -115,53 +122,53 @@ class MainApi {
   }
 
   getSavedMovies() {
-        return fetch(`${this._url}/movies`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-        })
-          .then((res) => this._parseResponse(res)
-          );
-      }
+    return fetch(`${this._url}/movies`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((res) => this._parseResponse(res)
+      );
+  }
 
   addMovie(movie) {
-        return fetch(`${this._url}/movies`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-          body: JSON.stringify({
-            country: movie.country || 'Нет данных',
-            director: movie.director,
-            duration: movie.duration,
-            year: movie.year,
-            description: movie.description,
-            image: (`https://api.nomoreparties.co/${movie.image.url}`),
-            trailerLink: movie.trailerLink || 'https://www.youtube.com',
-            thumbnail: (`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`),
-            movieId: movie.id,
-            nameRU: movie.nameRU || 'Нет данных',
-            nameEN: movie.nameEN || 'Нет данных'
-          })
-        })
-          .then(this._parseResponse);
-      }
+    return fetch(`${this._url}/movies`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({
+        country: movie.country || 'Нет данных',
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: (`https://api.nomoreparties.co/${movie.image.url}`),
+        trailerLink: movie.trailerLink || 'https://www.youtube.com',
+        thumbnail: (`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`),
+        movieId: movie.id,
+        nameRU: movie.nameRU || 'Нет данных',
+        nameEN: movie.nameEN || 'Нет данных'
+      })
+    })
+      .then(this._parseResponse);
+  }
 
   deleteMovie(id) {
-        return fetch(`${this._url}/movies/${id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          }
-        })
-          .then(this._parseResponse);
+    return fetch(`${this._url}/movies/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
       }
+    })
+      .then(this._parseResponse);
+  }
 };
 
-  export const mainApi = new MainApi({
-    url: 'https://api.portfolio-vorobeva.nomoredomains.rocks',
-  });
+export const mainApi = new MainApi({
+  url: 'https://api.portfolio-vorobeva.nomoredomains.rocks',
+});
