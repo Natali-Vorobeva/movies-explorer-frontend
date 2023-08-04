@@ -28,7 +28,6 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
     if (searchedMovies) {
       setFilteredMovies(JSON.parse(searchedMovies));
     }
-    // console.log(searchedMovies)  НЕ СЮДА  setInfo(true);
   }, [searchedMovies]);
 
   useEffect(() => {
@@ -46,9 +45,7 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
     if (!filteredMovies.length) {
       setIsLoading(true);
     }
-    // ...
     setInitialInfo(false);
-    // ...
     if (query.isShortFilmChecked && query.searchText !== undefined) {
       filtered = movies.filter((movie) => {
         return (
@@ -85,14 +82,6 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
     localStorage.removeItem('searchedMovies');
     localStorage.removeItem('searchQueryMovies');
   };
-
-  // useEffect(() => {
-  //   if (filteredMovies.length < 1) {
-  //     setInfo(true);
-  //   } else {
-  //     setInfo(false);
-  //   }
-  // }, [filteredMovies]);
 
   return (
     <>

@@ -1,12 +1,19 @@
+.profile {
+}
 .profile__container {
   max-width: 410px;
   margin: 0 auto;
 }
 
 .profile__title {
+  color: #fff ;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 30px;
   line-height: 29px;
   padding: 236px 0 0 0;
   text-align: center;
+  background-image: linear-gradient(to left,  #d7cbe4, #d7cbe4, #d7cbe4, #d7cbe4, #d7cbe4, #595353, #3b3939, #3b3939, #3b3939, #3b3939);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
 }

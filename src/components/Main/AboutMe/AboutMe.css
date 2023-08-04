@@ -1,8 +1,7 @@
 .about-me__flex-container {
   padding: 66px 0 0 0;
   display: flex;
-  justify-content: space-between;
-  gap: 49px;
+  gap: 80px;
 }
 
 .about-me__my-name {
@@ -51,7 +50,9 @@
 .about-me__image {
   width: 100%;
   aspect-ratio: 0.83;
+  border-radius: 10px;
 }
+
 @media (max-width:768px){
   .about-me__my-name {
     font-weight: 400;

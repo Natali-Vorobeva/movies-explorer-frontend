@@ -26,8 +26,8 @@ function Main({ isLoggedIn, onSignOut }) {
       <section className="main__container">
       <Promo />
       <AboutProject />
-      <Techs />
       <AboutMe />
+      <Techs />
       <Portfolio />
       </section>
     </main>

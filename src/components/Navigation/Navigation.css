@@ -1,31 +1,57 @@
 .navigation {
+  position: relative;
+  display: flex;
+  /* gap: 40px; */
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   transition: all 1s ease;
+  box-sizing: border-box;
+  min-height: 44px;
+  transition: all .5s ease;
+  width: 100%;
 }
 
 .navigation__button {
   border: 3px solid #000;
-  opacity: 0.6;
-  border: 1px solid #FFFFFF;
   border-radius: 3px;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   color: #fff;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   width: 129px;
   text-align: center;
+  margin: 0 auto;
   cursor: pointer;
   text-decoration: none;
   position: relative;
   overflow: hidden;
   transition: all .5s ease;
+  border-image: linear-gradient(20deg, #eb6083 38%, #00deff 65%);
+  border-image-slice: 1;
 }
-.navigation__button:not(:last-child){
-  margin-bottom: 3px;
+
+.navigation__button_position_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-self: end;
 }
+
+.navigation__button-nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* .navigation__button_position_about-project {
+  margin: -100px 0 0 -70px;
+  /* padding: 0 0 0 0; */
+  /* height: 40px; */
+/* } */
 
 .navigation__button:hover {
   transition: all .5s ease;
@@ -45,6 +71,8 @@
 .navigation__link {
   transition: all .5s ease;
   color: #fff;
+  display: block;
+  padding: 10px 20px;
 
 }
 .navigation__link:hover {

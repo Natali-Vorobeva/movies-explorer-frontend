@@ -1,40 +1,80 @@
 .promo {
-  background: #465DFF;
+  background: url('../../../images/AjIm.gif') 50%/cover no-repeat;
+  /* background-position:top right; */
+  box-shadow: rgba(0, 0, 0, 0.56) 0px -70px 45px 4px;
+  /* aspect-ratio:3; */
   flex: 1;
-  padding: 75px 0;
+  padding: 200px 0;
+  max-width: 100%;
 }
 
 .promo__container {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  /* width: 100%; */
+  /* gap: 10px; */
 }
 
 .promo__title {
-  font-size: 50px;
-  font-weight: 400;
-  line-height: 58px;
+  /* margin: auto auto; */
+  font-size: 35px;
+  font-weight: 500;
+  line-height: 50px;
+  color: #c89898;
+  max-width: 845px;
+  text-align: right;
+  padding: 0 50px 0 0;
+  max-width: 100%;
+  background: linear-gradient(45deg, #0B2349 33%, #0D61BC 66%, #00deff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.promo__title_style_font {
+  display: block;
+  text-align: center;
   color: #fff;
-  max-width: 645px;
+  font-size: 60px;
+  /* font-size: 50px; */
+  font-weight: 700;
+  text-transform: uppercase;
+  background: repeating-linear-gradient(white, rgb(202, 11, 74) 2px, #db310b 2px, #19df51 3px);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 40px 0 0 0;
+
+  color: transparent;
+	-webkit-background-clip: text;
+	background-clip: text;
+	background-image: url('../../../images/fon-for-name-red-green.webp');
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .promo__subtitle {
-  padding: 36px 0 146px 0;
-  mix-blend-mode: normal;
-  opacity: 0.5;
-  font-size: 13px;
-  line-height: 16px;
+  padding: 90px 0 50px 0;
+  margin: 0 auto;
+  opacity: .8;
+  font-size: 15px;
+  line-height: 18px;
   color: #fff;
   max-width: 310px;
+  text-align: center;
 }
-
+/*
 .promo__image {
   max-width: 315px;
-}
+} */
 
-.promo__img {
+/* .promo__img {
+  position: absolute;
+  object-fit: cover;
+  top: 0;
+  left: 0;
   width: 100%;
-}
+} */
 
 @media (max-width:885px){
   .promo {
@@ -55,10 +95,10 @@
     flex-direction: column;
   }
 
-  .promo__image {
+  /* .promo__image {
     display: flex;
     margin: 0 auto;
-  }
+  } */
 
   .promo__title {
     text-align: center;

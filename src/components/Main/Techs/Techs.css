@@ -1,5 +1,5 @@
 .techs {
-  background: #f5f5f5;
+  /* background: #f5f5f5; */
 }
 
 .techs__title {
@@ -25,6 +25,7 @@
 .techs__items {
   max-width: 790px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin: 0 auto;
   padding: 100px 0;

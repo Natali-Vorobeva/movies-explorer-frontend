@@ -2,7 +2,9 @@
   font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
   font-weight: 400;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background: url('../images/fon.jpg') 0 0/100% 100% no-repeat;
+
 	color: #000;
 }
 .page__content {

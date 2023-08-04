@@ -1,11 +1,14 @@
 .form {
-  padding: 40px 0 0 0;
   max-width: 394px;
+  /* border: 1px solid #000; */
 }
 
 .form_type_profile {
   margin: 0 auto;
-  padding: 123px 0 0 0;
+  padding: 123px 20px;
+  margin: 20px 0 0 0;
+  /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
+  /* background-color: #fff; */
 }
 
 .form__input-container {
@@ -21,7 +24,7 @@
 .form__label {
   font-size: 10px;
   line-height: 12px;
-  color: #a0a0a0;
+  color: #dccaca;
 }
 
 .form__input {
@@ -50,6 +53,7 @@
   display: grid;
   grid-template-columns: 30px 1fr;
   grid-template-rows: 27px minmax(8px, 15px);
+  column-gap: 20px;
   grid-template-areas:
   'label input'
   '. error';
@@ -67,7 +71,7 @@
   align-items: center;
   width: 50px;
   font-weight: 500;
-  font-size: 11px;
+  font-size: 15px;
   line-height: 13px;
   box-sizing: border-box;
   /* margin: 0 0 24px 0; */
@@ -76,7 +80,6 @@
 .form__label_type_profile-name {
   height: 27px;
   grid-area: label;
-
   border-bottom: 1px solid #e8e8e8;
 }
 
@@ -90,12 +93,17 @@
   height: 27px;
   grid-area: input;
   border-bottom: 1px solid #e8e8e8;
+  border-radius: 3px;
+  padding: 0 5px 0 0;
 }
 
 .form__input_type_profile-email {
+  /* background-color: #c0bdbd; */
+  padding: 0 5px 0 0;
   height: 27px;
   grid-area: input;
   border: none;
+  border-radius: 3px;
 }
 
 .form__input-error_type_profile-name {
@@ -124,7 +132,8 @@
 }
 
 .form__success_type_profile {
-  color: #465dff;
+  color: #c2c6e7;
+  cursor: none;
 }
 
 .form__success_type_error {
@@ -171,13 +180,16 @@
   position: relative;
   border: 1px solid #000;
   margin: 220px 0 0 0;
-  color: #000;
-  background: #fff;
+  color: #ebe2e7;
+  /* background: #fff; */
+  text-decoration: underline;
+  background: none;
   text-align: center;
   border: none;
   padding: 0;
   cursor: pointer;
   display: inline-block;
+  padding: 2px 0;
 }
 
 .form__save_type_profile:focus {
@@ -186,7 +198,7 @@
 
 .form__button_disable {
   background: #c0bdbd;
-  opacity: .7;
+  opacity: .4;
   pointer-events: none;
   cursor: auto;
 }
@@ -195,6 +207,9 @@
   cursor: auto;
   color: #d3d1d1;
   pointer-events: none;
+  text-decoration: none;
+
+  opacity: .5;
 }
 
 .form__edit {
@@ -230,9 +245,9 @@
   text-align: center;
   margin: 16px 0 40px 0;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 16px;
-  color: #ee3465;
+  color: #ed7c9a;
 }
 
 .form__profile-exit:focus {

@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   padding: 0 70px;
 }
 
@@ -24,8 +25,9 @@
 }
 
 .indent-nav-button {
-  margin-top: -80px;
+  margin-top: -200px;
   transition: all .5s ease;
+  height: 44px;
 }
 
 @media (min-width:853px){
