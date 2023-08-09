@@ -22,6 +22,9 @@ const MoviesCardList = ({
   infoSaved,
 }) => {
 
+    const [locationSavedMovies, setLocationSavedMovies] = useState('');
+
+
   let size = useResize();
   const [moviesToAdd, setMoviesToAdd] = useState(0);
   const location = useLocation();
@@ -45,6 +48,8 @@ const MoviesCardList = ({
   if (getSavedMovies < 1) {
     return <span className="form__nothing-found container">Сохраненных фильмов нет</span>
   };
+
+
 
   return (
     <>

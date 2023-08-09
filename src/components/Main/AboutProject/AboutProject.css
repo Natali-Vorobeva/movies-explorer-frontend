@@ -1,6 +1,15 @@
 .about-project{
   background: #fff;
   padding: 0 0 110px 0;
+  margin: 100px 0 0 0;
+  transition: all .5s ease;
+  border-radius: 20px;
+}
+
+.about-project:hover {
+  box-shadow: #442024 0px 20px 45px 24px;
+  transform: scale(1.01);
+  transition: all .5s ease;
 }
 
 .about-project__main {
@@ -37,7 +46,8 @@
 }
 
 .about-project__frontend {
-  background: url('../../../images/gif-green-about-project.gif') 50%/cover no-repeat;
+  /* background: url('../../../images/gif-green-about-project.gif') 50%/cover no-repeat; */
+  background: linear-gradient(120deg, #fb7584 10%, #442024, #442024, #442024, #fb7584);
   color: #fff;
   display: flex;
   align-items: center;
@@ -47,7 +57,7 @@
 .about-project__backend {
   text-align: center;
   background: #f2f2f2;
-  background: url('../../../images/gif-green-about-project.gif') 50%/cover no-repeat;
+  background: linear-gradient(120deg, #fb7584 10%, #442024, #442024, #442024, #fb7584);
   color: #fff;
   display: flex;
   align-items: center;
@@ -102,16 +112,17 @@
 } */
 
 /* #eb6083 38%, #00deff */
+/* #81074b */
 
-.about-project__item:nth-child(1){border-color: #fcba30;}
-.about-project__item:nth-child(2){border-color: #eb6083;}
+.about-project__item:nth-child(1){border-color: #81074b;}
+.about-project__item:nth-child(2){border-color: #ff029c;}
 .about-project__item:nth-child(3){border-color: #8bc63e;}
-.about-project__item:nth-child(4){border-color: #396de5;}
-.about-project__item:nth-child(5){border-color: #bc2276;}
-.about-project__item:nth-child(6){border-color: #8bc63e;}
-.about-project__item:nth-child(7){border-color: #fcba30;}
-.about-project__item:nth-child(8){border-color: #1ccfc9;}
-.about-project__item:nth-child(9){border-color: #f05d22;}
+.about-project__item:nth-child(4){border-color: #008cd9}
+.about-project__item:nth-child(5){border-color: #00b14d}
+.about-project__item:nth-child(6){border-color: #d0047b}
+.about-project__item:nth-child(7){border-color: #00d5fb}
+.about-project__item:nth-child(8){border-color: #f21174}
+.about-project__item:nth-child(9){border-color: #09091d}
 
 .about-project__item:hover {border-left: 10px solid transparent;}
 

@@ -26,7 +26,8 @@ function Promo() {
 
       <div className="promo__container container">
         <article className="promo__main-text">
-          <h1 className="promo__title">Учебный проект<br/>студента<br/>факультета<br/>Веб&#8209;разработки<br/><span className="promo__title_style_font">Натальи Воробьёвой</span></h1>
+          <h1 className="promo__title">Учебный проект факультета<br/>Веб&#8209;разработки.<br/>Выполнила студентка:</h1>
+          <span className="promo__title_style_font">Наталья Воробьёва</span>
           <p className="promo__subtitle">Листайте ниже, чтобы узнать больше про этот проект и его создателя.</p>
           <div className="navigation">
           <div className={`navigation__button navigation__button_position_text ${indentNavigationButton}`} onClick={handleToggleClickButtonNavigation}>Узнать больше</div>

@@ -36,6 +36,15 @@ function App() {
     movies: {}
   });
 
+  const [locationMain, setLocationMain] = useState('page__content_position_header-for-main');
+  useEffect(() => {
+    if(location.pathname !== '/') {
+      setLocationMain('');
+    } else {
+      setLocationMain('page__content_position_header-for-main');
+    }
+  }, [location.pathname]);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -122,7 +131,7 @@ function App() {
       })
       .catch((err) => {
         setApiErrors({ ...apiErrors, login: err });
-    });
+      });
   };
 
   const handleRegister = (values) => {
@@ -136,7 +145,7 @@ function App() {
       })
       .catch((err) => {
         setApiErrors({ ...apiErrors, register: err });
-    });
+      });
   };
 
   const handleUpdateUser = (values) => {
@@ -160,7 +169,7 @@ function App() {
         console.log(statusSuccess);
       })
       .catch((err) => {
-          setApiErrors({ ...apiErrors, profile: err });
+        setApiErrors({ ...apiErrors, profile: err });
       });
   }
 
@@ -213,7 +222,10 @@ function App() {
 
   return (
     <>
-      <div className="page__content">
+      {/* <div className=
+      {`location.pathname === '/' ? 'page__content page__content_position_header-for-main' : 'page__content'`}> */}
+      <div className={`page__content ${locationMain}`}>
+      {/* <div className="page__content"> */}
         {isLoading ? (
           <Preloader />
         ) : (
@@ -224,9 +236,9 @@ function App() {
                 path='/signup'
                 element={
                   <Register
-                  onRegister={handleRegister}
-                  isLoggedIn={isLoggedIn}
-                  apiErrors={apiErrors}
+                    onRegister={handleRegister}
+                    isLoggedIn={isLoggedIn}
+                    apiErrors={apiErrors}
                   />
                 }
               />
@@ -238,7 +250,7 @@ function App() {
                     onLogin={handleLogin}
                     isLoggedIn={isLoggedIn}
                     apiErrors={apiErrors}
-                    />
+                  />
                 }
               />
               <Route

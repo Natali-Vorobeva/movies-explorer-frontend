@@ -89,7 +89,6 @@ function Movies({ email, movies, savedMovies, onLikeMovie, onDeleteMovie, isLike
         onDisplayMain={'visibility'}
         noActiveFilmsLink={'no-active-nav-link'}
         onActiveLinkFilms={'active'}
-        email={email}
       />
       <section className="movies">
         <SearchForm

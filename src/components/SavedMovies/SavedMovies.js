@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import Header from '../Header/Header';
 import SearchForm from '../Movies/SearchForm/SearchForm';
-import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import MoviesCardListSaved from '../SavedMovies/MoviesCardListSaved/MoviesCardListSaved';
 import Footer from '../Footer/Footer';
 import { SHOT_FILM } from '../../utils/constants';
+// import MoviesCardListSaved from './MoviesCardListSaved/MoviesCardListSaved';
 
 const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -12,7 +13,7 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
   const queries = localStorage.getItem('searchQuerySavedMovies');
   const [searchQuery, setSearchQuery] = useState({});
   const [infoSaved, setInfoSaved] = useState(false);
-
+  console.log(savedMovies);
   useEffect(() => {
     if (searchedMovies) {
       setFilteredMovies(JSON.parse(searchedMovies));
@@ -76,16 +77,15 @@ const SavedMovies = ({ savedMovies, onDeleteMovie, getSavedMovies }) => {
           searchQuery={searchQuery}
           onResetInput={handleResetInput}
         />
-        <div className="saved-movies">
           <div className="gallery_size_saved-movies">
-            <MoviesCardList
+            <MoviesCardListSaved
               movies={filteredMovies}
               onDeleteMovie={onDeleteMovie}
               getSavedMovies={getSavedMovies}
               infoSaved={infoSaved}
+              savedMovies={savedMovies}
             />
           </div>
-        </div >
       </section >
       <Footer />
     </>
