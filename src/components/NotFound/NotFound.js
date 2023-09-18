@@ -14,7 +14,7 @@ function NotFound() {
         <p className="not-found__code">404</p>
         <p className="not-found__text">Страница не найдена</p>
       </div>
-      <Link className="not-found__link" onClick={handleBackNavigate}>Назад</Link>
+      <Link className="not-found__link" to="/">Назад</Link>
     </section>
   )
 }
