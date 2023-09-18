@@ -16,8 +16,9 @@
 ***
 ***
 ###  Описание ![](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)
-Movies-Explorerll — cервис, в котором можно найти фильмы по запросу и сохранить в личном кабинете.
+Movies-Explorer — cервис, в котором можно найти фильмы по запросу и сохранить в личном кабинете**.   
 
+  ** `проект прошел код-ревью`
 
 ### Структура и функционал ![](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)
 1. Сайт состоит из нескольких страниц:
@@ -73,10 +74,10 @@ npm run start
 
 
 ### Ссылки ![](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)
-[Ссылка на макет](https://disk.yandex.ru/d/-kBJ0A7bgcTBjg)
+[Ссылка на макет](https://disk.yandex.ru/d/-kBJ0A7bgcTBjg)   
 [Репозиторий с бэкендом с предыдущего этапа дипломной работы](https://github.com/Natali-Vorobeva/movies-explorer-api)
 
-## 
+##
 * [Описание](#описание  'Переход к пункту "Описание"')
 * [Структура и функционал](#структура-и-функционал 'Переход к пункту "Структура и функционал"')
 * [Технологии](#технологии 'Переход к пункту "Технологии"')
