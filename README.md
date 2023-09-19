@@ -65,7 +65,7 @@ npm run start
 
 
 ### Ссылки ![](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)
-[Ссылка на макет](https://disk.yandex.ru/d/-kBJ0A7bgcTBjg)   
+   
 [Репозиторий с бэкендом с предыдущего этапа дипломной работы](https://github.com/Natali-Vorobeva/movies-explorer-api)
 
 
