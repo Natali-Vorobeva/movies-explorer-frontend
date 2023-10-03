@@ -20,11 +20,17 @@
 }
 
 .about-me__text {
+
+  text-align: justify;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
   padding: 20px 0 0 0;
   max-width: 600px;
+}
+
+.about-me__text_indent {
+text-indent: 30px;
 }
 
 .about-me__link-github {
@@ -50,7 +56,7 @@
 
 .about-me__image {
   width: 100%;
-  aspect-ratio: 0.83;
+  /* aspect-ratio: 0.83; */
 }
 @media (max-width:768px){
   .about-me__my-name {

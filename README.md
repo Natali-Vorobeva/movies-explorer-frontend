@@ -60,12 +60,12 @@ npm run start
 
 
 ### Системные требования ![](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)
-Для запуска потребуется Node.js версии 6.14.18.
+Для запуска потребуется Node.js версии 6.14
 
 
 
 ### Ссылки ![](https://cdn.jsdelivr.net/gh/Readme-Workflows/Readme-Icons@main/icons/octicons/ApprovedChanges.svg)
-   
+
 [Репозиторий с бэкендом с предыдущего этапа дипломной работы](https://github.com/Natali-Vorobeva/movies-explorer-api)
 
 
